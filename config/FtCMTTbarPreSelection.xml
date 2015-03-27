@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd" [
+
+  <!ENTITY PROOFdir  "/nfs/dust/cms/user/marchesi/PROOF">
+  <!ENTITY PRESELdir "/nfs/dust/cms/user/marchesi/Phys14/Semileppre">
+
+  <!ENTITY TTbar     SYSTEM "../../common/datasets/MC_TTJets_20x25.xml">
+  <!ENTITY WJets     SYSTEM "../../common/datasets/MC_WJets_LNu_20x25.xml">
+  <!ENTITY ZJets     SYSTEM "../../common/datasets/MC_ZJets_LL_20x25.xml">
+]>
+
+<JobConfiguration JobName="FtCMTTbarPreSelectionJob" OutputLevel="INFO">
+    <Library Name="libSUHH2FtCMTTbar"/>
+    <Package Name="SUHH2FtCMTTbar.par" />
+<!--
+    <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="&PRESELdir;/" PostFix="" TargetLumi="1" >
+
+    <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="&PRESELdir;/" PostFix="" TargetLumi="1" RunMode="PROOF" ProofServer="lite://" ProofWorkDir="&PROOFdir;/" ProofNodes="10" >
+-->
+
+    <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="&PRESELdir;/" PostFix="" TargetLumi="1" RunMode="PROOF" ProofServer="pod://" ProofWorkDir="&PROOFdir;/" >
+
+        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TTbar" Cacheable="True">
+          &TTbar;
+          <InputTree Name="AnalysisTree" />
+	  <OutputTree Name="AnalysisTree" />
+        </InputData>
+
+        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="WJets" Cacheable="True">
+          &WJets;
+          <InputTree Name="AnalysisTree" />
+	  <OutputTree Name="AnalysisTree" />
+        </InputData>
+
+        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="ZJets" Cacheable="True">
+          &ZJets;
+          <InputTree Name="AnalysisTree" />
+	  <OutputTree Name="AnalysisTree" />
+        </InputData>
+
+
+        <UserConfig>
+            <Item Name="PrimaryVertexCollection" Value="offlineSlimmedPrimaryVertices" />
+            <Item Name="ElectronCollection" Value="slimmedElectrons" />
+            <Item Name="MuonCollection" Value="slimmedMuons" />
+            <Item Name="TauCollection" Value="slimmedTaus" />
+            <Item Name="JetCollection" Value="patJetsAk4PFCHS" />
+            <Item Name="GenJetCollection" Value="slimmedGenJets" />
+            <Item Name="METName" Value="slimmedMETs" />
+            <Item Name="TopJetCollection" Value="patJetsCmsTopTagCHSPacked" />
+            <Item Name="GenParticleCollection" Value="GenParticles" />
+
+            <Item Name="channel" Value="lepton" />
+
+            <Item Name="AnalysisModule" Value="FtCMTTbarPreSelectionModule" />
+        </UserConfig>
+
+    </Cycle>
+</JobConfiguration>
