@@ -1,0 +1,658 @@
+#include <memory>
+
+#include "UHH2/FtCMTTbar/include/Hists2.h"
+#include "UHH2/core/include/Event.h"
+#include "UHH2/common/include/TopJetIds.h"
+#include "TH1F.h"
+#include <iostream>
+#include "UHH2/common/include/TopJetIds.h"
+
+using namespace std;
+using namespace uhh2;
+using namespace uhh2examples;
+
+Hists2::Hists2(Context & ctx, const string & dirname): Hists(ctx, dirname){
+  // book all histograms here
+  //btag variables
+  book<TH1F>("subCSV_b", "combined secondary vertex discriminator of the subjet", 100, 0., 1.);  
+  book<TH1F>("subCSV_c", "combined secondary vertex discriminator of the subjet", 100, 0., 1.); 
+  book<TH1F>("subCSV_uds", "combined secondary vertex discriminator of the subjet", 100, 0., 1.); 
+  book<TH1F>("subCSV_g", "combined secondary vertex discriminator of the subjet", 100, 0., 1.); 
+  book<TH1F>("subCSV_none", "combined secondary vertex discriminator of the subjet", 100, 0., 1.); 
+  book<TH1F>("subCSV_data", "combined secondary vertex discriminator of the subjet", 100, 0., 1.);
+
+  book<TH1F>("subFlavour_b", "matched flavour of the subjet", 4, 0., 4.);  
+  book<TH1F>("subFlavour_c", "matched flavour of the subjet", 4, 0., 4.); 
+  book<TH1F>("subFlavour_uds", "matched flavour of the subjet", 4, 0., 4.); 
+  book<TH1F>("subFlavour_g", "matched flavour of the subjet", 4, 0., 4.); 
+  book<TH1F>("subFlavour_none", "matched flavour of the subjet", 4, 0., 4.); 
+  book<TH1F>("subFlavour_data", "matched flavour of the subjet", 4, 0., 4.);
+
+  //track impact parameter tag info
+  book<TH1F>("subTrackMomentum_b", "momentum of tracks in the subjet", 100, 0., 15.);  
+  book<TH1F>("subTrackMomentum_c", "momentum of tracks in the subjet", 100, 0., 15.); 
+  book<TH1F>("subTrackMomentum_uds", "momentum of tracks in the subjet", 100, 0., 15.); 
+  book<TH1F>("subTrackMomentum_g", "momentum of tracks in the subjet", 100, 0., 15.); 
+  book<TH1F>("subTrackMomentum_none", "momentum of tracks in the subjet", 100, 0., 15.); 
+  book<TH1F>("subTrackMomentum_data", "momentum of tracks in the subjet", 100, 0., 15.); 
+
+  book<TH1F>("subTrackEta_b", "pseudorapidity of tracks in the subjet", 100, -5., 5.);  
+  book<TH1F>("subTrackEta_c", "pseudorapidity of tracks in the subjet", 100, -5., 5.); 
+  book<TH1F>("subTrackEta_uds", "pseudorapidity of tracks in the subjet", 100, -5., 5.); 
+  book<TH1F>("subTrackEta_g", "pseudorapidity of tracks in the subjet", 100, -5., 5.); 
+  book<TH1F>("subTrackEta_none", "pseudorapidity of tracks in the subjet", 100, -5., 5.); 
+  book<TH1F>("subTrackEta_data", "pseudorapidity of tracks in the subjet", 100, -5., 5.); 
+
+  book<TH1F>("subTrackEtaRel_b", "track pseudorapidity, relative to the jet axis", 100, -5., 5.);  
+  book<TH1F>("subTrackEtaRel_c", "track pseudorapidity, relative to the jet axis", 100, -5., 5.); 
+  book<TH1F>("subTrackEtaRel_uds", "track pseudorapidity, relative to the jet axis", 100, -5., 5.); 
+  book<TH1F>("subTrackEtaRel_g", "track pseudorapidity, relative to the jet axis", 100, -5., 5.); 
+  book<TH1F>("subTrackEtaRel_none", "track pseudorapidity, relative to the jet axis", 100, -5., 5.); 
+  book<TH1F>("subTrackEtaRel_data", "track pseudorapidity, relative to the jet axis", 100, -5., 5.);
+
+  book<TH1F>("subTrackDeltaR_b", "track pseudoangular distance from the jet axis", 100, -1., 1.);  
+  book<TH1F>("subTrackDeltaR_c", "track pseudoangular distance from the jet axis", 100, -1., 1.); 
+  book<TH1F>("subTrackDeltaR_uds", "track pseudoangular distance from the jet axis", 100, -1., 1.); 
+  book<TH1F>("subTrackDeltaR_g", "track pseudoangular distance from the jet axis", 100, -1., 1.); 
+  book<TH1F>("subTrackDeltaR_none", "track pseudoangular distance from the jet axis", 100, -1., 1.); 
+  book<TH1F>("subTrackDeltaR_data", "track pseudoangular distance from the jet axis", 100, -1., 1.); 
+
+  book<TH1F>("subTrackSip3dVal_b", "track 3D signed impact parameter", 100, -0.1, 0.1);  
+  book<TH1F>("subTrackSip3dVal_c", "track 3D signed impact parameter", 100, -0.1, 0.1); 
+  book<TH1F>("subTrackSip3dVal_uds", "track 3D signed impact parameter", 100, -0.1, 0.1); 
+  book<TH1F>("subTrackSip3dVal_g", "track 3D signed impact parameter", 100, -0.1, 0.1); 
+  book<TH1F>("subTrackSip3dVal_none", "track 3D signed impact parameter", 100, -0.1, 0.1); 
+  book<TH1F>("subTrackSip3dVal_data", "track 3D signed impact parameter", 100, -0.1, 0.1); 
+
+  book<TH1F>("subTrackSip3dSig_b", "track 3D signed impact parameter significance", 100, -35., 35.);  
+  book<TH1F>("subTrackSip3dSig_c", "track 3D signed impact parameter significance", 100, -35., 35.); 
+  book<TH1F>("subTrackSip3dSig_uds", "track 3D signed impact parameter significance", 100, -35., 35.); 
+  book<TH1F>("subTrackSip3dSig_g", "track 3D signed impact parameter significance", 100, -35., 35.); 
+  book<TH1F>("subTrackSip3dSig_none", "track 3D signed impact parameter significance", 100, -35., 35.); 
+  book<TH1F>("subTrackSip3dSig_data", "track 3D signed impact parameter significance", 100, -35., 35.); 
+
+  book<TH1F>("subTrackSip2dVal_b", "track 2D signed impact parameter", 100, -10., 10.);  
+  book<TH1F>("subTrackSip2dVal_c", "track 2D signed impact parameter", 100, -10., 10.); 
+  book<TH1F>("subTrackSip2dVal_uds", "track 2D signed impact parameter", 100, -10., 10.); 
+  book<TH1F>("subTrackSip2dVal_g", "track 2D signed impact parameter", 100, -10., 10.); 
+  book<TH1F>("subTrackSip2dVal_none", "track 2D signed impact parameter", 100, -10., 10.); 
+  book<TH1F>("subTrackSip2dVal_data", "track 2D signed impact parameter", 100, -10., 10.); 
+
+  book<TH1F>("subTrackSip2dSig_b", "track 2D signed impact parameter significance", 100, -10., 10.);  
+  book<TH1F>("subTrackSip2dSig_c", "track 2D signed impact parameter significance", 100, -10., 10.); 
+  book<TH1F>("subTrackSip2dSig_uds", "track 2D signed impact parameter significance", 100, -10., 10.); 
+  book<TH1F>("subTrackSip2dSig_g", "track 2D signed impact parameter significance", 100, -10., 10.); 
+  book<TH1F>("subTrackSip2dSig_none", "track 2D signed impact parameter significance", 100, -10., 10.); 
+  book<TH1F>("subTrackSip2dSig_data", "track 2D signed impact parameter significance", 100, -10., 10.); 
+
+  book<TH1F>("subTrackDecayLenVal_b", "track decay length", 100, 0., 25.);  
+  book<TH1F>("subTrackDecayLenVal_c", "track decay length", 100, 0., 25.); 
+  book<TH1F>("subTrackDecayLenVal_uds", "track decay length", 100, 0., 25.); 
+  book<TH1F>("subTrackDecayLenVal_g", "track decay length", 100, 0., 25.); 
+  book<TH1F>("subTrackDecayLenVal_none", "track decay length", 100, 0., 25.); 
+  book<TH1F>("subTrackDecayLenVal_data", "track decay length", 100, 0., 25.); 
+
+  book<TH1F>("subTrackChi2_b", "track fit chi2", 100, 0., 10.);  
+  book<TH1F>("subTrackChi2_c", "track fit chi2", 100, 0., 10.); 
+  book<TH1F>("subTrackChi2_uds", "track fit chi2", 100, 0., 10.); 
+  book<TH1F>("subTrackChi2_g", "track fit chi2", 100, 0., 10.); 
+  book<TH1F>("subTrackChi2_none", "track fit chi2", 100, 0., 10.); 
+  book<TH1F>("subTrackChi2_data", "track fit chi2", 100, 0., 10.); 
+
+  book<TH1F>("subTrackNTotalHits_b", "number of valid total hits", 20, 0., 20.);  
+  book<TH1F>("subTrackNTotalHits_c", "number of valid total hits", 20, 0., 20.); 
+  book<TH1F>("subTrackNTotalHits_uds", "number of valid total hits", 20, 0., 20.); 
+  book<TH1F>("subTrackNTotalHits_g", "number of valid total hits", 20, 0., 20.); 
+  book<TH1F>("subTrackNTotalHits_none", "number of valid total hits", 20, 0., 20.); 
+  book<TH1F>("subTrackNTotalHits_data", "number of valid total hits", 20, 0., 20.); 
+
+  book<TH1F>("subTrackNPixelHits_b", "number of valid pixel hits", 9, 0., 9.);  
+  book<TH1F>("subTrackNPixelHits_c", "number of valid pixel hits", 9, 0., 9.); 
+  book<TH1F>("subTrackNPixelHits_uds", "number of valid pixel hits", 9, 0., 9.); 
+  book<TH1F>("subTrackNPixelHits_g", "number of valid pixel hits", 9, 0., 9.); 
+  book<TH1F>("subTrackNPixelHits_none", "number of valid pixel hits", 9, 0., 9.); 
+  book<TH1F>("subTrackNPixelHits_data", "number of valid pixel hits", 9, 0., 9.); 
+
+  book<TH1F>("subTrackPtRel_b", "track transverse momentum, relative to the jet axis", 100, -50., 50.);  
+  book<TH1F>("subTrackPtRel_c", "track transverse momentum, relative to the jet axis", 100, -50., 50.); 
+  book<TH1F>("subTrackPtRel_uds", "track transverse momentum, relative to the jet axis", 100, -50., 50.); 
+  book<TH1F>("subTrackPtRel_g", "track transverse momentum, relative to the jet axis", 100, -50., 50.); 
+  book<TH1F>("subTrackPtRel_none", "track transverse momentum, relative to the jet axis", 100, -50., 50.); 
+  book<TH1F>("subTrackPtRel_data", "track transverse momentum, relative to the jet axis", 100, -50., 50.); 
+
+  book<TH1F>("subTrackPPar_b", "track parallel momentum, along the jet axis", 100, -50., 50.);  
+  book<TH1F>("subTrackPPar_c", "track parallel momentum, along the jet axis", 100, -50., 50.); 
+  book<TH1F>("subTrackPPar_uds", "track parallel momentum, along the jet axis", 100, -50., 50.); 
+  book<TH1F>("subTrackPPar_g", "track parallel momentum, along the jet axis", 100, -50., 50.); 
+  book<TH1F>("subTrackPPar_none", "track parallel momentum, along the jet axis", 100, -50., 50.); 
+  book<TH1F>("subTrackPPar_data", "track parallel momentum, along the jet axis", 100, -50., 50.); 
+
+  book<TH1F>("subTrackPtRatio_b", "track transverse momentum, relative to the jet axis, normalized to its energy", 100, -10., 10.);  
+  book<TH1F>("subTrackPtRatio_c", "track transverse momentum, relative to the jet axis, normalized to its energy", 100, -10., 10.); 
+  book<TH1F>("subTrackPtRatio_uds", "track transverse momentum, relative to the jet axis, normalized to its energy", 100, -10., 10.); 
+  book<TH1F>("subTrackPtRatio_g", "track transverse momentum, relative to the jet axis, normalized to its energy", 100, -10., 10.); 
+  book<TH1F>("subTrackPtRatio_none", "track transverse momentum, relative to the jet axis, normalized to its energy", 100, -10., 10.); 
+  book<TH1F>("subTrackPtRatio_data", "track transverse momentum, relative to the jet axis, normalized to its energy", 100, -10., 10.); 
+
+  book<TH1F>("subTrackPParRatio_b", "track parallel momentum, along the jet axis, normalized to its energy", 100, -10., 10.);  
+  book<TH1F>("subTrackPParRatio_c", "track parallel momentum, along the jet axis, normalized to its energy", 100, -10., 10.); 
+  book<TH1F>("subTrackPParRatio_uds", "track parallel momentum, along the jet axis, normalized to its energy", 100, -10., 10.); 
+  book<TH1F>("subTrackPParRatio_g", "track parallel momentum, along the jet axis, normalized to its energy", 100, -10., 10.); 
+  book<TH1F>("subTrackPParRatio_none", "track parallel momentum, along the jet axis, normalized to its energy", 100, -10., 10.); 
+  book<TH1F>("subTrackPParRatio_data", "track parallel momentum, along the jet axis, normalized to its energy", 100, -10., 10.); 
+
+  book<TH1F>("subTrackJetDistVal_b", "minimum track approach distance to jet axis", 100, -0.01, 0.3);  
+  book<TH1F>("subTrackJetDistVal_c", "minimum track approach distance to jet axis", 100, -0.01, 0.3); 
+  book<TH1F>("subTrackJetDistVal_uds", "minimum track approach distance to jet axis", 100, -0.01, 0.3); 
+  book<TH1F>("subTrackJetDistVal_g", "minimum track approach distance to jet axis", 100, -0.01, 0.3); 
+  book<TH1F>("subTrackJetDistVal_none", "minimum track approach distance to jet axis", 100, -0.01, 0.3); 
+  book<TH1F>("subTrackJetDistVal_data", "minimum track approach distance to jet axis", 100, -0.01, 0.3); 
+
+  book<TH1F>("subTrackJetDistSig_b", "minimum track approach distance to jet axis significance", 100, -50., 50.);  
+  book<TH1F>("subTrackJetDistSig_c", "minimum track approach distance to jet axis significance", 100, -50., 50.); 
+  book<TH1F>("subTrackJetDistSig_uds", "minimum track approach distance to jet axis significance", 100, -50., 50.); 
+  book<TH1F>("subTrackJetDistSig_g", "minimum track approach distance to jet axis significance", 100, -50., 50.); 
+  book<TH1F>("subTrackJetDistSig_none", "minimum track approach distance to jet axis significance", 100, -50., 50.); 
+  book<TH1F>("subTrackJetDistSig_data", "minimum track approach distance to jet axis significance", 100, -50., 50.); 
+
+  book<TH1F>("subTrackGhostTrackDistVal_b", "minimum approach distance to ghost track", 100, -50., 50.);  
+  book<TH1F>("subTrackGhostTrackDistVal_c", "minimum approach distance to ghost track", 100, -50., 50.); 
+  book<TH1F>("subTrackGhostTrackDistVal_uds", "minimum approach distance to ghost track", 100, -50., 50.); 
+  book<TH1F>("subTrackGhostTrackDistVal_g", "minimum approach distance to ghost track", 100, -50., 50.); 
+  book<TH1F>("subTrackGhostTrackDistVal_none", "minimum approach distance to ghost track", 100, -50., 50.); 
+  book<TH1F>("subTrackGhostTrackDistVal_data", "minimum approach distance to ghost track", 100, -50., 50.); 
+
+  book<TH1F>("subTrackGhostTrackDistSig_b", "minimum approach distance to ghost track significance", 100, -50., 50.);  
+  book<TH1F>("subTrackGhostTrackDistSig_c", "minimum approach distance to ghost track significance", 100, -50., 50.); 
+  book<TH1F>("subTrackGhostTrackDistSig_uds", "minimum approach distance to ghost track significance", 100, -50., 50.); 
+  book<TH1F>("subTrackGhostTrackDistSig_g", "minimum approach distance to ghost track significance", 100, -50., 50.); 
+  book<TH1F>("subTrackGhostTrackDistSig_none", "minimum approach distance to ghost track significance", 100, -50., 50.); 
+  book<TH1F>("subTrackGhostTrackDistSig_data", "minimum approach distance to ghost track significance", 100, -50., 50.); 
+
+  book<TH1F>("subTrackGhostTrackWeight_b", "weight of track participation in ghost track fit", 100, -1., 10.);  
+  book<TH1F>("subTrackGhostTrackWeight_c", "weight of track participation in ghost track fit", 100, -1., 10.); 
+  book<TH1F>("subTrackGhostTrackWeight_uds", "weight of track participation in ghost track fit", 100, -1., 10.); 
+  book<TH1F>("subTrackGhostTrackWeight_g", "weight of track participation in ghost track fit", 100, -1., 10.); 
+  book<TH1F>("subTrackGhostTrackWeight_none", "weight of track participation in ghost track fit", 100, -1., 10.); 
+  book<TH1F>("subTrackGhostTrackWeight_data", "weight of track participation in ghost track fit", 100, -1., 10.);
+
+ //secondary vertex tag info
+
+  book<TH1F>("subFlightDistance2dVal_b", "transverse distance between primary and secondary vertex", 100, -50., 50.);  
+  book<TH1F>("subFlightDistance2dVal_c", "transverse distance between primary and secondary vertex", 100, -50., 50.); 
+  book<TH1F>("subFlightDistance2dVal_uds", "transverse distance between primary and secondary vertex", 100, -50., 50.); 
+  book<TH1F>("subFlightDistance2dVal_g", "transverse distance between primary and secondary vertex", 100, -50., 50.); 
+  book<TH1F>("subFlightDistance2dVal_none", "transverse distance between primary and secondary vertex", 100, -50., 50.); 
+  book<TH1F>("subFlightDistance2dVal_data", "transverse distance between primary and secondary vertex", 100, -50., 50.); 
+
+  book<TH1F>("subFlightDistance2dSig_b", "transverse distance significance between primary and secondary vertex", 100, -50., 50.);  
+  book<TH1F>("subFlightDistance2dSig_c", "transverse distance significance between primary and secondary vertex", 100, -50., 50.); 
+  book<TH1F>("subFlightDistance2dSig_uds", "transverse distance significance between primary and secondary vertex", 100, -50., 50.); 
+  book<TH1F>("subFlightDistance2dSig_g", "transverse distance significance between primary and secondary vertex", 100, -50., 50.); 
+  book<TH1F>("subFlightDistance2dSig_none", "transverse distance significance between primary and secondary vertex", 100, -50., 50.); 
+  book<TH1F>("subFlightDistance2dSig_data", "transverse distance significance between primary and secondary vertex", 100, -50., 50.);
+
+  book<TH1F>("subFlightDistance3dVal_b", "distance between primary and secondary vertex", 100, -50., 50.);  
+  book<TH1F>("subFlightDistance3dVal_c", "distance between primary and secondary vertex", 100, -50., 50.); 
+  book<TH1F>("subFlightDistance3dVal_uds", "distance between primary and secondary vertex", 100, -50., 50.); 
+  book<TH1F>("subFlightDistance3dVal_g", "distance between primary and secondary vertex", 100, -50., 50.); 
+  book<TH1F>("subFlightDistance3dVal_none", "distance between primary and secondary vertex", 100, -50., 50.); 
+  book<TH1F>("subFlightDistance3dVal_data", "distance between primary and secondary vertex", 100, -50., 50.); 
+
+  book<TH1F>("subFlightDistance3dSig_b", "distance significance between primary and secondary vertex", 100, 0., 80.);  
+  book<TH1F>("subFlightDistance3dSig_c", "distance significance between primary and secondary vertex", 100, 0., 80.); 
+  book<TH1F>("subFlightDistance3dSig_uds", "distance significance between primary and secondary vertex", 100, 0., 80.); 
+  book<TH1F>("subFlightDistance3dSig_g", "distance significance between primary and secondary vertex", 100, 0., 80.); 
+  book<TH1F>("subFlightDistance3dSig_none", "distance significance between primary and secondary vertex", 100, 0., 80.); 
+  book<TH1F>("subFlightDistance3dSig_data", "distance significance between primary and secondary vertex", 100, 0., 80.); 
+
+  book<TH1F>("subVertexJetDeltaR_b", "pseudoangular distance between jet axis and secondary vertex direction", 100, -10., 10.);  
+  book<TH1F>("subVertexJetDeltaR_c", "pseudoangular distance between jet axis and secondary vertex direction", 100, -10., 10.); 
+  book<TH1F>("subVertexJetDeltaR_uds", "pseudoangular distance between jet axis and secondary vertex direction", 100, -10., 10.); 
+  book<TH1F>("subVertexJetDeltaR_g", "pseudoangular distance between jet axis and secondary vertex direction", 100, -10., 10.); 
+  book<TH1F>("subVertexJetDeltaR_none", "pseudoangular distance between jet axis and secondary vertex direction", 100, -10., 10.); 
+  book<TH1F>("subVertexJetDeltaR_data", "pseudoangular distance between jet axis and secondary vertex direction", 100, -10., 10.); 
+
+  book<TH1F>("subJetNSecondaryVertices_b", "number of reconstructed possible secondary vertices in jet", 8, 0., 8.);  
+  book<TH1F>("subJetNSecondaryVertices_c", "number of reconstructed possible secondary vertices in jet", 8, 0., 8.); 
+  book<TH1F>("subJetNSecondaryVertices_uds", "number of reconstructed possible secondary vertices in jet", 8, 0., 8.); 
+  book<TH1F>("subJetNSecondaryVertices_g", "number of reconstructed possible secondary vertices in jet", 8, 0., 8.); 
+  book<TH1F>("subJetNSecondaryVertices_none", "number of reconstructed possible secondary vertices in jet", 8, 0., 8.); 
+  book<TH1F>("subJetNSecondaryVertices_data", "number of reconstructed possible secondary vertices in jet", 8, 0., 8.); 
+
+  book<TH1F>("subVertexNTracks_b", "number of tracks at secondary vertex", 20, 0., 20.);  
+  book<TH1F>("subVertexNTracks_c", "number of tracks at secondary vertex", 20, 0., 20.); 
+  book<TH1F>("subVertexNTracks_uds", "number of tracks at secondary vertex", 20, 0., 20.); 
+  book<TH1F>("subVertexNTracks_g", "number of tracks at secondary vertex", 20, 0., 20.); 
+  book<TH1F>("subVertexNTracks_none", "number of tracks at secondary vertex", 20, 0., 20.); 
+  book<TH1F>("subVertexNTracks_data", "number of tracks at secondary vertex", 20, 0., 20.); 
+
+  book<TH1F>("subSecondaryVertex_b", "secondary vertex uncorrected mass", 100, 0., 10.);  
+  book<TH1F>("subSecondaryVertex_c", "secondary vertex uncorrected mass", 100, 0., 10.); 
+  book<TH1F>("subSecondaryVertex_uds", "secondary vertex uncorrected mass", 100, 0., 10.); 
+  book<TH1F>("subSecondaryVertex_g", "secondary vertex uncorrected mass", 100, 0., 10.); 
+  book<TH1F>("subSecondaryVertex_none", "secondary vertex uncorrected mass", 100, 0., 10.); 
+  book<TH1F>("subSecondaryVertex_data", "secondary vertex uncorrected mass", 100, 0., 10.); 
+
+  book<TH1F>("subVertexChi2_b", "secondary vertex chi2", 100, 0., 10.);  
+  book<TH1F>("subVertexChi2_c", "secondary vertex chi2", 100, 0., 10.); 
+  book<TH1F>("subVertexChi2_uds", "secondary vertex chi2", 100, 0., 10.); 
+  book<TH1F>("subVertexChi2_g", "secondary vertex chi2", 100, 0., 10.); 
+  book<TH1F>("subVertexChi2_none", "secondary vertex chi2", 100, 0., 10.); 
+  book<TH1F>("subVertexChi2_data", "secondary vertex chi2", 100, 0., 10.); 
+
+  book<TH1F>("subVertexNdof_b", "secondary vertex fit dergrees of frendom", 100, 0., 50.);  
+  book<TH1F>("subVertexNdof_c", "secondary vertex fit dergrees of frendom", 100, 0., 50.); 
+  book<TH1F>("subVertexNdof_uds", "secondary vertex fit dergrees of frendom", 100, 0., 50.); 
+  book<TH1F>("subVertexNdof_g", "secondary vertex fit dergrees of frendom", 100, 0., 50.); 
+  book<TH1F>("subVertexNdof_none", "secondary vertex fit dergrees of frendom", 100, 0., 50.); 
+  book<TH1F>("subVertexNdof_data", "secondary vertex fit dergrees of frendom", 100, 0., 50.); 
+
+  book<TH1F>("subVertexNormalizedChi2_b", "secondary vertex fit normalized chi2", 100, 0., 10.);  
+  book<TH1F>("subVertexNormalizedChi2_c", "secondary vertex fit normalized chi2", 100, 0., 10.); 
+  book<TH1F>("subVertexNormalizedChi2_uds", "secondary vertex fit normalized chi2", 100, 0., 10.); 
+  book<TH1F>("subVertexNormalizedChi2_g", "secondary vertex fit normalized chi2", 100, 0., 10.); 
+  book<TH1F>("subVertexNormalizedChi2_none", "secondary vertex fit normalized chi2", 100, 0., 10.); 
+  book<TH1F>("subVertexNormalizedChi2_data", "secondary vertex fit normalized chi2", 100, 0., 10.); 
+
+
+
+  //JTC SV variables
+  book<TH1F>("subVertexCategoryJTC_b", "secondary vertex category from jet tag computer", 5, 0., 5.);  
+  book<TH1F>("subVertexCategoryJTC_c", "secondary vertex category from jet tag computer", 5, 0., 5.); 
+  book<TH1F>("subVertexCategoryJTC_uds", "secondary vertex category from jet tag computer", 5, 0., 5.); 
+  book<TH1F>("subVertexCategoryJTC_g", "secondary vertex category from jet tag computer", 5, 0., 5.); 
+  book<TH1F>("subVertexCategoryJTC_none", "secondary vertex category from jet tag computer", 5, 0., 5.); 
+  book<TH1F>("subVertexCategoryJTC_data", "secondary vertex category from jet tag computer", 5, 0., 5.); 
+
+  book<TH1F>("subVertexMassJTC_b", "secondary vertex corrected mass from jet tag computer", 100, 0., 8.);  
+  book<TH1F>("subVertexMassJTC_c", "secondary vertex corrected mass from jet tag computer", 100, 0., 8.); 
+  book<TH1F>("subVertexMassJTC_uds", "secondary vertex corrected mass from jet tag computer", 100, 0., 8.); 
+  book<TH1F>("subVertexMassJTC_g", "secondary vertex corrected mass from jet tag computer", 100, 0., 8.); 
+  book<TH1F>("subVertexMassJTC_none", "secondary vertex corrected mass from jet tag computer", 100, 0., 8.); 
+  book<TH1F>("subVertexMassJTC_data", "secondary vertex corrected mass from jet tag computer", 100, 0., 8.); 
+
+  book<TH1F>("subVertexEnergyRatioJTC_b", "ratio of energy at secondary vertex over total energy from JTC", 100, 0., 10.);  
+  book<TH1F>("subVertexEnergyRatioJTC_c", "ratio of energy at secondary vertex over total energy from JTC", 100, 0., 10.); 
+  book<TH1F>("subVertexEnergyRatioJTC_uds", "ratio of energy at secondary vertex over total energy from JTC", 100, 0., 10.); 
+  book<TH1F>("subVertexEnergyRatioJTC_g", "ratio of energy at secondary vertex over total energy from JTC", 100, 0., 10.); 
+  book<TH1F>("subVertexEnergyRatioJTC_none", "ratio of energy at secondary vertex over total energy from JTC", 100, 0., 10.); 
+  book<TH1F>("subVertexEnergyRatioJTC_data", "ratio of energy at secondary vertex over total energy from JTC", 100, 0., 10.); 
+
+  book<TH1F>("subTrackSip3dSigAboveCharmJTC_b", "track 3D signed impact parameter significance of first track lifting mass above charm from JTC", 100, 0., 50.);  
+  book<TH1F>("subTrackSip3dSigAboveCharmJTC_c", "track 3D signed impact parameter significance of first track lifting mass above charm from JTC", 100, 0., 50.); 
+  book<TH1F>("subTrackSip3dSigAboveCharmJTC_uds", "track 3D signed impact parameter significance of first track lifting mass above charm from JTC", 100, 0., 50.); 
+  book<TH1F>("subTrackSip3dSigAboveCharmJTC_g", "track 3D signed impact parameter significance of first track lifting mass above charm from JTC", 100, 0., 50.); 
+  book<TH1F>("subTrackSip3dSigAboveCharmJTC_none", "track 3D signed impact parameter significance of first track lifting mass above charm from JTC", 100, 0., 50.); 
+  book<TH1F>("subTrackSip3dSigAboveCharmJTC_data", "track 3D signed impact parameter significance of first track lifting mass above charm from JTC", 100, 0., 50.); 
+
+  book<TH1F>("subTrackMultiplicity_b", "track multiplicity of the subjet", 50, 0., 50.);  
+  book<TH1F>("subTrackMultiplicity_c", "track multiplicity of the subjet", 50, 0., 50.); 
+  book<TH1F>("subTrackMultiplicity_uds", "track multiplicity of the subjet", 50, 0., 50.); 
+  book<TH1F>("subTrackMultiplicity_g", "track multiplicity of the subjet", 50, 0., 50.); 
+  book<TH1F>("subTrackMultiplicity_none", "track multiplicity of the subjet", 50, 0., 50.); 
+  book<TH1F>("subTrackMultiplicity_data", "track multiplicity of the subjet", 50, 0., 50.); 
+
+  book<TH1F>("subTrackPt_b", "track transverse momentum", 100, 0., 50.);  
+  book<TH1F>("subTrackPt_c", "track transverse momentum", 100, 0., 50.); 
+  book<TH1F>("subTrackPt_uds", "track transverse momentum", 100, 0., 50.); 
+  book<TH1F>("subTrackPt_g", "track transverse momentum", 100, 0., 50.); 
+  book<TH1F>("subTrackPt_none", "track transverse momentum", 100, 0., 50.); 
+  book<TH1F>("subTrackPt_data", "track transverse momentum", 100, 0., 50.); 
+
+  book<TH1F>("weight_b", "weight", 100, 0., 0.1);  
+  book<TH1F>("weight_c", "weight", 100, 0., 0.1); 
+  book<TH1F>("weight_uds", "weight", 100, 0., 0.1); 
+  book<TH1F>("weight_g", "weight", 100, 0., 0.1); 
+  book<TH1F>("weight_none", "weight", 100, 0., 0.1); 
+  book<TH1F>("weight_data", "weight", 100, 0., 0.1); 
+
+  book<TH1F>("MassTop_b", "Top Mass", 100, 0., 500.);  
+  book<TH1F>("MassTop_c", "Top Mass", 100, 0., 500.); 
+  book<TH1F>("MassTop_uds", "Top Mass", 100, 0., 500.); 
+  book<TH1F>("MassTop_g", "Top Mass", 100, 0., 500.); 
+  book<TH1F>("MassTop_none", "Top Mass", 100, 0., 500.); 
+  book<TH1F>("MassTop_data", "Top Mass", 100, 0., 500.); 
+
+  book<TH1F>("subVertexNvtx_b", "N of secondary vertex", 6, 0., 6.);  
+  book<TH1F>("subVertexNvtx_c", "N of secondary vertex", 6, 0., 6.); 
+  book<TH1F>("subVertexNvtx_uds", "N of secondary vertex", 6, 0., 6.); 
+  book<TH1F>("subVertexNvtx_g", "N of secondary vertex", 6, 0., 6.); 
+  book<TH1F>("subVertexNvtx_none", "N of secondary vertex", 6, 0., 6.); 
+  book<TH1F>("subVertexNvtx_data", "N of secondary vertex", 6, 0., 6.); 
+
+  h_topjetsCMSTopTag = ctx.get_handle<std::vector<TopJet> >("slimmedJetsAK8_CMSTopTag");
+  h_topjetssoftdrop = ctx.get_handle<std::vector<TopJet> >("patJetsAk8CHSJetsSoftDropPacked_daughters");
+
+}
+
+
+void Hists2::fill(const Event & event){
+  // fill the histograms. Please note the comments in the header file:
+  // 'hist' is used here a lot for simplicity, but it will be rather
+  // slow when you have many histograms; therefore, better
+  // use histogram pointers as members as in 'UHH2/common/include/ElectronHists.h'
+  
+  // Don't forget to always use the weight when filling.
+  float weight = event.weight;
+  
+  //get extra jet collections
+
+  const auto topjetssoftdrop = &event.get(h_topjetssoftdrop);
+
+  
+  std::vector<TopJet>* topjets = event.topjets;
+  std::vector<Muon>* muons = event.muons;
+ 
+  
+  for(unsigned int i=0;i<topjetssoftdrop->size();i++){
+
+    double deltaR=99999.;
+    
+    if (muons->size() == 0) continue; 
+
+    for(unsigned int j=0;j<topjets->size();j++){
+      //check muon and topjet are in opposite emispheres
+      double deltaphi=deltaPhi(topjets->at(j),muons->at(0));
+      double pi = 3.14159265359;
+      if(!((deltaphi>(2*pi/3))&&(topjets->at(j).pt()>350.)&&(fabs(topjets->at(j).eta())<2.4))) continue;
+      //check deltaR_tmp between topjet j and softdrop i 
+      double deltaPHI = deltaPhi(topjets->at(j),topjetssoftdrop->at(i));
+      double deltaETA = topjets->at(j).eta()-topjetssoftdrop->at(i).eta();
+      double deltaR_tmp = sqrt(deltaPHI*deltaPHI+deltaETA*deltaETA);
+      if (deltaR_tmp < deltaR) {deltaR = deltaR_tmp;} 	
+    }
+
+    //go to next topjet if there is no matching topjetTopTag
+    if (!(deltaR<0.4)) continue;
+
+
+        
+    //TopJets (Softdrop)
+    TopJet topjet=topjetssoftdrop->at(i);
+
+    //Subjets of topjetssoftdrop 
+
+    const std::vector<Jet> subjets=topjet.subjets();
+
+    for(unsigned int ii=0;ii<subjets.size();ii++){
+
+      Jet subjet=subjets[ii];
+
+      JetBTagInfo btaginfo=subjet.btaginfo();
+ 
+
+      //Flavours
+      //b 
+      if (subjet.flavor() == 5 || subjet.flavor()==-5)
+	{
+	  //btag variables
+	  hist("subCSV_b")->Fill(subjet.btag_combinedSecondaryVertex(),weight);
+	  hist("subFlavour_b")->Fill(weight);
+
+	  //track impact parameter tag info
+	  hist("subTrackMultiplicity_b")->Fill(btaginfo.TrackMomentum().size(), weight);
+	  if (btaginfo.TrackMomentum().size()>0) {for(unsigned int j=0; j<btaginfo.TrackMomentum().size(); j++) {hist("subTrackMomentum_b")->Fill(btaginfo.TrackMomentum().at(j),weight);}}
+	  if (btaginfo.TrackEta().size()>0) {for(unsigned int j=0; j<btaginfo.TrackEta().size(); j++) {hist("subTrackEta_b")->Fill(btaginfo.TrackEta().at(j),weight);}}
+	  if (btaginfo.TrackEtaRel().size()>0) {for(unsigned int j=0; j<btaginfo.TrackEtaRel().size(); j++) {hist("subTrackEtaRel_b")->Fill(btaginfo.TrackEtaRel().at(j),weight);}}
+	  if (btaginfo.TrackDeltaR().size()>0) {for(unsigned int j=0; j<btaginfo.TrackDeltaR().size(); j++) {hist("subTrackDeltaR_b")->Fill(btaginfo.TrackDeltaR().at(j),weight);}}
+	  if (btaginfo.TrackSip3dVal().size()>0) {for(unsigned int j=0; j<btaginfo.TrackSip3dVal().size(); j++) {hist("subTrackSip3dVal_b")->Fill(btaginfo.TrackSip3dVal().at(j),weight);}}
+	  if (btaginfo.TrackSip3dSig().size()>0) {for(unsigned int j=0; j<btaginfo.TrackSip3dSig().size(); j++) {hist("subTrackSip3dSig_b")->Fill(btaginfo.TrackSip3dSig().at(j),weight);}}
+	  if (btaginfo.TrackSip2dVal().size()>0) {for(unsigned int j=0; j<btaginfo.TrackSip2dVal().size(); j++) {hist("subTrackSip2dVal_b")->Fill(btaginfo.TrackSip2dVal().at(j),weight);}}
+	  if (btaginfo.TrackSip2dSig().size()>0) {for(unsigned int j=0; j<btaginfo.TrackSip2dSig().size(); j++) {hist("subTrackSip2dSig_b")->Fill(btaginfo.TrackSip2dSig().at(j),weight);}}
+	  if (btaginfo.TrackDecayLenVal().size()>0) {for(unsigned int j=0; j<btaginfo.TrackDecayLenVal().size(); j++) {hist("subTrackDecayLenVal_b")->Fill(btaginfo.TrackDecayLenVal().at(j),weight);}}
+	  if (btaginfo.TrackChi2().size()>0) {for(unsigned int j=0; j<btaginfo.TrackChi2().size(); j++) {hist("subTrackChi2_b")->Fill(btaginfo.TrackChi2().at(j),weight);}}
+	  if (btaginfo.TrackNTotalHits().size()>0) {for(unsigned int j=0; j<btaginfo.TrackNTotalHits().size(); j++) {hist("subTrackNTotalHits_b")->Fill(btaginfo.TrackNTotalHits().at(j),weight);}}
+	  if (btaginfo.TrackNPixelHits().size()>0) {for(unsigned int j=0; j<btaginfo.TrackNPixelHits().size(); j++) {hist("subTrackNPixelHits_b")->Fill(btaginfo.TrackNPixelHits().at(j),weight);}}
+	  if (btaginfo.TrackPtRel().size()>0) {for(unsigned int j=0; j<btaginfo.TrackPtRel().size(); j++) {hist("subTrackPtRel_b")->Fill(btaginfo.TrackPtRel().at(j),weight);}}
+	  if (btaginfo.TrackPPar().size()>0) {for(unsigned int j=0; j<btaginfo.TrackPPar().size(); j++) {hist("subTrackPPar_b")->Fill(btaginfo.TrackPPar().at(j),weight);}}
+	  if (btaginfo.TrackPtRatio().size()>0) {for(unsigned int j=0; j<btaginfo.TrackPtRatio().size(); j++) {hist("subTrackPtRatio_b")->Fill(btaginfo.TrackPtRatio().at(j),weight);}}
+	  if (btaginfo.TrackPParRatio().size()>0) {for(unsigned int j=0; j<btaginfo.TrackPParRatio().size(); j++) {hist("subTrackPParRatio_b")->Fill(btaginfo.TrackPParRatio().at(j),weight);}}
+	  if (btaginfo.TrackJetDistVal().size()>0) {for(unsigned int j=0; j<btaginfo.TrackJetDistVal().size(); j++) {hist("subTrackJetDistVal_b")->Fill(btaginfo.TrackJetDistVal().at(j),weight);}}
+	  if (btaginfo.TrackJetDistSig().size()>0) {for(unsigned int j=0; j<btaginfo.TrackJetDistSig().size(); j++) {hist("subTrackJetDistSig_b")->Fill(btaginfo.TrackJetDistSig().at(j),weight);}}
+	  if (btaginfo.TrackGhostTrackDistVal().size()>0) {for(unsigned int j=0; j<btaginfo.TrackGhostTrackDistVal().size(); j++) {hist("subTrackGhostTrackDistVal_b")->Fill(btaginfo.TrackGhostTrackDistVal().at(j),weight);}}
+	  if (btaginfo.TrackGhostTrackDistSig().size()>0) {for(unsigned int j=0; j<btaginfo.TrackGhostTrackDistSig().size(); j++) {hist("subTrackGhostTrackDistSig_b")->Fill(btaginfo.TrackGhostTrackDistSig().at(j),weight);}}
+	  if (btaginfo.TrackGhostTrackWeight().size()>0) {for(unsigned int j=0; j<btaginfo.TrackGhostTrackWeight().size(); j++) {hist("subTrackGhostTrackWeight_b")->Fill(btaginfo.TrackGhostTrackWeight().at(j),weight);}}
+
+	  //secondary vertex tag info
+	  if (btaginfo.FlightDistance2dVal().size()>0) {for(unsigned int j=0; j<btaginfo.FlightDistance2dVal().size(); j++) {hist("subFlightDistance2dVal_b")->Fill(btaginfo.FlightDistance2dVal().at(j),weight);}}
+	  if (btaginfo.FlightDistance2dSig().size()>0) {for(unsigned int j=0; j<btaginfo.FlightDistance2dSig().size(); j++) {hist("subFlightDistance2dSig_b")->Fill(btaginfo.FlightDistance2dSig().at(j),weight);}}
+	  if (btaginfo.FlightDistance3dVal().size()>0) {for(unsigned int j=0; j<btaginfo.FlightDistance3dVal().size(); j++) {hist("subFlightDistance3dVal_b")->Fill(btaginfo.FlightDistance3dVal().at(j),weight);}}
+	  if (btaginfo.FlightDistance3dSig().size()>0) {for(unsigned int j=0; j<btaginfo.FlightDistance3dSig().size(); j++) {hist("subFlightDistance3dSig_b")->Fill(btaginfo.FlightDistance3dSig().at(j),weight);}}
+	  if (btaginfo.VertexJetDeltaR().size()>0) {for(unsigned int j=0; j<btaginfo.VertexJetDeltaR().size(); j++) {hist("subVertexJetDeltaR_b")->Fill(btaginfo.VertexJetDeltaR().at(j),weight);}}
+	  hist("subJetNSecondaryVertices_b")->Fill(btaginfo.JetNSecondaryVertices(), weight);
+	  if (btaginfo.VertexNTracks().size()>0) {for(unsigned int j=0; j<btaginfo.VertexNTracks().size(); j++) {hist("subVertexNTracks_b")->Fill(btaginfo.VertexNTracks().at(j),weight);}}
+	  if (btaginfo.SecondaryVertex().size()>0) {for(unsigned int j=0; j<btaginfo.SecondaryVertex().size(); j++) {hist("subSecondaryVertex_b")->Fill(btaginfo.SecondaryVertex().at(j).M(),weight);}}
+	  if (btaginfo.VertexChi2().size()>0) {for(unsigned int j=0; j<btaginfo.VertexChi2().size(); j++) {hist("subVertexChi2_b")->Fill(btaginfo.VertexChi2().at(j),weight);}}
+	  if (btaginfo.VertexNdof().size()>0) {for(unsigned int j=0; j<btaginfo.VertexNdof().size(); j++) {hist("subVertexNdof_b")->Fill(btaginfo.VertexNdof().at(j),weight);}}
+	  if (btaginfo.VertexNormalizedChi2().size()>0) {for(unsigned int j=0; j<btaginfo.VertexNormalizedChi2().size(); j++) {hist("subVertexNormalizedChi2_b")->Fill(btaginfo.VertexNormalizedChi2().at(j),weight);}}
+ 
+	  //JTC SV variables
+	  hist("subVertexCategoryJTC_b")->Fill(btaginfo.VertexCategoryJTC(), weight);
+	  hist("subVertexMassJTC_b")->Fill(btaginfo.VertexMassJTC(), weight);
+	  hist("subVertexEnergyRatioJTC_b")->Fill(btaginfo.VertexEnergyRatioJTC(), weight);
+	  hist("subTrackSip3dSigAboveCharmJTC_b")->Fill(btaginfo.TrackSip3dSigAboveCharmJTC(), weight);
+
+
+
+
+	}
+
+      //c
+      if (subjet.flavor() == 4 || subjet.flavor()==-4)
+	{
+	  //btag variables
+	  hist("subCSV_c")->Fill(subjet.btag_combinedSecondaryVertex(),weight);
+	  hist("subFlavour_c")->Fill(weight);
+
+	  //track impact parameter tag info
+	  hist("subTrackMultiplicity_c")->Fill(btaginfo.TrackMomentum().size(), weight);
+	  if (btaginfo.TrackMomentum().size()>0) {for(unsigned int j=0; j<btaginfo.TrackMomentum().size(); j++) {hist("subTrackMomentum_c")->Fill(btaginfo.TrackMomentum().at(j),weight);}}
+	  if (btaginfo.TrackEta().size()>0) {for(unsigned int j=0; j<btaginfo.TrackEta().size(); j++) {hist("subTrackEta_c")->Fill(btaginfo.TrackEta().at(j),weight);}}
+	  if (btaginfo.TrackEtaRel().size()>0) {for(unsigned int j=0; j<btaginfo.TrackEtaRel().size(); j++) {hist("subTrackEtaRel_c")->Fill(btaginfo.TrackEtaRel().at(j),weight);}}
+	  if (btaginfo.TrackDeltaR().size()>0) {for(unsigned int j=0; j<btaginfo.TrackDeltaR().size(); j++) {hist("subTrackDeltaR_c")->Fill(btaginfo.TrackDeltaR().at(j),weight);}}
+ 	  if (btaginfo.TrackSip3dVal().size()>0) {for(unsigned int j=0; j<btaginfo.TrackSip3dVal().size(); j++) {hist("subTrackSip3dVal_c")->Fill(btaginfo.TrackSip3dVal().at(j),weight);}}
+	  if (btaginfo.TrackSip3dSig().size()>0) {for(unsigned int j=0; j<btaginfo.TrackSip3dSig().size(); j++) {hist("subTrackSip3dSig_c")->Fill(btaginfo.TrackSip3dSig().at(j),weight);}}
+	  if (btaginfo.TrackSip2dVal().size()>0) {for(unsigned int j=0; j<btaginfo.TrackSip2dVal().size(); j++) {hist("subTrackSip2dVal_c")->Fill(btaginfo.TrackSip2dVal().at(j),weight);}}
+	  if (btaginfo.TrackSip2dSig().size()>0) {for(unsigned int j=0; j<btaginfo.TrackSip2dSig().size(); j++) {hist("subTrackSip2dSig_c")->Fill(btaginfo.TrackSip2dSig().at(j),weight);}}
+	  if (btaginfo.TrackDecayLenVal().size()>0) {for(unsigned int j=0; j<btaginfo.TrackDecayLenVal().size(); j++) {hist("subTrackDecayLenVal_c")->Fill(btaginfo.TrackDecayLenVal().at(j),weight);}}
+	  if (btaginfo.TrackChi2().size()>0) {for(unsigned int j=0; j<btaginfo.TrackChi2().size(); j++) {hist("subTrackChi2_c")->Fill(btaginfo.TrackChi2().at(j),weight);}}
+	  if (btaginfo.TrackNTotalHits().size()>0) {for(unsigned int j=0; j<btaginfo.TrackNTotalHits().size(); j++) {hist("subTrackNTotalHits_c")->Fill(btaginfo.TrackNTotalHits().at(j),weight);}}
+	  if (btaginfo.TrackNPixelHits().size()>0) {for(unsigned int j=0; j<btaginfo.TrackNPixelHits().size(); j++) {hist("subTrackNPixelHits_c")->Fill(btaginfo.TrackNPixelHits().at(j),weight);}}
+	  if (btaginfo.TrackPtRel().size()>0) {for(unsigned int j=0; j<btaginfo.TrackPtRel().size(); j++) {hist("subTrackPtRel_c")->Fill(btaginfo.TrackPtRel().at(j),weight);}}
+	  if (btaginfo.TrackPPar().size()>0) {for(unsigned int j=0; j<btaginfo.TrackPPar().size(); j++) {hist("subTrackPPar_c")->Fill(btaginfo.TrackPPar().at(j),weight);}}
+	  if (btaginfo.TrackPtRatio().size()>0) {for(unsigned int j=0; j<btaginfo.TrackPtRatio().size(); j++) {hist("subTrackPtRatio_c")->Fill(btaginfo.TrackPtRatio().at(j),weight);}}
+	  if (btaginfo.TrackPParRatio().size()>0) {for(unsigned int j=0; j<btaginfo.TrackPParRatio().size(); j++) {hist("subTrackPParRatio_c")->Fill(btaginfo.TrackPParRatio().at(j),weight);}}
+	  if (btaginfo.TrackJetDistVal().size()>0) {for(unsigned int j=0; j<btaginfo.TrackJetDistVal().size(); j++) {hist("subTrackJetDistVal_c")->Fill(btaginfo.TrackJetDistVal().at(j),weight);}}
+	  if (btaginfo.TrackJetDistSig().size()>0) {for(unsigned int j=0; j<btaginfo.TrackJetDistSig().size(); j++) {hist("subTrackJetDistSig_c")->Fill(btaginfo.TrackJetDistSig().at(j),weight);}}
+	  if (btaginfo.TrackGhostTrackDistVal().size()>0) {for(unsigned int j=0; j<btaginfo.TrackGhostTrackDistVal().size(); j++) {hist("subTrackGhostTrackDistVal_c")->Fill(btaginfo.TrackGhostTrackDistVal().at(j),weight);}}
+	  if (btaginfo.TrackGhostTrackDistSig().size()>0) {for(unsigned int j=0; j<btaginfo.TrackGhostTrackDistSig().size(); j++) {hist("subTrackGhostTrackDistSig_c")->Fill(btaginfo.TrackGhostTrackDistSig().at(j),weight);}}
+	  if (btaginfo.TrackGhostTrackWeight().size()>0) {for(unsigned int j=0; j<btaginfo.TrackGhostTrackWeight().size(); j++) {hist("subTrackGhostTrackWeight_c")->Fill(btaginfo.TrackGhostTrackWeight().at(j),weight);}}
+
+	  //secondary vertex tag info
+	  if (btaginfo.FlightDistance2dVal().size()>0) {for(unsigned int j=0; j<btaginfo.FlightDistance2dVal().size(); j++) {hist("subFlightDistance2dVal_c")->Fill(btaginfo.FlightDistance2dVal().at(j),weight);}}
+	  if (btaginfo.FlightDistance2dSig().size()>0) {for(unsigned int j=0; j<btaginfo.FlightDistance2dSig().size(); j++) {hist("subFlightDistance2dSig_c")->Fill(btaginfo.FlightDistance2dSig().at(j),weight);}}
+	  if (btaginfo.FlightDistance3dVal().size()>0) {for(unsigned int j=0; j<btaginfo.FlightDistance3dVal().size(); j++) {hist("subFlightDistance3dVal_c")->Fill(btaginfo.FlightDistance3dVal().at(j),weight);}}
+	  if (btaginfo.FlightDistance3dSig().size()>0) {for(unsigned int j=0; j<btaginfo.FlightDistance3dSig().size(); j++) {hist("subFlightDistance3dSig_c")->Fill(btaginfo.FlightDistance3dSig().at(j),weight);}}
+	  if (btaginfo.VertexJetDeltaR().size()>0) {for(unsigned int j=0; j<btaginfo.VertexJetDeltaR().size(); j++) {hist("subVertexJetDeltaR_c")->Fill(btaginfo.VertexJetDeltaR().at(j),weight);}}
+	  hist("subJetNSecondaryVertices_c")->Fill(btaginfo.JetNSecondaryVertices(), weight);
+	  if (btaginfo.VertexNTracks().size()>0) {for(unsigned int j=0; j<btaginfo.VertexNTracks().size(); j++) {hist("subVertexNTracks_c")->Fill(btaginfo.VertexNTracks().at(j),weight);}}
+	  if (btaginfo.SecondaryVertex().size()>0) {for(unsigned int j=0; j<btaginfo.SecondaryVertex().size(); j++) {hist("subSecondaryVertex_c")->Fill(btaginfo.SecondaryVertex().at(j).M(),weight);}}
+	  if (btaginfo.VertexChi2().size()>0) {for(unsigned int j=0; j<btaginfo.VertexChi2().size(); j++) {hist("subVertexChi2_c")->Fill(btaginfo.VertexChi2().at(j),weight);}}
+	  if (btaginfo.VertexNdof().size()>0) {for(unsigned int j=0; j<btaginfo.VertexNdof().size(); j++) {hist("subVertexNdof_c")->Fill(btaginfo.VertexNdof().at(j),weight);}}
+	  if (btaginfo.VertexNormalizedChi2().size()>0) {for(unsigned int j=0; j<btaginfo.VertexNormalizedChi2().size(); j++) {hist("subVertexNormalizedChi2_c")->Fill(btaginfo.VertexNormalizedChi2().at(j),weight);}}
+
+	  //JTC SV variables
+	  hist("subVertexCategoryJTC_c")->Fill(btaginfo.VertexCategoryJTC(), weight);
+	  hist("subVertexMassJTC_c")->Fill(btaginfo.VertexMassJTC(), weight);
+	  hist("subVertexEnergyRatioJTC_c")->Fill(btaginfo.VertexEnergyRatioJTC(), weight);
+	  hist("subTrackSip3dSigAboveCharmJTC_c")->Fill(btaginfo.TrackSip3dSigAboveCharmJTC(), weight);
+
+
+	}
+
+      //u,d,s
+       if (subjet.flavor() == 1 || subjet.flavor()==-1 || subjet.flavor() == 2 || subjet.flavor()==-2 || subjet.flavor() == 3|| subjet.flavor()==-3 )
+	{ 
+	  //btag variables	
+	  hist("subCSV_uds")->Fill(subjet.btag_combinedSecondaryVertex(),weight);
+	  hist("subFlavour_uds")->Fill(weight);
+
+	  //track impact parameter tag info
+	  hist("subTrackMultiplicity_uds")->Fill(btaginfo.TrackMomentum().size(), weight);
+	  if (btaginfo.TrackMomentum().size()>0) {for(unsigned int j=0; j<btaginfo.TrackMomentum().size(); j++) {hist("subTrackMomentum_uds")->Fill(btaginfo.TrackMomentum().at(j),weight);}}
+	  if (btaginfo.TrackEta().size()>0) {for(unsigned int j=0; j<btaginfo.TrackEta().size(); j++) {hist("subTrackEta_uds")->Fill(btaginfo.TrackEta().at(j),weight);}}
+	  if (btaginfo.TrackEtaRel().size()>0) {for(unsigned int j=0; j<btaginfo.TrackEtaRel().size(); j++) {hist("subTrackEtaRel_uds")->Fill(btaginfo.TrackEtaRel().at(j),weight);}}
+	  if (btaginfo.TrackDeltaR().size()>0) {for(unsigned int j=0; j<btaginfo.TrackDeltaR().size(); j++) {hist("subTrackDeltaR_uds")->Fill(btaginfo.TrackDeltaR().at(j),weight);}}
+	  if (btaginfo.TrackSip3dVal().size()>0) {for(unsigned int j=0; j<btaginfo.TrackSip3dVal().size(); j++) {hist("subTrackSip3dVal_uds")->Fill(btaginfo.TrackSip3dVal().at(j),weight);}}
+	  if (btaginfo.TrackSip3dSig().size()>0) {for(unsigned int j=0; j<btaginfo.TrackSip3dSig().size(); j++) {hist("subTrackSip3dSig_uds")->Fill(btaginfo.TrackSip3dSig().at(j),weight);}}
+	  if (btaginfo.TrackSip2dVal().size()>0) {for(unsigned int j=0; j<btaginfo.TrackSip2dVal().size(); j++) {hist("subTrackSip2dVal_uds")->Fill(btaginfo.TrackSip2dVal().at(j),weight);}}
+	  if (btaginfo.TrackSip2dSig().size()>0) {for(unsigned int j=0; j<btaginfo.TrackSip2dSig().size(); j++) {hist("subTrackSip2dSig_uds")->Fill(btaginfo.TrackSip2dSig().at(j),weight);}}
+	  if (btaginfo.TrackDecayLenVal().size()>0) {for(unsigned int j=0; j<btaginfo.TrackDecayLenVal().size(); j++) {hist("subTrackDecayLenVal_uds")->Fill(btaginfo.TrackDecayLenVal().at(j),weight);}}
+	  if (btaginfo.TrackChi2().size()>0) {for(unsigned int j=0; j<btaginfo.TrackChi2().size(); j++) {hist("subTrackChi2_uds")->Fill(btaginfo.TrackChi2().at(j),weight);}}
+	  if (btaginfo.TrackNTotalHits().size()>0) {for(unsigned int j=0; j<btaginfo.TrackNTotalHits().size(); j++) {hist("subTrackNTotalHits_uds")->Fill(btaginfo.TrackNTotalHits().at(j),weight);}}
+	  if (btaginfo.TrackNPixelHits().size()>0) {for(unsigned int j=0; j<btaginfo.TrackNPixelHits().size(); j++) {hist("subTrackNPixelHits_uds")->Fill(btaginfo.TrackNPixelHits().at(j),weight);}}
+	  if (btaginfo.TrackPtRel().size()>0) {for(unsigned int j=0; j<btaginfo.TrackPtRel().size(); j++) {hist("subTrackPtRel_uds")->Fill(btaginfo.TrackPtRel().at(j),weight);}}
+	  if (btaginfo.TrackPPar().size()>0) {for(unsigned int j=0; j<btaginfo.TrackPPar().size(); j++) {hist("subTrackPPar_uds")->Fill(btaginfo.TrackPPar().at(j),weight);}}
+	  if (btaginfo.TrackPtRatio().size()>0) {for(unsigned int j=0; j<btaginfo.TrackPtRatio().size(); j++) {hist("subTrackPtRatio_uds")->Fill(btaginfo.TrackPtRatio().at(j),weight);}}
+	  if (btaginfo.TrackPParRatio().size()>0) {for(unsigned int j=0; j<btaginfo.TrackPParRatio().size(); j++) {hist("subTrackPParRatio_uds")->Fill(btaginfo.TrackPParRatio().at(j),weight);}}
+	  if (btaginfo.TrackJetDistVal().size()>0) {for(unsigned int j=0; j<btaginfo.TrackJetDistVal().size(); j++) {hist("subTrackJetDistVal_uds")->Fill(btaginfo.TrackJetDistVal().at(j),weight);}}
+	  if (btaginfo.TrackJetDistSig().size()>0) {for(unsigned int j=0; j<btaginfo.TrackJetDistSig().size(); j++) {hist("subTrackJetDistSig_uds")->Fill(btaginfo.TrackJetDistSig().at(j),weight);}}
+	  if (btaginfo.TrackGhostTrackDistVal().size()>0) {for(unsigned int j=0; j<btaginfo.TrackGhostTrackDistVal().size(); j++) {hist("subTrackGhostTrackDistVal_uds")->Fill(btaginfo.TrackGhostTrackDistVal().at(j),weight);}}
+	  if (btaginfo.TrackGhostTrackDistSig().size()>0) {for(unsigned int j=0; j<btaginfo.TrackGhostTrackDistSig().size(); j++) {hist("subTrackGhostTrackDistSig_uds")->Fill(btaginfo.TrackGhostTrackDistSig().at(j),weight);}}
+	  if (btaginfo.TrackGhostTrackWeight().size()>0) {for(unsigned int j=0; j<btaginfo.TrackGhostTrackWeight().size(); j++) {hist("subTrackGhostTrackWeight_uds")->Fill(btaginfo.TrackGhostTrackWeight().at(j),weight);}}
+
+	  //secondary vertex tag info
+	  if (btaginfo.FlightDistance2dVal().size()>0) {for(unsigned int j=0; j<btaginfo.FlightDistance2dVal().size(); j++) {hist("subFlightDistance2dVal_uds")->Fill(btaginfo.FlightDistance2dVal().at(j),weight);}}
+	  if (btaginfo.FlightDistance2dSig().size()>0) {for(unsigned int j=0; j<btaginfo.FlightDistance2dSig().size(); j++) {hist("subFlightDistance2dSig_uds")->Fill(btaginfo.FlightDistance2dSig().at(j),weight);}}
+	  if (btaginfo.FlightDistance3dVal().size()>0) {for(unsigned int j=0; j<btaginfo.FlightDistance3dVal().size(); j++) {hist("subFlightDistance3dVal_uds")->Fill(btaginfo.FlightDistance3dVal().at(j),weight);}}
+	  if (btaginfo.FlightDistance3dSig().size()>0) {for(unsigned int j=0; j<btaginfo.FlightDistance3dSig().size(); j++) {hist("subFlightDistance3dSig_uds")->Fill(btaginfo.FlightDistance3dSig().at(j),weight);}}
+	  if (btaginfo.VertexJetDeltaR().size()>0) {for(unsigned int j=0; j<btaginfo.VertexJetDeltaR().size(); j++) {hist("subVertexJetDeltaR_uds")->Fill(btaginfo.VertexJetDeltaR().at(j),weight);}}
+	  hist("subJetNSecondaryVertices_uds")->Fill(btaginfo.JetNSecondaryVertices(), weight);
+	  if (btaginfo.VertexNTracks().size()>0) {for(unsigned int j=0; j<btaginfo.VertexNTracks().size(); j++) {hist("subVertexNTracks_uds")->Fill(btaginfo.VertexNTracks().at(j),weight);}}
+	  if (btaginfo.SecondaryVertex().size()>0) {for(unsigned int j=0; j<btaginfo.SecondaryVertex().size(); j++) {hist("subSecondaryVertex_uds")->Fill(btaginfo.SecondaryVertex().at(j).M(),weight);}}
+	  if (btaginfo.VertexChi2().size()>0) {for(unsigned int j=0; j<btaginfo.VertexChi2().size(); j++) {hist("subVertexChi2_uds")->Fill(btaginfo.VertexChi2().at(j),weight);}}
+	  if (btaginfo.VertexNdof().size()>0) {for(unsigned int j=0; j<btaginfo.VertexNdof().size(); j++) {hist("subVertexNdof_uds")->Fill(btaginfo.VertexNdof().at(j),weight);}}
+	  if (btaginfo.VertexNormalizedChi2().size()>0) {for(unsigned int j=0; j<btaginfo.VertexNormalizedChi2().size(); j++) {hist("subVertexNormalizedChi2_uds")->Fill(btaginfo.VertexNormalizedChi2().at(j),weight);}}
+
+	  //JTC SV variables
+	  hist("subVertexCategoryJTC_uds")->Fill(btaginfo.VertexCategoryJTC(), weight);
+	  hist("subVertexMassJTC_uds")->Fill(btaginfo.VertexMassJTC(), weight);
+	  hist("subVertexEnergyRatioJTC_uds")->Fill(btaginfo.VertexEnergyRatioJTC(), weight);
+	  hist("subTrackSip3dSigAboveCharmJTC_uds")->Fill(btaginfo.TrackSip3dSigAboveCharmJTC(), weight);
+
+	}
+
+       //gluon    
+       if (subjet.flavor() == 21)
+	{
+	  //btag variables
+	  hist("subCSV_g")->Fill(subjet.btag_combinedSecondaryVertex(),weight);
+	  hist("subFlavour_g")->Fill(weight);
+
+	  //track impact parameter tag info
+	  hist("subTrackMultiplicity_g")->Fill(btaginfo.TrackMomentum().size(), weight);
+	  if (btaginfo.TrackMomentum().size()>0) {for(unsigned int j=0; j<btaginfo.TrackMomentum().size(); j++) {hist("subTrackMomentum_g")->Fill(btaginfo.TrackMomentum().at(j),weight);}}
+	  if (btaginfo.TrackEta().size()>0) {for(unsigned int j=0; j<btaginfo.TrackEta().size(); j++) {hist("subTrackEta_g")->Fill(btaginfo.TrackEta().at(j),weight);}}
+	  if (btaginfo.TrackEtaRel().size()>0) {for(unsigned int j=0; j<btaginfo.TrackEtaRel().size(); j++) {hist("subTrackEtaRel_g")->Fill(btaginfo.TrackEtaRel().at(j),weight);}}
+	  if (btaginfo.TrackDeltaR().size()>0) {for(unsigned int j=0; j<btaginfo.TrackDeltaR().size(); j++) {hist("subTrackDeltaR_g")->Fill(btaginfo.TrackDeltaR().at(j),weight);}}
+	  if (btaginfo.TrackSip3dVal().size()>0) {for(unsigned int j=0; j<btaginfo.TrackSip3dVal().size(); j++) {hist("subTrackSip3dVal_g")->Fill(btaginfo.TrackSip3dVal().at(j),weight);}}
+	  if (btaginfo.TrackSip3dSig().size()>0) {for(unsigned int j=0; j<btaginfo.TrackSip3dSig().size(); j++) {hist("subTrackSip3dSig_g")->Fill(btaginfo.TrackSip3dSig().at(j),weight);}}
+	  if (btaginfo.TrackSip2dVal().size()>0) {for(unsigned int j=0; j<btaginfo.TrackSip2dVal().size(); j++) {hist("subTrackSip2dVal_g")->Fill(btaginfo.TrackSip2dVal().at(j),weight);}}
+	  if (btaginfo.TrackSip2dSig().size()>0) {for(unsigned int j=0; j<btaginfo.TrackSip2dSig().size(); j++) {hist("subTrackSip2dSig_g")->Fill(btaginfo.TrackSip2dSig().at(j),weight);}}
+	  if (btaginfo.TrackDecayLenVal().size()>0) {for(unsigned int j=0; j<btaginfo.TrackDecayLenVal().size(); j++) {hist("subTrackDecayLenVal_g")->Fill(btaginfo.TrackDecayLenVal().at(j),weight);}}
+	  if (btaginfo.TrackChi2().size()>0) {for(unsigned int j=0; j<btaginfo.TrackChi2().size(); j++) {hist("subTrackChi2_g")->Fill(btaginfo.TrackChi2().at(j),weight);}}
+	  if (btaginfo.TrackNTotalHits().size()>0) {for(unsigned int j=0; j<btaginfo.TrackNTotalHits().size(); j++) {hist("subTrackNTotalHits_g")->Fill(btaginfo.TrackNTotalHits().at(j),weight);}}
+	  if (btaginfo.TrackNPixelHits().size()>0) {for(unsigned int j=0; j<btaginfo.TrackNPixelHits().size(); j++) {hist("subTrackNPixelHits_g")->Fill(btaginfo.TrackNPixelHits().at(j),weight);}}
+	  if (btaginfo.TrackPtRel().size()>0) {for(unsigned int j=0; j<btaginfo.TrackPtRel().size(); j++) {hist("subTrackPtRel_g")->Fill(btaginfo.TrackPtRel().at(j),weight);}}
+	  if (btaginfo.TrackPPar().size()>0) {for(unsigned int j=0; j<btaginfo.TrackPPar().size(); j++) {hist("subTrackPPar_g")->Fill(btaginfo.TrackPPar().at(j),weight);}}
+	  if (btaginfo.TrackPtRatio().size()>0) {for(unsigned int j=0; j<btaginfo.TrackPtRatio().size(); j++) {hist("subTrackPtRatio_g")->Fill(btaginfo.TrackPtRatio().at(j),weight);}}
+	  if (btaginfo.TrackPParRatio().size()>0) {for(unsigned int j=0; j<btaginfo.TrackPParRatio().size(); j++) {hist("subTrackPParRatio_g")->Fill(btaginfo.TrackPParRatio().at(j),weight);}}
+	  if (btaginfo.TrackJetDistVal().size()>0) {for(unsigned int j=0; j<btaginfo.TrackJetDistVal().size(); j++) {hist("subTrackJetDistVal_g")->Fill(btaginfo.TrackJetDistVal().at(j),weight);}}
+	  if (btaginfo.TrackJetDistSig().size()>0) {for(unsigned int j=0; j<btaginfo.TrackJetDistSig().size(); j++) {hist("subTrackJetDistSig_g")->Fill(btaginfo.TrackJetDistSig().at(j),weight);}}
+	  if (btaginfo.TrackGhostTrackDistVal().size()>0) {for(unsigned int j=0; j<btaginfo.TrackGhostTrackDistVal().size(); j++) {hist("subTrackGhostTrackDistVal_g")->Fill(btaginfo.TrackGhostTrackDistVal().at(j),weight);}}
+	  if (btaginfo.TrackGhostTrackDistSig().size()>0) {for(unsigned int j=0; j<btaginfo.TrackGhostTrackDistSig().size(); j++) {hist("subTrackGhostTrackDistSig_g")->Fill(btaginfo.TrackGhostTrackDistSig().at(j),weight);}}
+	  if (btaginfo.TrackGhostTrackWeight().size()>0) {for(unsigned int j=0; j<btaginfo.TrackGhostTrackWeight().size(); j++) {hist("subTrackGhostTrackWeight_g")->Fill(btaginfo.TrackGhostTrackWeight().at(j),weight);}}
+
+	  //secondary vertex tag info
+	  if (btaginfo.FlightDistance2dVal().size()>0) {for(unsigned int j=0; j<btaginfo.FlightDistance2dVal().size(); j++) {hist("subFlightDistance2dVal_g")->Fill(btaginfo.FlightDistance2dVal().at(j),weight);}}
+	  if (btaginfo.FlightDistance2dSig().size()>0) {for(unsigned int j=0; j<btaginfo.FlightDistance2dSig().size(); j++) {hist("subFlightDistance2dSig_g")->Fill(btaginfo.FlightDistance2dSig().at(j),weight);}}
+	  if (btaginfo.FlightDistance3dVal().size()>0) {for(unsigned int j=0; j<btaginfo.FlightDistance3dVal().size(); j++) {hist("subFlightDistance3dVal_g")->Fill(btaginfo.FlightDistance3dVal().at(j),weight);}}
+	  if (btaginfo.FlightDistance3dSig().size()>0) {for(unsigned int j=0; j<btaginfo.FlightDistance3dSig().size(); j++) {hist("subFlightDistance3dSig_g")->Fill(btaginfo.FlightDistance3dSig().at(j),weight);}}
+	  if (btaginfo.VertexJetDeltaR().size()>0) {for(unsigned int j=0; j<btaginfo.VertexJetDeltaR().size(); j++) {hist("subVertexJetDeltaR_g")->Fill(btaginfo.VertexJetDeltaR().at(j),weight);}}
+	  hist("subJetNSecondaryVertices_g")->Fill(btaginfo.JetNSecondaryVertices(), weight);
+	  if (btaginfo.VertexNTracks().size()>0) {for(unsigned int j=0; j<btaginfo.VertexNTracks().size(); j++) {hist("subVertexNTracks_g")->Fill(btaginfo.VertexNTracks().at(j),weight);}}
+	  if (btaginfo.SecondaryVertex().size()>0) {for(unsigned int j=0; j<btaginfo.SecondaryVertex().size(); j++) {hist("subSecondaryVertex_g")->Fill(btaginfo.SecondaryVertex().at(j).M(),weight);}}
+	  if (btaginfo.VertexChi2().size()>0) {for(unsigned int j=0; j<btaginfo.VertexChi2().size(); j++) {hist("subVertexChi2_g")->Fill(btaginfo.VertexChi2().at(j),weight);}}
+	  if (btaginfo.VertexNdof().size()>0) {for(unsigned int j=0; j<btaginfo.VertexNdof().size(); j++) {hist("subVertexNdof_g")->Fill(btaginfo.VertexNdof().at(j),weight);}}
+	  if (btaginfo.VertexNormalizedChi2().size()>0) {for(unsigned int j=0; j<btaginfo.VertexNormalizedChi2().size(); j++) {hist("subVertexNormalizedChi2_g")->Fill(btaginfo.VertexNormalizedChi2().at(j),weight);}}
+
+	  //JTC SV variables
+	  hist("subVertexCategoryJTC_g")->Fill(btaginfo.VertexCategoryJTC(), weight);
+	  hist("subVertexMassJTC_g")->Fill(btaginfo.VertexMassJTC(), weight);
+	  hist("subVertexEnergyRatioJTC_g")->Fill(btaginfo.VertexEnergyRatioJTC(), weight);
+	  hist("subTrackSip3dSigAboveCharmJTC_g")->Fill(btaginfo.TrackSip3dSigAboveCharmJTC(), weight);
+
+
+	}
+       
+       //none
+       if (subjet.flavor() == 0)
+	{
+	  //btag variables
+	  hist("subCSV_none")->Fill(subjet.btag_combinedSecondaryVertex(),weight);
+	  hist("subFlavour_none")->Fill(weight);
+
+	  //track impact parameter tag info
+	  hist("subTrackMultiplicity_none")->Fill(btaginfo.TrackMomentum().size(), weight);
+	  if (btaginfo.TrackMomentum().size()>0) {for(unsigned int j=0; j<btaginfo.TrackMomentum().size(); j++) {hist("subTrackMomentum_none")->Fill(btaginfo.TrackMomentum().at(j),weight);}}
+	  if (btaginfo.TrackEta().size()>0) {for(unsigned int j=0; j<btaginfo.TrackEta().size(); j++) {hist("subTrackEta_none")->Fill(btaginfo.TrackEta().at(j),weight);}}
+	  if (btaginfo.TrackEtaRel().size()>0) {for(unsigned int j=0; j<btaginfo.TrackEtaRel().size(); j++) {hist("subTrackEtaRel_none")->Fill(btaginfo.TrackEtaRel().at(j),weight);}}
+	  if (btaginfo.TrackDeltaR().size()>0) {for(unsigned int j=0; j<btaginfo.TrackDeltaR().size(); j++) {hist("subTrackDeltaR_none")->Fill(btaginfo.TrackDeltaR().at(j),weight);}}
+	  if (btaginfo.TrackSip3dVal().size()>0) {for(unsigned int j=0; j<btaginfo.TrackSip3dVal().size(); j++) {hist("subTrackSip3dVal_none")->Fill(btaginfo.TrackSip3dVal().at(j),weight);}}
+	  if (btaginfo.TrackSip3dSig().size()>0) {for(unsigned int j=0; j<btaginfo.TrackSip3dSig().size(); j++) {hist("subTrackSip3dSig_none")->Fill(btaginfo.TrackSip3dSig().at(j),weight);}}
+	  if (btaginfo.TrackSip2dVal().size()>0) {for(unsigned int j=0; j<btaginfo.TrackSip2dVal().size(); j++) {hist("subTrackSip2dVal_none")->Fill(btaginfo.TrackSip2dVal().at(j),weight);}}
+	  if (btaginfo.TrackSip2dSig().size()>0) {for(unsigned int j=0; j<btaginfo.TrackSip2dSig().size(); j++) {hist("subTrackSip2dSig_none")->Fill(btaginfo.TrackSip2dSig().at(j),weight);}}
+	  if (btaginfo.TrackDecayLenVal().size()>0) {for(unsigned int j=0; j<btaginfo.TrackDecayLenVal().size(); j++) {hist("subTrackDecayLenVal_none")->Fill(btaginfo.TrackDecayLenVal().at(j),weight);}}
+	  if (btaginfo.TrackChi2().size()>0) {for(unsigned int j=0; j<btaginfo.TrackChi2().size(); j++) {hist("subTrackChi2_none")->Fill(btaginfo.TrackChi2().at(j),weight);}}
+	  if (btaginfo.TrackNTotalHits().size()>0) {for(unsigned int j=0; j<btaginfo.TrackNTotalHits().size(); j++) {hist("subTrackNTotalHits_none")->Fill(btaginfo.TrackNTotalHits().at(j),weight);}}
+	  if (btaginfo.TrackNPixelHits().size()>0) {for(unsigned int j=0; j<btaginfo.TrackNPixelHits().size(); j++) {hist("subTrackNPixelHits_none")->Fill(btaginfo.TrackNPixelHits().at(j),weight);}}
+	  if (btaginfo.TrackPtRel().size()>0) {for(unsigned int j=0; j<btaginfo.TrackPtRel().size(); j++) {hist("subTrackPtRel_none")->Fill(btaginfo.TrackPtRel().at(j),weight);}}
+	  if (btaginfo.TrackPPar().size()>0) {for(unsigned int j=0; j<btaginfo.TrackPPar().size(); j++) {hist("subTrackPPar_none")->Fill(btaginfo.TrackPPar().at(j),weight);}}
+	  if (btaginfo.TrackPtRatio().size()>0) {for(unsigned int j=0; j<btaginfo.TrackPtRatio().size(); j++) {hist("subTrackPtRatio_none")->Fill(btaginfo.TrackPtRatio().at(j),weight);}}
+	  if (btaginfo.TrackPParRatio().size()>0) {for(unsigned int j=0; j<btaginfo.TrackPParRatio().size(); j++) {hist("subTrackPParRatio_none")->Fill(btaginfo.TrackPParRatio().at(j),weight);}}
+	  if (btaginfo.TrackJetDistVal().size()>0) {for(unsigned int j=0; j<btaginfo.TrackJetDistVal().size(); j++) {hist("subTrackJetDistVal_none")->Fill(btaginfo.TrackJetDistVal().at(j),weight);}}
+	  if (btaginfo.TrackJetDistSig().size()>0) {for(unsigned int j=0; j<btaginfo.TrackJetDistSig().size(); j++) {hist("subTrackJetDistSig_none")->Fill(btaginfo.TrackJetDistSig().at(j),weight);}}
+	  if (btaginfo.TrackGhostTrackDistVal().size()>0) {for(unsigned int j=0; j<btaginfo.TrackGhostTrackDistVal().size(); j++) {hist("subTrackGhostTrackDistVal_none")->Fill(btaginfo.TrackGhostTrackDistVal().at(j),weight);}}  
+	  if (btaginfo.TrackGhostTrackDistSig().size()>0) {for(unsigned int j=0; j<btaginfo.TrackGhostTrackDistSig().size(); j++) {hist("subTrackGhostTrackDistSig_none")->Fill(btaginfo.TrackGhostTrackDistSig().at(j),weight);}}
+	  if (btaginfo.TrackGhostTrackWeight().size()>0) {for(unsigned int j=0; j<btaginfo.TrackGhostTrackWeight().size(); j++) {hist("subTrackGhostTrackWeight_none")->Fill(btaginfo.TrackGhostTrackWeight().at(j),weight);}}
+
+	  //secondary vertex tag info
+	  if (btaginfo.FlightDistance2dVal().size()>0) {for(unsigned int j=0; j<btaginfo.FlightDistance2dVal().size(); j++) {hist("subFlightDistance2dVal_none")->Fill(btaginfo.FlightDistance2dVal().at(j),weight);}}
+	  if (btaginfo.FlightDistance2dSig().size()>0) {for(unsigned int j=0; j<btaginfo.FlightDistance2dSig().size(); j++) {hist("subFlightDistance2dSig_none")->Fill(btaginfo.FlightDistance2dSig().at(j),weight);}}
+	  if (btaginfo.FlightDistance3dVal().size()>0) {for(unsigned int j=0; j<btaginfo.FlightDistance3dVal().size(); j++) {hist("subFlightDistance3dVal_none")->Fill(btaginfo.FlightDistance3dVal().at(j),weight);}}
+	  if (btaginfo.FlightDistance3dSig().size()>0) {for(unsigned int j=0; j<btaginfo.FlightDistance3dSig().size(); j++) {hist("subFlightDistance3dSig_none")->Fill(btaginfo.FlightDistance3dSig().at(j),weight);}}
+	  if (btaginfo.VertexJetDeltaR().size()>0) {for(unsigned int j=0; j<btaginfo.VertexJetDeltaR().size(); j++) {hist("subVertexJetDeltaR_none")->Fill(btaginfo.VertexJetDeltaR().at(j),weight);}}
+	  hist("subJetNSecondaryVertices_none")->Fill(btaginfo.JetNSecondaryVertices(), weight);
+	  if (btaginfo.VertexNTracks().size()>0) {for(unsigned int j=0; j<btaginfo.VertexNTracks().size(); j++) {hist("subVertexNTracks_none")->Fill(btaginfo.VertexNTracks().at(j),weight);}}
+	  if (btaginfo.SecondaryVertex().size()>0) {for(unsigned int j=0; j<btaginfo.SecondaryVertex().size(); j++) {hist("subSecondaryVertex_none")->Fill(btaginfo.SecondaryVertex().at(j).M(),weight);}}
+	  if (btaginfo.VertexChi2().size()>0) {for(unsigned int j=0; j<btaginfo.VertexChi2().size(); j++) {hist("subVertexChi2_none")->Fill(btaginfo.VertexChi2().at(j),weight);}}
+	  if (btaginfo.VertexNdof().size()>0) {for(unsigned int j=0; j<btaginfo.VertexNdof().size(); j++) {hist("subVertexNdof_none")->Fill(btaginfo.VertexNdof().at(j),weight);}}
+	  if (btaginfo.VertexNormalizedChi2().size()>0) {for(unsigned int j=0; j<btaginfo.VertexNormalizedChi2().size(); j++) {hist("subVertexNormalizedChi2_none")->Fill(btaginfo.VertexNormalizedChi2().at(j),weight);}}
+
+	  //JTC SV variables
+	  hist("subVertexCategoryJTC_none")->Fill(btaginfo.VertexCategoryJTC(), weight);
+	  hist("subVertexMassJTC_none")->Fill(btaginfo.VertexMassJTC(), weight);
+	  hist("subVertexEnergyRatioJTC_none")->Fill(btaginfo.VertexEnergyRatioJTC(), weight);
+	  hist("subTrackSip3dSigAboveCharmJTC_none")->Fill(btaginfo.TrackSip3dSigAboveCharmJTC(), weight);
+	}
+
+
+	
+    }
+  }
+      
+
+}
+
+Hists2::~Hists2(){}

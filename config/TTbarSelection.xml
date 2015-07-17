@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd">
+<JobConfiguration JobName="ExampleCycleJob" OutputLevel="INFO">
+    <Library Name="libSUHH2examples"/>
+    <Package Name="SUHH2examples.par" />
+
+   <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="./" PostFix="" TargetLumi="1" >
+   <!-- <Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/ottjoc/proof-wd/" ProofNodes="2" OutputDirectory="./" PostFix="" TargetLumi="1" > -->
+        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="Test" Cacheable="False">
+            <In FileName="/nfs/dust/cms/user/marchesi/testfiles/Ntuple.root" Lumi="0.0"/> 
+            <InputTree Name="AnalysisTree" /> 
+            <!-- uncomment to write tree of selected events, i.e. of those events for which the AnalysisModule::process method  returns true -->
+            <OutputTree Name="AnalysisTree" />
+        </InputData>
+        
+            
+        <UserConfig>
+            <!-- define which collections to read from the input. Only specify what you need to save I/O time -->
+            <Item Name="PrimaryVertexCollection" Value="offlineSlimmedPrimaryVertices" /> 
+            <Item Name="ElectronCollection" Value="slimmedElectronsUSER" />
+            <Item Name="MuonCollection" Value="slimmedMuonsUSER" /> 
+            <Item Name="JetCollection" Value="slimmedJets" />
+            <Item Name="METName" Value="slimmedMETs" />  
+            
+            <Item Name="TopJetCollection" Value="slimmedJetsAK8_CMSTopTag" />
+            <!--<Item Name="GenParticleCollection" Value="GenParticles" /> 
+            <Item Name="GenJetCollection" Value="slimmedGenJets" /> -->
+            
+	    <Item Name="additionalBranches" Value="patJetsAk8CHSJetsSoftDropPacked_daughters" /> 
+
+            <!-- the class name of the AnalysisModule subclasses to run: -->
+            <Item Name="AnalysisModule" Value="SelectionModule" /> 
+
+
+        </UserConfig>
+    </Cycle>
+</JobConfiguration>
