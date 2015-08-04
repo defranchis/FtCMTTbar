@@ -8,8 +8,8 @@ gStyle.SetOptStat('ioue')
 flavour_names_mc = ["b","c","uds","g","none"]
 flavour_name_data = "data"
 flavour_colors = [kRed,8,kBlue,kOrange-3,kGray]
-#process_names_mc = ['MC.TTbar','MC.Wjets'] 
-process_names_mc = ['MC.Test']
+process_names_mc = ['MC.TT_Mtt-700toInf'] 
+#process_names_mc = ['MC.Test']
 process_name_data = "DATA.DATA"
 histogram_names = ["subCSV","subFlavour","subTrackMomentum","subTrackEta","subTrackEtaRel","subTrackDeltaR","subTrackSip3dVal","subTrackSip3dSig","subTrackSip2dVal","subTrackSip2dSig","subTrackDecayLenVal","subTrackChi2","subTrackNTotalHits","subTrackNPixelHits","subTrackPtRel","subTrackPPar","subTrackPtRatio","subTrackPParRatio","subTrackJetDistVal","subTrackJetDistSig","subTrackGhostTrackDistVal","subTrackGhostTrackDistSig","subTrackGhostTrackWeight","subFlightDistance2dVal","subFlightDistance2dSig","subFlightDistance3dVal","subFlightDistance3dSig","subVertexJetDeltaR","subJetNSecondaryVertices","subVertexNTracks","subSecondaryVertex","subVertexChi2","subVertexNdof","subVertexNormalizedChi2","subVertexCategoryJTC","subVertexMassJTC","subVertexEnergyRatioJTC","subTrackSip3dSigAboveCharmJTC","subTrackMultiplicity","subTrackPt","MassTop"]
 histogram_descriptions = ["combined secondary vertex discriminator of the subjet","matched flavour of the subjet","momentum of tracks in the subjet","pseudorapidity of tracks in the subjet","track pseudorapidity, relative to the jet axis","track pseudoangular distance from the jet axis","track 3D signed impact parameter","track 3D signed impact parameter significance","track 2D signed impact parameter","track 2D signed impact parameter significance","track decay length","track fit chi2","number of valid total hits","number of valid pixel hits","track transverse momentum, relative to the jet axis","track parallel momentum, along the jet axis","track transverse momentum, relative to the jet axis, normalized to its energy","track parallel momentum, along the jet axis, normalized to its energy","minimum track approach distance to jet axis","minimum track approach distance to jet axis significance","minimum approach distance to ghost track","minimum approach distance to ghost track significance","weight of track participation in ghost track fit","transverse distance between primary and secondary vertex","transverse distance significance between primary and secondary vertex","distance between primary and secondary vertex","distance significance between primary and secondary vertex","pseudoangular distance between jet axis and secondary vertex direction","number of reconstructed possible secondary vertices in jet","number of tracks at secondary vertex","secondary vertex uncorrected mass","secondary vertex chi2","secondary vertex fit dergrees of frendom","secondary vertex fit normalized chi2","secondary vertex category from jet tag computer","secondary vertex corrected mass from jet tag computer","ratio of energy at secondary vertex over total energy from JTC","track 3D signed impact parameter significance of first track lifting mass above charm from JTC","track multiplicity of the subjet","track transverse momentum","Top Mass"]
@@ -22,7 +22,7 @@ yaxis_subjets = 'N of subjets'
 histogram_yaxes = [yaxis_subjets for i in range(2)] + [yaxis_tracks for i in range(21)] + [yaxis_vertices for i in range(5)] + [yaxis_subjets] + [yaxis_vertices for i in range(6)] + [yaxis_vertices for i in range(4)] + [yaxis_subjets] + [yaxis_tracks]+ ['Events']
 #histogram_xaxes = ["particle ID", "p [GeV/c]"]
 histogram_xaxes = ["CSV discriminator", "particle ID", "p [GeV/c]", "#eta", "#Delta#eta(track,jet axis)", "#Delta#phi(track,jet axis)", "IP [cm]", "IP/#sigma_{IP}", "IP_{2D} [cm]", "IP_{2D}/#sigma_{IP_{2D}}", "L_{d} [cm]", "#chi^2_{track}", "N_{hits}", "N_{pixel hits}"," "," "," "," ","d [cm]"," "," "," "," ", "dist_T(SV_1,SV_2) [cm]", "dist_T/#sigma_{dist_T}(SV_1,SV_2)", "dist(SV_1,SV_2) [cm]", "dist/#sigma_{dist}(PV,SV)", "#Delta#phi", "N of vertices", "N tracks", "inv. mass [GeV/c^2]", "#chi^2_{SV}", "N_{dof}", "#chi^2/N_{dof}(SV)", "category", "inv. mass [GeV/c^{2}]", "E_{SV}/E_{tot}", "IP/#sigma_{IP}","N of tracks in the subjet","pT [GeV/c]","Mass [GeV]"]
-files_path = "/nfs/dust/cms/user/schumas/sframe/CMSSW_7_4_3/src/UHH2/FtCMTTbar/config/"
+files_path = "/nfs/dust/cms/user/schumas/sframe/CMSSW_7_4_6/src/UHH2/FtCMTTbar/config/"
 files_name_base = "uhh2.AnalysisModuleRunner"
 cut_name = "AfterCuts"
 
@@ -145,8 +145,8 @@ legend=TLegend(0.9,0.295,0.999,0.93)
 for flavour_name_index in range(len(flavour_names_mc)):
   legend.AddEntry(input_merged_mc[0][flavour_name_index],flavour_names_mc[flavour_name_index],'f')
 legend.AddEntry(input_histos_data[0],flavour_name_data,'lpe')
-cmslabel=TLatex(0.3,0.87,"CMS Preliminary #sqrt{s} = 8TeV  15.9 fb^{-1}")
-cmslabel.SetNDC()
+#cmslabel=TLatex(0.3,0.87,"CMS Preliminary #sqrt{s} = 8TeV  15.9 fb^{-1}")
+#cmslabel.SetNDC()
 
 #compare mc and data
 #canvases=[]
@@ -182,7 +182,7 @@ for histogram_name_index in range(len(histogram_names)):
     stacked_mc[histogram_name_index].GetYaxis().SetTitleSize(0.07)
     stacked_mc[histogram_name_index].GetYaxis().SetLabelSize(0.07)
     stacked_mc[histogram_name_index].GetYaxis().SetTitleOffset(0.9)
-    cmslabel.Draw()
+    #cmslabel.Draw()
     tmp_canvas.cd(2)
     pulls[histogram_name_index].Draw()
     line1=TLine(stacked_mc[histogram_name_index].GetXaxis().	GetXmin(),1.0,stacked_mc[histogram_name_index].GetXaxis().	GetXmax(),1.0)

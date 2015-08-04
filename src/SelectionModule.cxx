@@ -11,7 +11,9 @@
 #include "UHH2/common/include/ElectronIds.h"
 #include "UHH2/common/include/NSelections.h"
 #include "UHH2/FtCMTTbar/include/Hists2.h"
+#include "UHH2/FtCMTTbar/include/FtCMTTbarSelections.h"
 #include "UHH2/common/include/TTbarReconstruction.h"
+#include "UHH2/common/include/TriggerSelection.h"
 
 using namespace std;
 using namespace uhh2;
@@ -52,6 +54,8 @@ namespace uhh2examples {
 
     std::vector<std::unique_ptr<AnalysisModule>> cleanermodules;
     AndSelection selection;
+    std::unique_ptr<Selection> trigger_sel;
+    std::unique_ptr<Selection> twodcut_sel;
   
   };
 
@@ -68,7 +72,7 @@ namespace uhh2examples {
 
     jet_kinematic = PtEtaCut(50.0, 2.4);
     topjet_kinematic = PtEtaCut(350.0,2.4);
-    muid = AndId<Muon>(MuonIDTight(), PtEtaCut(20.0, 2.4));
+    muid = AndId<Muon>(MuonIDTight(), PtEtaCut(45.0, 2.4));
     
     // clean the objects:
     cleanermodules.emplace_back(new JetCleaner(jet_kinematic));
@@ -77,6 +81,9 @@ namespace uhh2examples {
     
     // make the selection, step-by-step. Note that in most cases, no explicit
     // object id is passed, as the cleaners have removed the objects not passing the id already.
+
+    const std::string triggername(ctx.get("triggername", "NotSet"));
+
     selection.add<NMuonSelection>("nm == 1", 1, 1);
     selection.add<NJetSelection>("nj >= 2", 2);
     selection.add<NTopJetSelection>("ntj >= 1", 1);
@@ -84,12 +91,15 @@ namespace uhh2examples {
     h_nocuts.reset(new Hists2(ctx, "NoCuts"));
     h_aftercuts.reset(new Hists2(ctx, "AfterCuts"));
 
+    trigger_sel = make_unique<TriggerSelection>("HLT_Mu40_eta2p1_PFJet200_PFJet50_v*");
+    twodcut_sel.reset(new TwoDCut(.4, 25.));
+
   }
 
 
   bool SelectionModule::process(Event & event) {
 
-
+    //clean events
     for(auto & m : cleanermodules){
       m->process(event);
     }
@@ -110,38 +120,19 @@ namespace uhh2examples {
 	double deltaphi = deltaPhi(topjet,muons->at(0));
 	double pi = 3.14159265359;
 	if(deltaphi>2*pi/3 &&(topjets->at(i).pt()>350.)&&(fabs(topjets->at(i).eta())<2.4)) checkphi_pt = 1;
-
-	
-      
-	//std::cout << "pt of topjet " << i << " is " << topjet.pt() << std::endl;
-          
-
-	/*const std::vector<Jet> subjets=topjet.subjets();
-      
-	//std::cout << "this topjet has " << subjets.size() << " subjets" << std::endl;
-
-	for(unsigned int ii=0;ii<subjets.size();ii++){
-
-        Jet subjet=subjets[ii];
-        
-	//std::cout << "Subjet " << ii << " has pt " << subjet.pt() << std::endl;
-	*/
-      
       
       }
 
     }
    
-  
-    
-    // note that always both selections are tested, even if we could
-    // short-circuit after mu_selection is passed. This is done
-    // to ensure that both cutflow histograms are filled.
     bool keep = selection.passes(event);
-
+    bool pass_trigger = trigger_sel->passes(event);
+    //bool pass_twodcut = twodcut_sel->passes(event);
+    bool pass_twodcut =1;
     h_nocuts->fill(event);
 
-    if(keep && checkphi_pt) h_aftercuts->fill(event);
+    if(keep && pass_trigger && checkphi_pt && pass_twodcut) h_aftercuts->fill(event);
+     
 
     return keep;
   }
