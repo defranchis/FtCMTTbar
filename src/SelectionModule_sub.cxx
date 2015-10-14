@@ -35,10 +35,10 @@ namespace uhh2examples {
    * 
    * In the output, only leptons passing the id and jets with pt > 30 GeV and eta < 2.4 are kept.
    */
-  class SelectionModule: public AnalysisModule {
+  class SelectionModule_sub: public AnalysisModule {
   public:
     
-    explicit SelectionModule(Context & ctx);
+    explicit SelectionModule_sub(Context & ctx);
     virtual bool process(Event & event);
 
   private:
@@ -69,10 +69,11 @@ namespace uhh2examples {
     std::unique_ptr<Selection> htlep_sel;
     std::unique_ptr<Selection> btag_sel;
     std::unique_ptr<Selection> lumi_selection;
+    
   };
 
 
-  SelectionModule::SelectionModule(Context & ctx): selection(ctx, "selection") {
+  SelectionModule_sub::SelectionModule_sub(Context & ctx): selection(ctx, "selection") {
     
     type = ctx.get("dataset_type", "");
     h_topjetsCMSTopTag = ctx.declare_event_input<std::vector<TopJet> >("patJetsHepTopTagCHSPacked_daughters");
@@ -88,7 +89,7 @@ namespace uhh2examples {
     // clean the objects:
     cleanermodules.emplace_back(new JetCleaner(jet_kinematic));
     cleanermodules.emplace_back(new MuonCleaner(muid));
-    cleanermodules.emplace_back(new TopJetCleaner(HEPTopTag(150)));
+    //cleanermodules.emplace_back(new TopJetCleaner(HEPTopTag(150)));
     jet_corrector.reset(new JetCorrector(JERFiles::PHYS14_L123_MC));
     jetER_smearer.reset(new JetResolutionSmearer(ctx));
     jetlepton_cleaner.reset(new JetLeptonCleaner(JERFiles::PHYS14_L123_MC));
@@ -104,7 +105,7 @@ namespace uhh2examples {
     //    selection.add<NElectronSelection>("ne == 0", 0, 0);
     selection.add<NMuonSelection>("nm == 1", 1, 1);
     selection.add<NJetSelection>("nj >= 2", 2);
-    selection.add<NTopJetSelection>("ntj >= 1", 1);
+    selection.add<NTopJetSelection>("ntj >= 1", 1, 1);
 
     h_nocuts.reset(new Hists2(ctx, "NoCuts"));
     h_aftercuts.reset(new Hists2(ctx, "AfterCuts"));
@@ -122,17 +123,19 @@ namespace uhh2examples {
     met_sel.reset(new METCut(50., std::numeric_limits<double>::infinity()));
     htlep_sel.reset(new HTlepCut(150., std::numeric_limits<double>::infinity()));
     btag_sel.reset(new NMuonBTagSelection(1));
-
+    
 
   }
 
 
-  bool SelectionModule::process(Event & event) {
+  bool SelectionModule_sub::process(Event & event) {
 
+    
     //clean events
     for(auto & m : cleanermodules){
       m->process(event);
     }
+    
     jet_corrector->process(event);
     if (type != "DATA"){
       jetER_smearer->process(event);
@@ -141,12 +144,14 @@ namespace uhh2examples {
     topjet_corrector->process(event);
     //  topjetER_smearer->process(event);
     topjetlepton_cleaner->process(event);
-
     if (lumi_selection.get() && !lumi_selection->passes(event)) {
         return false;
     }
 
+    //bool btagged = 0;
     bool checkphi_pt=0;
+    bool topmass_window = 0;
+    bool pass_sub_btag = 0;
     if(selection.passes(event)){
 
       //Example to access top jets information and subjets
@@ -161,9 +166,21 @@ namespace uhh2examples {
       
 	double deltaphi = deltaPhi(topjet,muons->at(0));
 	double pi = 3.14159265359;
-	if(deltaphi>2*pi/3 &&(topjets->at(i).pt()>150.)&&(fabs(topjets->at(i).eta())<2.4)) checkphi_pt = 1;
-      
+	if(deltaphi>2*pi/3 &&(topjets->at(i).pt()>150.)&&(fabs(topjets->at(i).eta())<2.4)) 
+	  {
+	    checkphi_pt = 1;
+	    if (topjet.v4().M()<250 && topjet.v4().M()>140) topmass_window=1;
+	  }
+	const std::vector<Jet> subjets=topjet.subjets();
+	JetId checkbtag=CSVBTag(CSVBTag::WP_LOOSE);
+	for(unsigned int m = 0; m < subjets.size(); m++)
+	  {
+	    std::cout << m << "subjet b tag = " << checkbtag(subjets[m], event)<< " CSV = " << subjets[m].btag_combinedSecondaryVertex() << std::endl;
+	    if (checkbtag(subjets[m], event)) pass_sub_btag = 1;
+	  }
+
       }
+
 
     }
     bool keep = selection.passes(event);
@@ -173,8 +190,7 @@ namespace uhh2examples {
     
     //bool pass_twodcut =1;
     h_nocuts->fill(event);
-
-    if(keep && checkphi_pt)
+    if(keep && checkphi_pt &&  topmass_window) 
       {
 	
 	h_aftercuts_1->fill(event);
@@ -183,36 +199,35 @@ namespace uhh2examples {
 	  {
 	    h_aftercuts_2->fill(event);
 	
-	  
-	    bool pass_twodcut = 1;//twodcut_sel->passes(event);
-
-	    if(pass_twodcut) 
+	   
+	    //bool pass_twodcut = 1;//twodcut_sel->passes(event);
+	    bool pass_btag = btag_sel->passes(event);
+	    if(pass_btag) 
 	      {
 
 		h_aftercuts_3->fill(event);
 
-		bool pass_btag = btag_sel->passes(event);
+		
 
-		if(pass_btag)
+		if(pass_sub_btag)
 		  {
 
 		    h_aftercuts_4->fill(event);
 
 		    if(pass_met && pass_htlep)
 		      {
+			
 			h_aftercuts->fill(event);
 		      }
 		  }
 	      }
 	  }
       }
-     
-
     return keep;
   }
 
   // as we want to run the ExampleCycleNew directly with AnalysisModuleRunner,
   // make sure the ExampleModule is found by class name. This is ensured by this macro:
-  UHH2_REGISTER_ANALYSIS_MODULE(SelectionModule)
+  UHH2_REGISTER_ANALYSIS_MODULE(SelectionModule_sub)
 
 }

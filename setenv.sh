@@ -4,9 +4,9 @@ module load root
 
 cd /nfs/dust/cms/user/schumas/sframe/SFramePhys14/
 source setup.sh
-cd /nfs/dust/cms/user/schumas/sframe/CMSSW_7_4_6/src/
+cd /nfs/dust/cms/user/schumas/sframe/CMSSW_7_4_7/src/
 cmsenv
-cd UHH2/FtCMTTbar/
+cd UHH2/
 
 
 
