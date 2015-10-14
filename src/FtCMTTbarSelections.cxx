@@ -73,10 +73,10 @@ bool NJetCut::passes(const Event & event){
 bool TwoDCut::passes(const Event & event){
 
   assert(event.muons && event.electrons && event.jets);
-  if((event.muons->size()+event.electrons->size()) != 1){
-    std::cout << "\n @@@ WARNING -- TwoDCut::passes -- unexpected number of muons+electrons in the event (!=1). returning 'false'\n";
+  /*  if((event.muons->size()+event.electrons->size()) != 1){
+    std::cout << "N_elec=" << event.electrons->size() << "N_muon=" << event.muons->size() << "\n @@@ WARNING -- TwoDCut::passes -- unexpected number of muons+electrons in the event (!=1). returning 'false'\n";
     return false;
-  }
+    }*/
 
   float drmin, ptrel;  
   if(event.muons->size()) std::tie(drmin, ptrel) = drmin_pTrel(event.muons->at(0), *event.jets);
@@ -162,5 +162,89 @@ bool HypothesisDiscriminatorCut::passes(const Event & event){
   if(discr_value < m_min_discr_ || discr_value > m_max_discr_) return false;
 
   return true;
+}
+////////////////////////////////////////////////////////
+
+NMuonBTagSelection::NMuonBTagSelection(int min_nbtag, int max_nbtag, JetId btag, double ptmin, double etamax )
+{
+  m_min_nbtag=min_nbtag;
+  m_max_nbtag=max_nbtag;
+  m_btag=btag;
+  m_ptmin=ptmin;
+  m_etamax=etamax;
+}
+
+bool NMuonBTagSelection::passes(const Event & event)
+{
+  int nbtag=0;
+
+  //Assumes to have only one muon                                                                  
+  std::vector<Jet>* jets = event.jets;
+  std::vector<Muon>* muons = event.muons;
+  for(unsigned int i=0; i<event.jets->size(); ++i) {
+    int jettagged=0;
+    Jet jet=jets->at(i);
+    if (m_btag(jet, event)) jettagged=1;
+ 
+    if(muons->size() != 1){
+      std::cout << "ATTENTION!!! muon size " << muons->size() << std::endl;
+    }
+
+    double deltaphi=deltaPhi(jet,muons->at(0));
+    double pi = 3.14159265359;
+    if(jettagged&&(deltaphi<(2*pi/3))&&(jet.pt()>m_ptmin)&&(fabs(jet.eta())<m_etamax)){
+
+      nbtag++;
+
+    }
+
+  }
+
+  if(nbtag<m_min_nbtag) return false;
+  if(nbtag>m_max_nbtag) return false;
+  return true;
+}
+////////////////////////////////////////////////////////
+
+SubBTagSelection::SubBTagSelection(int min_nsubbtag, int max_nsubbtag, JetId subbtag, double ptsubmin, double etasubmax )
+{
+    m_min_nsubbtag=min_nsubbtag;
+    m_max_nsubbtag=max_nsubbtag;
+    m_subbtag=subbtag;
+    m_ptsubmin=ptsubmin;
+    m_etasubmax=etasubmax;
+}
+
+bool SubBTagSelection::passes(const Event & event)
+{
+  int nsubbtag=0;
+
+  //Assumes to have only one muon                                                                  
+  std::vector<TopJet>* topjets = event.topjets;
+  std::vector<Muon>* muons = event.muons;     
+  int subjettagged=0;
+
+  for(unsigned int j=0;j<topjets->size();j++){
+    subjettagged=0;
+    TopJet topjet=topjets->at(j);
+    if(muons->size() != 1){
+      std::cout << "ATTENTION!!! muon size " << muons->size() << std::endl;}
+    double deltaphi=deltaPhi(topjet,muons->at(0));
+    double pi = 3.14159265359;
+    if((deltaphi<(2*pi/3))&&(topjet.pt()>m_ptsubmin)&&(fabs(topjet.eta())<m_etasubmax)){
+      const std::vector<Jet> subjets=topjet.subjets();
+      for(unsigned int ii=0;ii<subjets.size();ii++){
+	Jet subjet=subjets[ii];
+	if (m_subbtag(subjet, event)) subjettagged=1;
+	//subjettagged=1;
+      }
+      if (subjettagged)nsubbtag++;
+      
+    }
+  }
+  if(nsubbtag<m_min_nsubbtag) return false;
+  if(nsubbtag>m_max_nsubbtag) return false;
+  return true;
+  
 }
 ////////////////////////////////////////////////////////

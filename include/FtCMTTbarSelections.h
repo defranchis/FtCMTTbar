@@ -7,6 +7,7 @@
 #include "UHH2/common/include/ObjectIdUtils.h"
 #include "UHH2/common/include/TopJetIds.h"
 
+
 namespace uhh2 {
     
   class HTlepCut : public Selection {
@@ -84,4 +85,34 @@ namespace uhh2 {
   };
   /////
 
+  class NMuonBTagSelection: public Selection {
+  public:
+
+    explicit NMuonBTagSelection(int min_nbtag, int max_nbtag=999, JetId btag=CSVBTag(CSVBTag::WP_LOOSE), double ptmin=0., double etamax=infinity );
+ 
+    virtual bool passes(const Event &) override;
+
+  private:
+    int m_min_nbtag;
+    int m_max_nbtag;
+    JetId m_btag;
+    double m_ptmin;
+    double m_etamax;
+  };
+  /////
+
+  class SubBTagSelection: public Selection {
+  public:
+
+    explicit SubBTagSelection(int min_nsubbtag, int max_nsubbtag=999, JetId bsubtag=CSVBTag(CSVBTag::WP_LOOSE), double subptmin=0., double subetamax=infinity );
+ 
+    virtual bool passes(const Event &) override;
+
+  private:
+    int m_min_nsubbtag;
+    int m_max_nsubbtag;
+    JetId m_subbtag;
+    double m_ptsubmin;
+    double m_etasubmax;
+  };
 }

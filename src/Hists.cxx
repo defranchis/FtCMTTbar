@@ -5,7 +5,8 @@
 #include "UHH2/common/include/TopJetIds.h"
 #include "TH1F.h"
 #include <iostream>
-#include "UHH2/common/include/TopJetIds.h"
+#include "UHH2/common/include/JetIds.h"
+#include "UHH2/common/include/Utils.h"
 
 using namespace std;
 using namespace uhh2;
@@ -29,12 +30,12 @@ Hists2::Hists2(Context & ctx, const string & dirname): Hists(ctx, dirname){
   book<TH1F>("subFlavour_data", "matched flavour of the subjet", 4, 0., 4.);
 
   //track impact parameter tag info
-  book<TH1F>("subTrackMomentum_b", "momentum of tracks in the subjet", 100, 0., 15.);  
-  book<TH1F>("subTrackMomentum_c", "momentum of tracks in the subjet", 100, 0., 15.); 
-  book<TH1F>("subTrackMomentum_uds", "momentum of tracks in the subjet", 100, 0., 15.); 
-  book<TH1F>("subTrackMomentum_g", "momentum of tracks in the subjet", 100, 0., 15.); 
-  book<TH1F>("subTrackMomentum_none", "momentum of tracks in the subjet", 100, 0., 15.); 
-  book<TH1F>("subTrackMomentum_data", "momentum of tracks in the subjet", 100, 0., 15.); 
+  book<TH1F>("subTrackMomentum_b", "momentum of tracks in the subjet", 50, 0., 15.);  
+  book<TH1F>("subTrackMomentum_c", "momentum of tracks in the subjet", 50, 0., 15.); 
+  book<TH1F>("subTrackMomentum_uds", "momentum of tracks in the subjet", 50, 0., 15.); 
+  book<TH1F>("subTrackMomentum_g", "momentum of tracks in the subjet", 50, 0., 15.); 
+  book<TH1F>("subTrackMomentum_none", "momentum of tracks in the subjet", 50, 0., 15.); 
+  book<TH1F>("subTrackMomentum_data", "momentum of tracks in the subjet", 50, 0., 15.); 
 
   book<TH1F>("subTrackEta_b", "pseudorapidity of tracks in the subjet", 100, -5., 5.);  
   book<TH1F>("subTrackEta_c", "pseudorapidity of tracks in the subjet", 100, -5., 5.); 
@@ -43,19 +44,19 @@ Hists2::Hists2(Context & ctx, const string & dirname): Hists(ctx, dirname){
   book<TH1F>("subTrackEta_none", "pseudorapidity of tracks in the subjet", 100, -5., 5.); 
   book<TH1F>("subTrackEta_data", "pseudorapidity of tracks in the subjet", 100, -5., 5.); 
 
-  book<TH1F>("subTrackEtaRel_b", "track pseudorapidity, relative to the jet axis", 100, -5., 5.);  
-  book<TH1F>("subTrackEtaRel_c", "track pseudorapidity, relative to the jet axis", 100, -5., 5.); 
-  book<TH1F>("subTrackEtaRel_uds", "track pseudorapidity, relative to the jet axis", 100, -5., 5.); 
-  book<TH1F>("subTrackEtaRel_g", "track pseudorapidity, relative to the jet axis", 100, -5., 5.); 
-  book<TH1F>("subTrackEtaRel_none", "track pseudorapidity, relative to the jet axis", 100, -5., 5.); 
-  book<TH1F>("subTrackEtaRel_data", "track pseudorapidity, relative to the jet axis", 100, -5., 5.);
+  book<TH1F>("subTrackEtaRel_b", "track pseudorapidity, relative to the jet axis", 100, 0., 5.);  
+  book<TH1F>("subTrackEtaRel_c", "track pseudorapidity, relative to the jet axis", 100, 0., 5.); 
+  book<TH1F>("subTrackEtaRel_uds", "track pseudorapidity, relative to the jet axis", 100, 0., 5.); 
+  book<TH1F>("subTrackEtaRel_g", "track pseudorapidity, relative to the jet axis", 100, 0., 5.); 
+  book<TH1F>("subTrackEtaRel_none", "track pseudorapidity, relative to the jet axis", 100, 0., 5.); 
+  book<TH1F>("subTrackEtaRel_data", "track pseudorapidity, relative to the jet axis", 100, 0., 5.);
 
-  book<TH1F>("subTrackDeltaR_b", "track pseudoangular distance from the jet axis", 100, -1., 1.);  
-  book<TH1F>("subTrackDeltaR_c", "track pseudoangular distance from the jet axis", 100, -1., 1.); 
-  book<TH1F>("subTrackDeltaR_uds", "track pseudoangular distance from the jet axis", 100, -1., 1.); 
-  book<TH1F>("subTrackDeltaR_g", "track pseudoangular distance from the jet axis", 100, -1., 1.); 
-  book<TH1F>("subTrackDeltaR_none", "track pseudoangular distance from the jet axis", 100, -1., 1.); 
-  book<TH1F>("subTrackDeltaR_data", "track pseudoangular distance from the jet axis", 100, -1., 1.); 
+  book<TH1F>("subTrackDeltaR_b", "track pseudoangular distance from the jet axis", 100, 0., 1.);  
+  book<TH1F>("subTrackDeltaR_c", "track pseudoangular distance from the jet axis", 100, 0., 1.); 
+  book<TH1F>("subTrackDeltaR_uds", "track pseudoangular distance from the jet axis", 100, 0., 1.); 
+  book<TH1F>("subTrackDeltaR_g", "track pseudoangular distance from the jet axis", 100, 0., 1.); 
+  book<TH1F>("subTrackDeltaR_none", "track pseudoangular distance from the jet axis", 100, 0., 1.); 
+  book<TH1F>("subTrackDeltaR_data", "track pseudoangular distance from the jet axis", 100, 0., 1.); 
 
   book<TH1F>("subTrackSip3dVal_b", "track 3D signed impact parameter", 100, -0.1, 0.1);  
   book<TH1F>("subTrackSip3dVal_c", "track 3D signed impact parameter", 100, -0.1, 0.1); 
@@ -71,12 +72,12 @@ Hists2::Hists2(Context & ctx, const string & dirname): Hists(ctx, dirname){
   book<TH1F>("subTrackSip3dSig_none", "track 3D signed impact parameter significance", 100, -35., 35.); 
   book<TH1F>("subTrackSip3dSig_data", "track 3D signed impact parameter significance", 100, -35., 35.); 
 
-  book<TH1F>("subTrackSip2dVal_b", "track 2D signed impact parameter", 100, -10., 10.);  
-  book<TH1F>("subTrackSip2dVal_c", "track 2D signed impact parameter", 100, -10., 10.); 
-  book<TH1F>("subTrackSip2dVal_uds", "track 2D signed impact parameter", 100, -10., 10.); 
-  book<TH1F>("subTrackSip2dVal_g", "track 2D signed impact parameter", 100, -10., 10.); 
-  book<TH1F>("subTrackSip2dVal_none", "track 2D signed impact parameter", 100, -10., 10.); 
-  book<TH1F>("subTrackSip2dVal_data", "track 2D signed impact parameter", 100, -10., 10.); 
+  book<TH1F>("subTrackSip2dVal_b", "track 2D signed impact parameter", 100, -0.5, 0.5);  
+  book<TH1F>("subTrackSip2dVal_c", "track 2D signed impact parameter", 100, -0.5, 0.5); 
+  book<TH1F>("subTrackSip2dVal_uds", "track 2D signed impact parameter", 100, -0.5, 0.5); 
+  book<TH1F>("subTrackSip2dVal_g", "track 2D signed impact parameter", 100, -0.5, 0.5); 
+  book<TH1F>("subTrackSip2dVal_none", "track 2D signed impact parameter", 100, -0.5, 0.5); 
+  book<TH1F>("subTrackSip2dVal_data", "track 2D signed impact parameter", 100, -0.5, 0.5); 
 
   book<TH1F>("subTrackSip2dSig_b", "track 2D signed impact parameter significance", 100, -10., 10.);  
   book<TH1F>("subTrackSip2dSig_c", "track 2D signed impact parameter significance", 100, -10., 10.); 
@@ -113,91 +114,91 @@ Hists2::Hists2(Context & ctx, const string & dirname): Hists(ctx, dirname){
   book<TH1F>("subTrackNPixelHits_none", "number of valid pixel hits", 9, 0., 9.); 
   book<TH1F>("subTrackNPixelHits_data", "number of valid pixel hits", 9, 0., 9.); 
 
-  book<TH1F>("subTrackPtRel_b", "track transverse momentum, relative to the jet axis", 100, -50., 50.);  
-  book<TH1F>("subTrackPtRel_c", "track transverse momentum, relative to the jet axis", 100, -50., 50.); 
-  book<TH1F>("subTrackPtRel_uds", "track transverse momentum, relative to the jet axis", 100, -50., 50.); 
-  book<TH1F>("subTrackPtRel_g", "track transverse momentum, relative to the jet axis", 100, -50., 50.); 
-  book<TH1F>("subTrackPtRel_none", "track transverse momentum, relative to the jet axis", 100, -50., 50.); 
-  book<TH1F>("subTrackPtRel_data", "track transverse momentum, relative to the jet axis", 100, -50., 50.); 
+  book<TH1F>("subTrackPtRel_b", "track transverse momentum, relative to the jet axis", 100, 0., 20.);  
+  book<TH1F>("subTrackPtRel_c", "track transverse momentum, relative to the jet axis", 100, 0., 20.); 
+  book<TH1F>("subTrackPtRel_uds", "track transverse momentum, relative to the jet axis", 100, 0., 20.); 
+  book<TH1F>("subTrackPtRel_g", "track transverse momentum, relative to the jet axis", 100, 0., 20.); 
+  book<TH1F>("subTrackPtRel_none", "track transverse momentum, relative to the jet axis", 100, 0., 20.); 
+  book<TH1F>("subTrackPtRel_data", "track transverse momentum, relative to the jet axis", 100, 0., 20.); 
 
-  book<TH1F>("subTrackPPar_b", "track parallel momentum, along the jet axis", 100, -50., 50.);  
-  book<TH1F>("subTrackPPar_c", "track parallel momentum, along the jet axis", 100, -50., 50.); 
-  book<TH1F>("subTrackPPar_uds", "track parallel momentum, along the jet axis", 100, -50., 50.); 
-  book<TH1F>("subTrackPPar_g", "track parallel momentum, along the jet axis", 100, -50., 50.); 
-  book<TH1F>("subTrackPPar_none", "track parallel momentum, along the jet axis", 100, -50., 50.); 
-  book<TH1F>("subTrackPPar_data", "track parallel momentum, along the jet axis", 100, -50., 50.); 
+  book<TH1F>("subTrackPPar_b", "track parallel momentum, along the jet axis", 100, 0., 50.);  
+  book<TH1F>("subTrackPPar_c", "track parallel momentum, along the jet axis", 100, 0., 50.); 
+  book<TH1F>("subTrackPPar_uds", "track parallel momentum, along the jet axis", 100, 0., 50.); 
+  book<TH1F>("subTrackPPar_g", "track parallel momentum, along the jet axis", 100, 0., 50.); 
+  book<TH1F>("subTrackPPar_none", "track parallel momentum, along the jet axis", 100, 0., 50.); 
+  book<TH1F>("subTrackPPar_data", "track parallel momentum, along the jet axis", 100, 0., 50.); 
 
-  book<TH1F>("subTrackPtRatio_b", "track transverse momentum, relative to the jet axis, normalized to its energy", 100, -10., 10.);  
-  book<TH1F>("subTrackPtRatio_c", "track transverse momentum, relative to the jet axis, normalized to its energy", 100, -10., 10.); 
-  book<TH1F>("subTrackPtRatio_uds", "track transverse momentum, relative to the jet axis, normalized to its energy", 100, -10., 10.); 
-  book<TH1F>("subTrackPtRatio_g", "track transverse momentum, relative to the jet axis, normalized to its energy", 100, -10., 10.); 
-  book<TH1F>("subTrackPtRatio_none", "track transverse momentum, relative to the jet axis, normalized to its energy", 100, -10., 10.); 
-  book<TH1F>("subTrackPtRatio_data", "track transverse momentum, relative to the jet axis, normalized to its energy", 100, -10., 10.); 
+  book<TH1F>("subTrackPtRatio_b", "track transverse momentum, relative to the jet axis, normalized to its energy", 100, 0., 1.);  
+  book<TH1F>("subTrackPtRatio_c", "track transverse momentum, relative to the jet axis, normalized to its energy", 100, 0., 1.); 
+  book<TH1F>("subTrackPtRatio_uds", "track transverse momentum, relative to the jet axis, normalized to its energy", 100, 0., 1.); 
+  book<TH1F>("subTrackPtRatio_g", "track transverse momentum, relative to the jet axis, normalized to its energy", 100, 0., 1.); 
+  book<TH1F>("subTrackPtRatio_none", "track transverse momentum, relative to the jet axis, normalized to its energy", 100, 0., 1.); 
+  book<TH1F>("subTrackPtRatio_data", "track transverse momentum, relative to the jet axis, normalized to its energy", 100, 0., 1.); 
 
-  book<TH1F>("subTrackPParRatio_b", "track parallel momentum, along the jet axis, normalized to its energy", 100, -10., 10.);  
-  book<TH1F>("subTrackPParRatio_c", "track parallel momentum, along the jet axis, normalized to its energy", 100, -10., 10.); 
-  book<TH1F>("subTrackPParRatio_uds", "track parallel momentum, along the jet axis, normalized to its energy", 100, -10., 10.); 
-  book<TH1F>("subTrackPParRatio_g", "track parallel momentum, along the jet axis, normalized to its energy", 100, -10., 10.); 
-  book<TH1F>("subTrackPParRatio_none", "track parallel momentum, along the jet axis, normalized to its energy", 100, -10., 10.); 
-  book<TH1F>("subTrackPParRatio_data", "track parallel momentum, along the jet axis, normalized to its energy", 100, -10., 10.); 
+  book<TH1F>("subTrackPParRatio_b", "track parallel momentum, along the jet axis, normalized to its energy", 100, 0.8, 1.2);  
+  book<TH1F>("subTrackPParRatio_c", "track parallel momentum, along the jet axis, normalized to its energy", 100, 0.8, 1.2); 
+  book<TH1F>("subTrackPParRatio_uds", "track parallel momentum, along the jet axis, normalized to its energy", 100, 0.8, 1.2); 
+  book<TH1F>("subTrackPParRatio_g", "track parallel momentum, along the jet axis, normalized to its energy", 100, 0.8, 1.2); 
+  book<TH1F>("subTrackPParRatio_none", "track parallel momentum, along the jet axis, normalized to its energy", 100, 0.8, 1.2); 
+  book<TH1F>("subTrackPParRatio_data", "track parallel momentum, along the jet axis, normalized to its energy", 100, 0.8, 1.2); 
 
-  book<TH1F>("subTrackJetDistVal_b", "minimum track approach distance to jet axis", 100, -0.01, 0.3);  
-  book<TH1F>("subTrackJetDistVal_c", "minimum track approach distance to jet axis", 100, -0.01, 0.3); 
-  book<TH1F>("subTrackJetDistVal_uds", "minimum track approach distance to jet axis", 100, -0.01, 0.3); 
-  book<TH1F>("subTrackJetDistVal_g", "minimum track approach distance to jet axis", 100, -0.01, 0.3); 
-  book<TH1F>("subTrackJetDistVal_none", "minimum track approach distance to jet axis", 100, -0.01, 0.3); 
-  book<TH1F>("subTrackJetDistVal_data", "minimum track approach distance to jet axis", 100, -0.01, 0.3); 
+  book<TH1F>("subTrackJetDistVal_b", "minimum track approach distance to jet axis", 100, -0.05, 0.05);  
+  book<TH1F>("subTrackJetDistVal_c", "minimum track approach distance to jet axis", 100, -0.05, 0.05); 
+  book<TH1F>("subTrackJetDistVal_uds", "minimum track approach distance to jet axis", 100, -0.05, 0.05); 
+  book<TH1F>("subTrackJetDistVal_g", "minimum track approach distance to jet axis", 100, -0.05, 0.05); 
+  book<TH1F>("subTrackJetDistVal_none", "minimum track approach distance to jet axis", 100, -0.05, 0.05); 
+  book<TH1F>("subTrackJetDistVal_data", "minimum track approach distance to jet axis", 100, -0.05, 0.05); 
+ 
+  book<TH1F>("subTrackJetDistSig_b", "minimum track approach distance to jet axis significance", 100, 0., 2.);  
+  book<TH1F>("subTrackJetDistSig_c", "minimum track approach distance to jet axis significance", 100, 0., 2.); 
+  book<TH1F>("subTrackJetDistSig_uds", "minimum track approach distance to jet axis significance", 100, 0., 2.); 
+  book<TH1F>("subTrackJetDistSig_g", "minimum track approach distance to jet axis significance", 100, 0., 2.); 
+  book<TH1F>("subTrackJetDistSig_none", "minimum track approach distance to jet axis significance", 100, 0., 2.); 
+  book<TH1F>("subTrackJetDistSig_data", "minimum track approach distance to jet axis significance", 100, 0., 2.); 
 
-  book<TH1F>("subTrackJetDistSig_b", "minimum track approach distance to jet axis significance", 100, -50., 50.);  
-  book<TH1F>("subTrackJetDistSig_c", "minimum track approach distance to jet axis significance", 100, -50., 50.); 
-  book<TH1F>("subTrackJetDistSig_uds", "minimum track approach distance to jet axis significance", 100, -50., 50.); 
-  book<TH1F>("subTrackJetDistSig_g", "minimum track approach distance to jet axis significance", 100, -50., 50.); 
-  book<TH1F>("subTrackJetDistSig_none", "minimum track approach distance to jet axis significance", 100, -50., 50.); 
-  book<TH1F>("subTrackJetDistSig_data", "minimum track approach distance to jet axis significance", 100, -50., 50.); 
+  book<TH1F>("subTrackGhostTrackDistVal_b", "minimum approach distance to ghost track", 100, 0., 6.);  
+  book<TH1F>("subTrackGhostTrackDistVal_c", "minimum approach distance to ghost track", 100, 0., 6.); 
+  book<TH1F>("subTrackGhostTrackDistVal_uds", "minimum approach distance to ghost track", 100, 0., 6.); 
+  book<TH1F>("subTrackGhostTrackDistVal_g", "minimum approach distance to ghost track", 100, 0., 6.); 
+  book<TH1F>("subTrackGhostTrackDistVal_none", "minimum approach distance to ghost track", 100, 0., 6.); 
+  book<TH1F>("subTrackGhostTrackDistVal_data", "minimum approach distance to ghost track", 100, 0., 6.); 
 
-  book<TH1F>("subTrackGhostTrackDistVal_b", "minimum approach distance to ghost track", 100, -50., 50.);  
-  book<TH1F>("subTrackGhostTrackDistVal_c", "minimum approach distance to ghost track", 100, -50., 50.); 
-  book<TH1F>("subTrackGhostTrackDistVal_uds", "minimum approach distance to ghost track", 100, -50., 50.); 
-  book<TH1F>("subTrackGhostTrackDistVal_g", "minimum approach distance to ghost track", 100, -50., 50.); 
-  book<TH1F>("subTrackGhostTrackDistVal_none", "minimum approach distance to ghost track", 100, -50., 50.); 
-  book<TH1F>("subTrackGhostTrackDistVal_data", "minimum approach distance to ghost track", 100, -50., 50.); 
+  book<TH1F>("subTrackGhostTrackDistSig_b", "minimum approach distance to ghost track significance", 100, 0., 20.);  
+  book<TH1F>("subTrackGhostTrackDistSig_c", "minimum approach distance to ghost track significance", 100, 0., 20.); 
+  book<TH1F>("subTrackGhostTrackDistSig_uds", "minimum approach distance to ghost track significance", 100, 0., 20.); 
+  book<TH1F>("subTrackGhostTrackDistSig_g", "minimum approach distance to ghost track significance", 100, 0., 20.); 
+  book<TH1F>("subTrackGhostTrackDistSig_none", "minimum approach distance to ghost track significance", 100, 0., 20.); 
+  book<TH1F>("subTrackGhostTrackDistSig_data", "minimum approach distance to ghost track significance", 100, 0., 20.); 
 
-  book<TH1F>("subTrackGhostTrackDistSig_b", "minimum approach distance to ghost track significance", 100, -50., 50.);  
-  book<TH1F>("subTrackGhostTrackDistSig_c", "minimum approach distance to ghost track significance", 100, -50., 50.); 
-  book<TH1F>("subTrackGhostTrackDistSig_uds", "minimum approach distance to ghost track significance", 100, -50., 50.); 
-  book<TH1F>("subTrackGhostTrackDistSig_g", "minimum approach distance to ghost track significance", 100, -50., 50.); 
-  book<TH1F>("subTrackGhostTrackDistSig_none", "minimum approach distance to ghost track significance", 100, -50., 50.); 
-  book<TH1F>("subTrackGhostTrackDistSig_data", "minimum approach distance to ghost track significance", 100, -50., 50.); 
+  book<TH1F>("subTrackGhostTrackWeight_b", "weight of track participation in ghost track fit", 100, -1., 2.);  
+  book<TH1F>("subTrackGhostTrackWeight_c", "weight of track participation in ghost track fit", 100, -1., 2.); 
+  book<TH1F>("subTrackGhostTrackWeight_uds", "weight of track participation in ghost track fit", 100, -1., 2.); 
+  book<TH1F>("subTrackGhostTrackWeight_g", "weight of track participation in ghost track fit", 100, -1., 2.); 
+  book<TH1F>("subTrackGhostTrackWeight_none", "weight of track participation in ghost track fit", 100, -1., 2.); 
+  book<TH1F>("subTrackGhostTrackWeight_data", "weight of track participation in ghost track fit", 100, -1., 2.);
 
-  book<TH1F>("subTrackGhostTrackWeight_b", "weight of track participation in ghost track fit", 100, -1., 10.);  
-  book<TH1F>("subTrackGhostTrackWeight_c", "weight of track participation in ghost track fit", 100, -1., 10.); 
-  book<TH1F>("subTrackGhostTrackWeight_uds", "weight of track participation in ghost track fit", 100, -1., 10.); 
-  book<TH1F>("subTrackGhostTrackWeight_g", "weight of track participation in ghost track fit", 100, -1., 10.); 
-  book<TH1F>("subTrackGhostTrackWeight_none", "weight of track participation in ghost track fit", 100, -1., 10.); 
-  book<TH1F>("subTrackGhostTrackWeight_data", "weight of track participation in ghost track fit", 100, -1., 10.);
+  //secondary vertex tag info
 
- //secondary vertex tag info
+  book<TH1F>("subFlightDistance2dVal_b", "transverse distance between primary and secondary vertex", 100, 0., 3.);  
+  book<TH1F>("subFlightDistance2dVal_c", "transverse distance between primary and secondary vertex", 100, 0., 3.); 
+  book<TH1F>("subFlightDistance2dVal_uds", "transverse distance between primary and secondary vertex", 100, 0., 3.); 
+  book<TH1F>("subFlightDistance2dVal_g", "transverse distance between primary and secondary vertex", 100, 0., 3.); 
+  book<TH1F>("subFlightDistance2dVal_none", "transverse distance between primary and secondary vertex", 100, 0., 3.); 
+  book<TH1F>("subFlightDistance2dVal_data", "transverse distance between primary and secondary vertex", 100, 0., 3.); 
 
-  book<TH1F>("subFlightDistance2dVal_b", "transverse distance between primary and secondary vertex", 100, -50., 50.);  
-  book<TH1F>("subFlightDistance2dVal_c", "transverse distance between primary and secondary vertex", 100, -50., 50.); 
-  book<TH1F>("subFlightDistance2dVal_uds", "transverse distance between primary and secondary vertex", 100, -50., 50.); 
-  book<TH1F>("subFlightDistance2dVal_g", "transverse distance between primary and secondary vertex", 100, -50., 50.); 
-  book<TH1F>("subFlightDistance2dVal_none", "transverse distance between primary and secondary vertex", 100, -50., 50.); 
-  book<TH1F>("subFlightDistance2dVal_data", "transverse distance between primary and secondary vertex", 100, -50., 50.); 
+  book<TH1F>("subFlightDistance2dSig_b", "transverse distance significance between primary and secondary vertex", 100, 0., 50.);  
+  book<TH1F>("subFlightDistance2dSig_c", "transverse distance significance between primary and secondary vertex", 100, 0., 50.); 
+  book<TH1F>("subFlightDistance2dSig_uds", "transverse distance significance between primary and secondary vertex", 100, 0., 50.); 
+  book<TH1F>("subFlightDistance2dSig_g", "transverse distance significance between primary and secondary vertex", 100, 0., 50.); 
+  book<TH1F>("subFlightDistance2dSig_none", "transverse distance significance between primary and secondary vertex", 100, 0., 50.); 
+  book<TH1F>("subFlightDistance2dSig_data", "transverse distance significance between primary and secondary vertex", 100, 0., 50.);
 
-  book<TH1F>("subFlightDistance2dSig_b", "transverse distance significance between primary and secondary vertex", 100, -50., 50.);  
-  book<TH1F>("subFlightDistance2dSig_c", "transverse distance significance between primary and secondary vertex", 100, -50., 50.); 
-  book<TH1F>("subFlightDistance2dSig_uds", "transverse distance significance between primary and secondary vertex", 100, -50., 50.); 
-  book<TH1F>("subFlightDistance2dSig_g", "transverse distance significance between primary and secondary vertex", 100, -50., 50.); 
-  book<TH1F>("subFlightDistance2dSig_none", "transverse distance significance between primary and secondary vertex", 100, -50., 50.); 
-  book<TH1F>("subFlightDistance2dSig_data", "transverse distance significance between primary and secondary vertex", 100, -50., 50.);
-
-  book<TH1F>("subFlightDistance3dVal_b", "distance between primary and secondary vertex", 100, -50., 50.);  
-  book<TH1F>("subFlightDistance3dVal_c", "distance between primary and secondary vertex", 100, -50., 50.); 
-  book<TH1F>("subFlightDistance3dVal_uds", "distance between primary and secondary vertex", 100, -50., 50.); 
-  book<TH1F>("subFlightDistance3dVal_g", "distance between primary and secondary vertex", 100, -50., 50.); 
-  book<TH1F>("subFlightDistance3dVal_none", "distance between primary and secondary vertex", 100, -50., 50.); 
-  book<TH1F>("subFlightDistance3dVal_data", "distance between primary and secondary vertex", 100, -50., 50.); 
+  book<TH1F>("subFlightDistance3dVal_b", "distance between primary and secondary vertex", 100, 0., 20.);  
+  book<TH1F>("subFlightDistance3dVal_c", "distance between primary and secondary vertex", 100, 0., 20.); 
+  book<TH1F>("subFlightDistance3dVal_uds", "distance between primary and secondary vertex", 100, 0., 20.); 
+  book<TH1F>("subFlightDistance3dVal_g", "distance between primary and secondary vertex", 100, 0., 20.); 
+  book<TH1F>("subFlightDistance3dVal_none", "distance between primary and secondary vertex", 100, 0., 20.); 
+  book<TH1F>("subFlightDistance3dVal_data", "distance between primary and secondary vertex", 100, 0., 20.); 
 
   book<TH1F>("subFlightDistance3dSig_b", "distance significance between primary and secondary vertex", 100, 0., 80.);  
   book<TH1F>("subFlightDistance3dSig_c", "distance significance between primary and secondary vertex", 100, 0., 80.); 
@@ -206,12 +207,12 @@ Hists2::Hists2(Context & ctx, const string & dirname): Hists(ctx, dirname){
   book<TH1F>("subFlightDistance3dSig_none", "distance significance between primary and secondary vertex", 100, 0., 80.); 
   book<TH1F>("subFlightDistance3dSig_data", "distance significance between primary and secondary vertex", 100, 0., 80.); 
 
-  book<TH1F>("subVertexJetDeltaR_b", "pseudoangular distance between jet axis and secondary vertex direction", 100, -10., 10.);  
-  book<TH1F>("subVertexJetDeltaR_c", "pseudoangular distance between jet axis and secondary vertex direction", 100, -10., 10.); 
-  book<TH1F>("subVertexJetDeltaR_uds", "pseudoangular distance between jet axis and secondary vertex direction", 100, -10., 10.); 
-  book<TH1F>("subVertexJetDeltaR_g", "pseudoangular distance between jet axis and secondary vertex direction", 100, -10., 10.); 
-  book<TH1F>("subVertexJetDeltaR_none", "pseudoangular distance between jet axis and secondary vertex direction", 100, -10., 10.); 
-  book<TH1F>("subVertexJetDeltaR_data", "pseudoangular distance between jet axis and secondary vertex direction", 100, -10., 10.); 
+  book<TH1F>("subVertexJetDeltaR_b", "pseudoangular distance between jet axis and secondary vertex direction", 100, 0., 1.);  
+  book<TH1F>("subVertexJetDeltaR_c", "pseudoangular distance between jet axis and secondary vertex direction", 100, 0., 1.); 
+  book<TH1F>("subVertexJetDeltaR_uds", "pseudoangular distance between jet axis and secondary vertex direction", 100, 0., 1.); 
+  book<TH1F>("subVertexJetDeltaR_g", "pseudoangular distance between jet axis and secondary vertex direction", 100, 0., 1.); 
+  book<TH1F>("subVertexJetDeltaR_none", "pseudoangular distance between jet axis and secondary vertex direction", 100, 0., 1.); 
+  book<TH1F>("subVertexJetDeltaR_data", "pseudoangular distance between jet axis and secondary vertex direction", 100, 0., 1.); 
 
   book<TH1F>("subJetNSecondaryVertices_b", "number of reconstructed possible secondary vertices in jet", 8, 0., 8.);  
   book<TH1F>("subJetNSecondaryVertices_c", "number of reconstructed possible secondary vertices in jet", 8, 0., 8.); 
@@ -227,12 +228,12 @@ Hists2::Hists2(Context & ctx, const string & dirname): Hists(ctx, dirname){
   book<TH1F>("subVertexNTracks_none", "number of tracks at secondary vertex", 20, 0., 20.); 
   book<TH1F>("subVertexNTracks_data", "number of tracks at secondary vertex", 20, 0., 20.); 
 
-  book<TH1F>("subSecondaryVertex_b", "secondary vertex uncorrected mass", 100, 0., 10.);  
-  book<TH1F>("subSecondaryVertex_c", "secondary vertex uncorrected mass", 100, 0., 10.); 
-  book<TH1F>("subSecondaryVertex_uds", "secondary vertex uncorrected mass", 100, 0., 10.); 
-  book<TH1F>("subSecondaryVertex_g", "secondary vertex uncorrected mass", 100, 0., 10.); 
-  book<TH1F>("subSecondaryVertex_none", "secondary vertex uncorrected mass", 100, 0., 10.); 
-  book<TH1F>("subSecondaryVertex_data", "secondary vertex uncorrected mass", 100, 0., 10.); 
+  book<TH1F>("subSecondaryVertex_b", "secondary vertex uncorrected mass", 50, 0., 10.);  
+  book<TH1F>("subSecondaryVertex_c", "secondary vertex uncorrected mass", 50, 0., 10.); 
+  book<TH1F>("subSecondaryVertex_uds", "secondary vertex uncorrected mass", 50, 0., 10.); 
+  book<TH1F>("subSecondaryVertex_g", "secondary vertex uncorrected mass", 50, 0., 10.); 
+  book<TH1F>("subSecondaryVertex_none", "secondary vertex uncorrected mass", 50, 0., 10.); 
+  book<TH1F>("subSecondaryVertex_data", "secondary vertex uncorrected mass", 50, 0., 10.); 
 
   book<TH1F>("subVertexChi2_b", "secondary vertex chi2", 100, 0., 10.);  
   book<TH1F>("subVertexChi2_c", "secondary vertex chi2", 100, 0., 10.); 
@@ -265,26 +266,26 @@ Hists2::Hists2(Context & ctx, const string & dirname): Hists(ctx, dirname){
   book<TH1F>("subVertexCategoryJTC_none", "secondary vertex category from jet tag computer", 5, 0., 5.); 
   book<TH1F>("subVertexCategoryJTC_data", "secondary vertex category from jet tag computer", 5, 0., 5.); 
 
-  book<TH1F>("subVertexMassJTC_b", "secondary vertex corrected mass from jet tag computer", 100, 0., 8.);  
-  book<TH1F>("subVertexMassJTC_c", "secondary vertex corrected mass from jet tag computer", 100, 0., 8.); 
-  book<TH1F>("subVertexMassJTC_uds", "secondary vertex corrected mass from jet tag computer", 100, 0., 8.); 
-  book<TH1F>("subVertexMassJTC_g", "secondary vertex corrected mass from jet tag computer", 100, 0., 8.); 
-  book<TH1F>("subVertexMassJTC_none", "secondary vertex corrected mass from jet tag computer", 100, 0., 8.); 
-  book<TH1F>("subVertexMassJTC_data", "secondary vertex corrected mass from jet tag computer", 100, 0., 8.); 
+  book<TH1F>("subVertexMassJTC_b", "secondary vertex corrected mass from jet tag computer", 100, 0., 0.02);  
+  book<TH1F>("subVertexMassJTC_c", "secondary vertex corrected mass from jet tag computer", 100, 0., 0.02); 
+  book<TH1F>("subVertexMassJTC_uds", "secondary vertex corrected mass from jet tag computer", 100, 0., 0.02); 
+  book<TH1F>("subVertexMassJTC_g", "secondary vertex corrected mass from jet tag computer", 100, 0., 0.02); 
+  book<TH1F>("subVertexMassJTC_none", "secondary vertex corrected mass from jet tag computer", 100, 0., 0.02); 
+  book<TH1F>("subVertexMassJTC_data", "secondary vertex corrected mass from jet tag computer", 100, 0., 0.02); 
 
-  book<TH1F>("subVertexEnergyRatioJTC_b", "ratio of energy at secondary vertex over total energy from JTC", 100, 0., 10.);  
-  book<TH1F>("subVertexEnergyRatioJTC_c", "ratio of energy at secondary vertex over total energy from JTC", 100, 0., 10.); 
-  book<TH1F>("subVertexEnergyRatioJTC_uds", "ratio of energy at secondary vertex over total energy from JTC", 100, 0., 10.); 
-  book<TH1F>("subVertexEnergyRatioJTC_g", "ratio of energy at secondary vertex over total energy from JTC", 100, 0., 10.); 
-  book<TH1F>("subVertexEnergyRatioJTC_none", "ratio of energy at secondary vertex over total energy from JTC", 100, 0., 10.); 
-  book<TH1F>("subVertexEnergyRatioJTC_data", "ratio of energy at secondary vertex over total energy from JTC", 100, 0., 10.); 
+  book<TH1F>("subVertexEnergyRatioJTC_b", "ratio of energy at secondary vertex over total energy from JTC", 100, 0., 2.);  
+  book<TH1F>("subVertexEnergyRatioJTC_c", "ratio of energy at secondary vertex over total energy from JTC", 100, 0., 2.); 
+  book<TH1F>("subVertexEnergyRatioJTC_uds", "ratio of energy at secondary vertex over total energy from JTC", 100, 0., 2.); 
+  book<TH1F>("subVertexEnergyRatioJTC_g", "ratio of energy at secondary vertex over total energy from JTC", 100, 0., 2.); 
+  book<TH1F>("subVertexEnergyRatioJTC_none", "ratio of energy at secondary vertex over total energy from JTC", 100, 0., 2.); 
+  book<TH1F>("subVertexEnergyRatioJTC_data", "ratio of energy at secondary vertex over total energy from JTC", 100, 0., 2.); 
 
-  book<TH1F>("subTrackSip3dSigAboveCharmJTC_b", "track 3D signed impact parameter significance of first track lifting mass above charm from JTC", 100, 0., 50.);  
-  book<TH1F>("subTrackSip3dSigAboveCharmJTC_c", "track 3D signed impact parameter significance of first track lifting mass above charm from JTC", 100, 0., 50.); 
-  book<TH1F>("subTrackSip3dSigAboveCharmJTC_uds", "track 3D signed impact parameter significance of first track lifting mass above charm from JTC", 100, 0., 50.); 
-  book<TH1F>("subTrackSip3dSigAboveCharmJTC_g", "track 3D signed impact parameter significance of first track lifting mass above charm from JTC", 100, 0., 50.); 
-  book<TH1F>("subTrackSip3dSigAboveCharmJTC_none", "track 3D signed impact parameter significance of first track lifting mass above charm from JTC", 100, 0., 50.); 
-  book<TH1F>("subTrackSip3dSigAboveCharmJTC_data", "track 3D signed impact parameter significance of first track lifting mass above charm from JTC", 100, 0., 50.); 
+  book<TH1F>("subTrackSip3dSigAboveCharmJTC_b", "track 3D signed impact parameter significance of first track lifting mass above charm from JTC", 100, 0., 0.02);  
+  book<TH1F>("subTrackSip3dSigAboveCharmJTC_c", "track 3D signed impact parameter significance of first track lifting mass above charm from JTC", 100, 0., 0.02); 
+  book<TH1F>("subTrackSip3dSigAboveCharmJTC_uds", "track 3D signed impact parameter significance of first track lifting mass above charm from JTC", 100, 0., 0.02); 
+  book<TH1F>("subTrackSip3dSigAboveCharmJTC_g", "track 3D signed impact parameter significance of first track lifting mass above charm from JTC", 100, 0., 0.02); 
+  book<TH1F>("subTrackSip3dSigAboveCharmJTC_none", "track 3D signed impact parameter significance of first track lifting mass above charm from JTC", 100, 0., 0.02); 
+  book<TH1F>("subTrackSip3dSigAboveCharmJTC_data", "track 3D signed impact parameter significance of first track lifting mass above charm from JTC", 100, 0., 0.02); 
 
   book<TH1F>("subTrackMultiplicity_b", "track multiplicity of the subjet", 50, 0., 50.);  
   book<TH1F>("subTrackMultiplicity_c", "track multiplicity of the subjet", 50, 0., 50.); 
@@ -307,12 +308,10 @@ Hists2::Hists2(Context & ctx, const string & dirname): Hists(ctx, dirname){
   book<TH1F>("weight_none", "weight", 100, 0., 0.1); 
   book<TH1F>("weight_data", "weight", 100, 0., 0.1); 
 
-  book<TH1F>("MassTop_b", "Top Mass", 100, 0., 500.);  
-  book<TH1F>("MassTop_c", "Top Mass", 100, 0., 500.); 
-  book<TH1F>("MassTop_uds", "Top Mass", 100, 0., 500.); 
-  book<TH1F>("MassTop_g", "Top Mass", 100, 0., 500.); 
-  book<TH1F>("MassTop_none", "Top Mass", 100, 0., 500.); 
-  book<TH1F>("MassTop_data", "Top Mass", 100, 0., 500.); 
+  book<TH1F>("MassTop", "Top Mass", 50, 0., 500.); 
+  book<TH1F>("MassTop_sub", "Top Mass calculated from subjets", 50, 0., 500.);
+ 
+  book<TH1F>("PTTop", "Top PT", 50, 0., 500.);  
 
   book<TH1F>("subVertexNvtx_b", "N of secondary vertex", 6, 0., 6.);  
   book<TH1F>("subVertexNvtx_c", "N of secondary vertex", 6, 0., 6.); 
@@ -321,11 +320,42 @@ Hists2::Hists2(Context & ctx, const string & dirname): Hists(ctx, dirname){
   book<TH1F>("subVertexNvtx_none", "N of secondary vertex", 6, 0., 6.); 
   book<TH1F>("subVertexNvtx_data", "N of secondary vertex", 6, 0., 6.); 
 
-  h_topjetsCMSTopTag = ctx.get_handle<std::vector<TopJet> >("slimmedJetsAK8_CMSTopTag");
-  h_topjetssoftdrop = ctx.get_handle<std::vector<TopJet> >("patJetsAk8CHSJetsSoftDropPacked_daughters");
+  book<TH1F>("PrimaryVertex", "Primary Vertex", 50, 0., 50.);  
+
+  book<TH1F>("Weight", "Weight", 100, -0.3, 0.3);
+  book<TH1F>("NumberofEvents", "Number of Events", 6, 0., 6.);
+
+  book<TH1F>("m12", "m12", 20, 0., 100.);
+  book<TH1F>("m13", "m13", 20, 0., 100.);
+  book<TH1F>("m23", "m23", 20, 0., 100.);
+ 
+  book<TH1F>("fRec", "fRec", 50, 0., 1.);
+
+  book<TH1F>("HTTmass", "HTTmass", 50, 0., 300.);
+  book<TH1F>("tau32", "tau32", 50, 0., 1.);
+  book<TH1F>("tau21", "tau21", 50, 0., 1.);
+
+  book<TH1F>("wmass", "wmass", 50, 0., 150.);
+  book<TH1F>("neutralEmEnergyFraction", "neutralEmEnergyFraction", 50, 0., 1.);
+  book<TH1F>("neutralHadronEnergyFraction", "neutralHadronEnergyFraction", 50, 0., 1.);
+  book<TH1F>("neutralMultiplicity", "neutralMultiplicity", 20, 0., 20.);
+
+  h_topjetsCMSTopTag = ctx.get_handle<std::vector<TopJet> >("patJetsHepTopTagCHSPacked_daughters");
+  h_topjetssoftdrop = ctx.get_handle<std::vector<TopJet> >("patJetsCa15CHSJetsFilteredPacked_daughters");
 
 }
 
+template<typename T>
+double m_groomedT(const T & topjet){
+  auto subjets = topjet.subjets();
+  LorentzVector sum(0,0,0,0);
+  for(auto subjet : subjets) sum += subjet.v4();
+  if(!sum.isTimelike()) return -1.0;
+  else return sum.M();
+}
+double m_groomed(const TopJet & topjet){
+  return m_groomedT<TopJet>(topjet);
+}
 
 void Hists2::fill(const Event & event){
   // fill the histograms. Please note the comments in the header file:
@@ -344,7 +374,49 @@ void Hists2::fill(const Event & event){
   std::vector<TopJet>* topjets = event.topjets;
   std::vector<Muon>* muons = event.muons;
  
+  int check_one_event = 0;
+
+  for(unsigned int n=0;n<topjets->size();n++){
+    if (muons->size() == 0) continue; 
+    TopJet seltopjet=topjets->at(n);
+    double deltaphi=deltaPhi(seltopjet,muons->at(0));
+    double pi = 3.14159265359;
+    if(!((deltaphi>(2*pi/3))&&(seltopjet.pt()>150.)&&(fabs(seltopjet.eta())<2.4))) continue;
+
+
+    auto selsubjets=seltopjet.subjets();
+
+    sort_by_pt(selsubjets); 
+
   
+    double m12 = 0;
+    double m13 = 0;
+    double m23 = 0;
+    if(selsubjets.size()==3) {    
+      
+      if( (selsubjets[0].v4()+selsubjets[1].v4()).isTimelike())
+	m12=(selsubjets[0].v4()+selsubjets[1].v4()).M();
+      
+      if( (selsubjets[0].v4()+selsubjets[2].v4()).isTimelike() )
+	m13=(selsubjets[0].v4()+selsubjets[2].v4()).M();
+      
+      if( (selsubjets[1].v4()+selsubjets[2].v4()).isTimelike()  )
+	m23 = (selsubjets[1].v4()+selsubjets[2].v4()).M();
+
+      hist("m12")->Fill(m12, weight);
+      hist("m13")->Fill(m13, weight);
+      hist("m23")->Fill(m23, weight);
+
+      }
+    if (seltopjet.has_tag(seltopjet.tagname2tag("fRec"))) hist("fRec")->Fill(seltopjet.get_tag(seltopjet.tagname2tag("fRec")),weight);
+    if (seltopjet.has_tag(seltopjet.tagname2tag("mass"))) hist("HTTmass")->Fill(seltopjet.get_tag(seltopjet.tagname2tag("mass")),weight);
+
+    hist("tau32")->Fill(seltopjet.tau3()/seltopjet.tau2(), weight);
+    hist("tau21")->Fill(seltopjet.tau2()/seltopjet.tau1(), weight);
+
+  }
+  
+
   for(unsigned int i=0;i<topjetssoftdrop->size();i++){
 
     double deltaR=99999.;
@@ -355,25 +427,48 @@ void Hists2::fill(const Event & event){
       //check muon and topjet are in opposite emispheres
       double deltaphi=deltaPhi(topjets->at(j),muons->at(0));
       double pi = 3.14159265359;
-      if(!((deltaphi>(2*pi/3))&&(topjets->at(j).pt()>350.)&&(fabs(topjets->at(j).eta())<2.4))) continue;
+      if(!((deltaphi>(2*pi/3))&&(topjets->at(j).pt()>150.)&&(fabs(topjets->at(j).eta())<2.4))) continue;
       //check deltaR_tmp between topjet j and softdrop i 
       double deltaPHI = deltaPhi(topjets->at(j),topjetssoftdrop->at(i));
       double deltaETA = topjets->at(j).eta()-topjetssoftdrop->at(i).eta();
       double deltaR_tmp = sqrt(deltaPHI*deltaPHI+deltaETA*deltaETA);
       if (deltaR_tmp < deltaR) {deltaR = deltaR_tmp;} 	
-    }
+    } //loop over selection topjets
 
     //go to next topjet if there is no matching topjetTopTag
     if (!(deltaR<0.4)) continue;
 
+    check_one_event++;
+    if(check_one_event == 1) hist("NumberofEvents")->Fill(1,weight);
+       
 
-        
+ 
     //TopJets (Softdrop)
     TopJet topjet=topjetssoftdrop->at(i);
+   
+    hist("MassTop")->Fill(topjet.v4().M(), weight);
+    hist("PTTop")->Fill(topjet.v4().pt(), weight);
+    hist("PrimaryVertex")->Fill(event.pvs->size(), weight);
+    hist("Weight")->Fill(weight);
+    hist("MassTop_sub")->Fill(m_groomed(topjet),weight);
+    hist("neutralEmEnergyFraction")->Fill(topjet.neutralEmEnergyFraction(),weight);
+    hist("neutralHadronEnergyFraction")->Fill(topjet.neutralHadronEnergyFraction(),weight);
+    hist("neutralMultiplicity")->Fill(topjet.neutralMultiplicity(),weight);
 
     //Subjets of topjetssoftdrop 
-
     const std::vector<Jet> subjets=topjet.subjets();
+    JetId checkbtag=CSVBTag(CSVBTag::WP_LOOSE);
+    
+    if(subjets.size() == 3)
+      {
+	if (checkbtag(subjets[0], event)+checkbtag(subjets[1], event)+checkbtag(subjets[2], event) >= 1){
+	  double_t wmass = 0.;
+	  
+	  if(checkbtag(subjets[0], event) && subjets[1].btag_combinedSecondaryVertex() < subjets[0].btag_combinedSecondaryVertex() && subjets[2].btag_combinedSecondaryVertex() < subjets[0].btag_combinedSecondaryVertex()) {wmass = (subjets[1].v4()+subjets[2].v4()).M(); hist("wmass")->Fill(wmass,weight);}
+	  if(checkbtag(subjets[1], event) && subjets[0].btag_combinedSecondaryVertex() < subjets[1].btag_combinedSecondaryVertex() && subjets[2].btag_combinedSecondaryVertex() < subjets[1].btag_combinedSecondaryVertex()) {wmass = (subjets[0].v4()+subjets[2].v4()).M(); hist("wmass")->Fill(wmass,weight);}
+	  if(checkbtag(subjets[2], event) && subjets[0].btag_combinedSecondaryVertex() < subjets[2].btag_combinedSecondaryVertex() && subjets[1].btag_combinedSecondaryVertex() < subjets[2].btag_combinedSecondaryVertex()) {wmass = (subjets[0].v4()+subjets[1].v4()).M(); hist("wmass")->Fill(wmass,weight);}
+	}
+      }
 
     for(unsigned int ii=0;ii<subjets.size();ii++){
 
@@ -432,11 +527,7 @@ void Hists2::fill(const Event & event){
 	  hist("subVertexMassJTC_b")->Fill(btaginfo.VertexMassJTC(), weight);
 	  hist("subVertexEnergyRatioJTC_b")->Fill(btaginfo.VertexEnergyRatioJTC(), weight);
 	  hist("subTrackSip3dSigAboveCharmJTC_b")->Fill(btaginfo.TrackSip3dSigAboveCharmJTC(), weight);
-
-
-
-
-	}
+	} //fill b
 
       //c
       if (subjet.flavor() == 4 || subjet.flavor()==-4)
@@ -487,12 +578,10 @@ void Hists2::fill(const Event & event){
 	  hist("subVertexMassJTC_c")->Fill(btaginfo.VertexMassJTC(), weight);
 	  hist("subVertexEnergyRatioJTC_c")->Fill(btaginfo.VertexEnergyRatioJTC(), weight);
 	  hist("subTrackSip3dSigAboveCharmJTC_c")->Fill(btaginfo.TrackSip3dSigAboveCharmJTC(), weight);
-
-
-	}
+	} //fill c
 
       //u,d,s
-       if (subjet.flavor() == 1 || subjet.flavor()==-1 || subjet.flavor() == 2 || subjet.flavor()==-2 || subjet.flavor() == 3|| subjet.flavor()==-3 )
+      if (subjet.flavor() == 1 || subjet.flavor()==-1 || subjet.flavor() == 2 || subjet.flavor()==-2 || subjet.flavor() == 3|| subjet.flavor()==-3 )
 	{ 
 	  //btag variables	
 	  hist("subCSV_uds")->Fill(subjet.btag_combinedSecondaryVertex(),weight);
@@ -541,10 +630,10 @@ void Hists2::fill(const Event & event){
 	  hist("subVertexEnergyRatioJTC_uds")->Fill(btaginfo.VertexEnergyRatioJTC(), weight);
 	  hist("subTrackSip3dSigAboveCharmJTC_uds")->Fill(btaginfo.TrackSip3dSigAboveCharmJTC(), weight);
 
-	}
+	} //fill uds
 
-       //gluon    
-       if (subjet.flavor() == 21)
+      //gluon    
+      if (subjet.flavor() == 21)
 	{
 	  //btag variables
 	  hist("subCSV_g")->Fill(subjet.btag_combinedSecondaryVertex(),weight);
@@ -592,12 +681,10 @@ void Hists2::fill(const Event & event){
 	  hist("subVertexMassJTC_g")->Fill(btaginfo.VertexMassJTC(), weight);
 	  hist("subVertexEnergyRatioJTC_g")->Fill(btaginfo.VertexEnergyRatioJTC(), weight);
 	  hist("subTrackSip3dSigAboveCharmJTC_g")->Fill(btaginfo.TrackSip3dSigAboveCharmJTC(), weight);
-
-
-	}
+	} //fill g
        
-       //none
-       if (subjet.flavor() == 0)
+      //none
+      if (subjet.flavor() == 0)
 	{
 	  //btag variables
 	  hist("subCSV_none")->Fill(subjet.btag_combinedSecondaryVertex(),weight);
@@ -645,14 +732,11 @@ void Hists2::fill(const Event & event){
 	  hist("subVertexMassJTC_none")->Fill(btaginfo.VertexMassJTC(), weight);
 	  hist("subVertexEnergyRatioJTC_none")->Fill(btaginfo.VertexEnergyRatioJTC(), weight);
 	  hist("subTrackSip3dSigAboveCharmJTC_none")->Fill(btaginfo.TrackSip3dSigAboveCharmJTC(), weight);
-	}
 
 
-	
-    }
-  }
-      
-
+	} // Fill none
+    } //loop over subjets
+    }  //loop over topjets 
 }
 
 Hists2::~Hists2(){}
