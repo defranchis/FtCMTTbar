@@ -29,7 +29,7 @@ histogram_xaxes = ["CSVv2 discriminator", "particle ID", "Track p [GeV]", "#eta"
 files_path = "/nfs/dust/cms/user/schumas/sframe/CMSSW_7_4_7/src/UHH2/FtCMTTbar/config/"
 #files_path = "/nfs/dust/cms/user/marchesi/74XUHH2/CMSSW_7_4_7/src/UHH2/FtCMTTbar/config/"
 files_name_base = "uhh2.AnalysisModuleRunner"
-cut_name = "AfterCuts_2"
+cut_name = "AfterCuts"
 
 #get the files
 files_list_mc=[]

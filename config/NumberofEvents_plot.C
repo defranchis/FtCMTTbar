@@ -150,7 +150,7 @@ vector<TString> XAxis(vector<TString> list)
 
 void NumberofEvents_plot()
 {
-  TString selectionlevel = "AfterCuts_2";
+  TString selectionlevel = "AfterCuts";
 
   vector<TString> files_mc, selection_steps, names, hists, stackhists, description, xaxis, yaxis, flavour;
   files_mc=Files_MC(files_mc);
@@ -340,7 +340,7 @@ void NumberofEvents_plot()
       h_stack->Draw("hist""same");
       h_tmphist_data->Draw("P""same");
       leg->Draw();
-      T6.DrawLatex(0.98,0.95125,"#sqrt{s} = 13 TeV, 50 ns");
+      T6.DrawLatex(0.98,0.95125,"#sqrt{s} = 13 TeV, 25 ns");
       c2->Print(hists[k]+".png");
       c2->Print("Plots_2.pdf");
       if(k == stackhists.size()-1)

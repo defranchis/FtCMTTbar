@@ -68,7 +68,7 @@ namespace uhh2examples {
     std::unique_ptr<Selection> met_sel;
     std::unique_ptr<Selection> htlep_sel;
     std::unique_ptr<Selection> btag_sel;
-    std::unique_ptr<Selection> lumi_selection;
+    //std::unique_ptr<Selection> lumi_selection;
   };
 
 
@@ -89,11 +89,20 @@ namespace uhh2examples {
     cleanermodules.emplace_back(new JetCleaner(jet_kinematic));
     cleanermodules.emplace_back(new MuonCleaner(muid));
     cleanermodules.emplace_back(new TopJetCleaner(HEPTopTag(150)));
-    jet_corrector.reset(new JetCorrector(JERFiles::PHYS14_L123_MC));
+    if (type == "DATA"){
+    jet_corrector.reset(new JetCorrector(JERFiles::Summer15_25ns_L123_AK4PFchs_DATA));
+    jetlepton_cleaner.reset(new JetLeptonCleaner(JERFiles::Summer15_25ns_L123_AK4PFchs_DATA));
+    topjet_corrector.reset(new TopJetCorrector(JERFiles::Summer15_25ns_L123_AK8PFchs_DATA));
+    }
+    else {
+    jet_corrector.reset(new JetCorrector(JERFiles::Summer15_25ns_L123_AK4PFchs_MC));
+    jetlepton_cleaner.reset(new JetLeptonCleaner(JERFiles::Summer15_25ns_L123_AK4PFchs_MC));
+    topjet_corrector.reset(new TopJetCorrector(JERFiles::Summer15_25ns_L123_AK8PFchs_MC));
+    }
+
     jetER_smearer.reset(new JetResolutionSmearer(ctx));
-    jetlepton_cleaner.reset(new JetLeptonCleaner(JERFiles::PHYS14_L123_MC));
     jetlepton_cleaner->set_drmax(.4);
-    topjet_corrector.reset(new TopJetCorrector(JERFiles::PHYS14_L123_AK8PFchs_MC));
+
     //  topjetER_smearer.reset(new TopJetResolutionSmearer(ctx));
     topjetlepton_cleaner.reset(new TopJetLeptonDeltaRCleaner(1.5));
     // make the selection, step-by-step. Note that in most cases, no explicit
@@ -112,10 +121,10 @@ namespace uhh2examples {
     h_aftercuts_2.reset(new Hists2(ctx, "AfterCuts_2"));
     h_aftercuts_3.reset(new Hists2(ctx, "AfterCuts_3"));
     h_aftercuts_4.reset(new Hists2(ctx, "AfterCuts_4"));
-    if (type == "DATA"){
-      std::cout << "Running on Data, using lumi selection!" << std::endl;
-      lumi_selection.reset(new LumiSelection(ctx));
-    }
+    //if (type == "DATA"){
+    //  std::cout << "Running on Data, using lumi selection!" << std::endl;
+    //  lumi_selection.reset(new LumiSelection(ctx));
+    //}
 
     trigger_sel = make_unique<TriggerSelection>("HLT_Mu45_eta2p1_v*");
     twodcut_sel.reset(new TwoDCut(.4, 25.));
@@ -142,9 +151,9 @@ namespace uhh2examples {
     //  topjetER_smearer->process(event);
     topjetlepton_cleaner->process(event);
 
-    if (lumi_selection.get() && !lumi_selection->passes(event)) {
-        return false;
-    }
+    //if (lumi_selection.get() && !lumi_selection->passes(event)) {
+    //    return false;
+    //}
 
     bool checkphi_pt=0;
     if(selection.passes(event)){
