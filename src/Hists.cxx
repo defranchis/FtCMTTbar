@@ -128,7 +128,7 @@ Hists2::Hists2(Context & ctx, const string & dirname): Hists(ctx, dirname){
   book<TH1F>("subTrackPPar_none", "track parallel momentum, along the jet axis", 100, 0., 50.); 
   book<TH1F>("subTrackPPar_data", "track parallel momentum, along the jet axis", 100, 0., 50.); 
 
-  book<TH1F>("subTrackPtRatio_b", "track transverse momentum, relative to the jet axis, normalized to its energy", 50, 0., 0.5.);  
+  book<TH1F>("subTrackPtRatio_b", "track transverse momentum, relative to the jet axis, normalized to its energy", 50, 0., 0.5);  
   book<TH1F>("subTrackPtRatio_c", "track transverse momentum, relative to the jet axis, normalized to its energy", 50, 0., 0.5); 
   book<TH1F>("subTrackPtRatio_uds", "track transverse momentum, relative to the jet axis, normalized to its energy", 50, 0., 0.5); 
   book<TH1F>("subTrackPtRatio_g", "track transverse momentum, relative to the jet axis, normalized to its energy", 50, 0., 0.5); 

@@ -20,7 +20,7 @@
    <!--<Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="./" PostFix="" TargetLumi="552.67"-->
    <Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/schumas/proof/" ProofNodes="24" OutputDirectory="./" PostFix="" TargetLumi="552.67">
   
-	 <!--InputData Lumi="552.67" NEventsMax="-1" Type="DATA" Version="Data" Cacheable="True">
+	 <InputData Lumi="552.67" NEventsMax="-1" Type="DATA" Version="Data" Cacheable="True">
             &Data;
             <InputTree Name="AnalysisTree" /> 
             <OutputTree Name="AnalysisTree" />
@@ -41,7 +41,7 @@
             &DYJetsToLL_M-50;
             <InputTree Name="AnalysisTree" /> 
             <OutputTree Name="AnalysisTree" />
-        </InputData-->
+        </InputData>
          <InputData Lumi="6146790.4" NEventsMax="-1" Type="MC" Version="ST_t-channel" Cacheable="True">
             &ST_t-channel_4f_leptonDecays;
             <InputTree Name="AnalysisTree" /> 
@@ -57,11 +57,11 @@
             <InputTree Name="AnalysisTree" /> 
             <OutputTree Name="AnalysisTree" />
         </InputData>
-         <!--InputData Lumi="60501928.3331" NEventsMax="-1" Type="MC" Version="WJets" Cacheable="True">
+         <InputData Lumi="60501928.3331" NEventsMax="-1" Type="MC" Version="WJets" Cacheable="True">
             &WJetsToLNu;
             <InputTree Name="AnalysisTree" /> 
             <OutputTree Name="AnalysisTree" />
-        </InputData-->
+        </InputData>
 
 
         <UserConfig>
@@ -79,7 +79,7 @@
 	    <Item Name="additionalBranches" Value="patJetsCa15CHSJetsFilteredPacked_daughters" /> 
 
 	    <Item Name="pileup_directory_data" Value="/nfs/dust/cms/user/marchesi/PUData/MyDataPileupHistogram.root"/>
-	    <Item Name="pileup_directory_50ns" Value="/nfs/dust/cms/user/peiffer/NtupleWriter/Ntuples/RunII_25ns_v1/Pileup.MC.TTbar.root"/>
+	    <Item Name="pileup_directory_25ns" Value="/nfs/dust/cms/user/peiffer/NtupleWriter/Ntuples/RunII_25ns_v1/Pileup.MC.TTbar.root"/>
 
 
 	    <!--Item Name="lumi_file" Value="/nfs/dust/cms/user/peiffer/NtupleWriter/Ntuples/RunII_v1/Lumifile.root" />

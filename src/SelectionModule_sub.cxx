@@ -17,6 +17,7 @@
 #include "UHH2/common/include/JetCorrections.h"
 #include "UHH2/FtCMTTbar/include/FtCMTTbarUtils.h"
 #include "UHH2/common/include/LumiSelection.h"
+#include "UHH2/common/include/MCWeight.h"
 using namespace std;
 using namespace uhh2;
 
@@ -69,7 +70,8 @@ namespace uhh2examples {
     std::unique_ptr<Selection> htlep_sel;
     std::unique_ptr<Selection> btag_sel;
     //std::unique_ptr<Selection> lumi_selection;
-    
+    std::unique_ptr<uhh2::AnalysisModule> pileup_SF;
+
   };
 
 
@@ -86,6 +88,9 @@ namespace uhh2examples {
     jet_kinematic = PtEtaCut(30.0, 2.4);
     topjet_kinematic = PtEtaCut(150.0,2.4);
     muid = AndId<Muon>(MuonIDTight(), PtEtaCut(50.0, 2.1),MuonIso(0.12));
+
+    if (type != "DATA") pileup_SF.reset(new MCPileupReweight(ctx));
+
     // clean the objects:
     cleanermodules.emplace_back(new JetCleaner(jet_kinematic));
     cleanermodules.emplace_back(new MuonCleaner(muid));
@@ -139,6 +144,7 @@ namespace uhh2examples {
 
   bool SelectionModule_sub::process(Event & event) {
 
+    if(!event.isRealData) pileup_SF->process(event); 
     
     //clean events
     for(auto & m : cleanermodules){
