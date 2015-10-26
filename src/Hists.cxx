@@ -156,19 +156,19 @@ Hists2::Hists2(Context & ctx, const string & dirname): Hists(ctx, dirname){
   book<TH1F>("subTrackJetDistSig_none", "minimum track approach distance to jet axis significance", 50, 0., 0.1); 
   book<TH1F>("subTrackJetDistSig_data", "minimum track approach distance to jet axis significance", 50, 0., 0.1); 
 
-  book<TH1F>("subTrackGhostTrackDistVal_b", "minimum approach distance to ghost track", 100, 0., 0.5);  
-  book<TH1F>("subTrackGhostTrackDistVal_c", "minimum approach distance to ghost track", 100, 0., 0.5); 
-  book<TH1F>("subTrackGhostTrackDistVal_uds", "minimum approach distance to ghost track", 100, 0., 0.5); 
-  book<TH1F>("subTrackGhostTrackDistVal_g", "minimum approach distance to ghost track", 100, 0., 0.5); 
-  book<TH1F>("subTrackGhostTrackDistVal_none", "minimum approach distance to ghost track", 100, 0., 0.5); 
-  book<TH1F>("subTrackGhostTrackDistVal_data", "minimum approach distance to ghost track", 100, 0., 0.5); 
+  book<TH1F>("subTrackGhostTrackDistVal_b", "minimum approach distance to ghost track", 100, 0., 0.05);  
+  book<TH1F>("subTrackGhostTrackDistVal_c", "minimum approach distance to ghost track", 100, 0., 0.05); 
+  book<TH1F>("subTrackGhostTrackDistVal_uds", "minimum approach distance to ghost track", 100, 0., 0.05); 
+  book<TH1F>("subTrackGhostTrackDistVal_g", "minimum approach distance to ghost track", 100, 0., 0.05); 
+  book<TH1F>("subTrackGhostTrackDistVal_none", "minimum approach distance to ghost track", 100, 0., 0.05); 
+  book<TH1F>("subTrackGhostTrackDistVal_data", "minimum approach distance to ghost track", 100, 0., 0.05); 
 
-  book<TH1F>("subTrackGhostTrackDistSig_b", "minimum approach distance to ghost track significance", 50, 0., 10.);  
-  book<TH1F>("subTrackGhostTrackDistSig_c", "minimum approach distance to ghost track significance", 50, 0., 10.); 
-  book<TH1F>("subTrackGhostTrackDistSig_uds", "minimum approach distance to ghost track significance", 50, 0., 10.); 
-  book<TH1F>("subTrackGhostTrackDistSig_g", "minimum approach distance to ghost track significance", 50, 0., 10.); 
-  book<TH1F>("subTrackGhostTrackDistSig_none", "minimum approach distance to ghost track significance", 50, 0., 10.); 
-  book<TH1F>("subTrackGhostTrackDistSig_data", "minimum approach distance to ghost track significance", 50, 0., 10.); 
+  book<TH1F>("subTrackGhostTrackDistSig_b", "minimum approach distance to ghost track significance", 50, 0., 5.);  
+  book<TH1F>("subTrackGhostTrackDistSig_c", "minimum approach distance to ghost track significance", 50, 0., 5.); 
+  book<TH1F>("subTrackGhostTrackDistSig_uds", "minimum approach distance to ghost track significance", 50, 0., 5.); 
+  book<TH1F>("subTrackGhostTrackDistSig_g", "minimum approach distance to ghost track significance", 50, 0., 5.); 
+  book<TH1F>("subTrackGhostTrackDistSig_none", "minimum approach distance to ghost track significance", 50, 0., 5.); 
+  book<TH1F>("subTrackGhostTrackDistSig_data", "minimum approach distance to ghost track significance", 50, 0., 5.); 
 
   book<TH1F>("subTrackGhostTrackWeight_b", "weight of track participation in ghost track fit", 100, -0.5, 1.5);  
   book<TH1F>("subTrackGhostTrackWeight_c", "weight of track participation in ghost track fit", 100, -0.5, 1.5); 
