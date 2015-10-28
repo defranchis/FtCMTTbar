@@ -17,7 +17,7 @@
     <Library Name="libSUHH2FtCMTTbar"/>
     <Package Name="SUHH2FtCMTTbar.par" />
 
-   <!--<Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="./" PostFix="" TargetLumi="552.67"-->
+   <!--Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="./" PostFix="" TargetLumi="552.67"-->
    <Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/schumas/proof/" ProofNodes="24" OutputDirectory="./" PostFix="" TargetLumi="552.67">
   
 	 <InputData Lumi="552.67" NEventsMax="-1" Type="DATA" Version="Data" Cacheable="True">
@@ -72,11 +72,11 @@
             <Item Name="JetCollection" Value="slimmedJets" />
             <Item Name="METName" Value="slimmedMETs" />  
             <Item Name="GenJetCollection" Value="slimmedGenJets" />
-            <Item Name="TopJetCollection" Value="patJetsHepTopTagCHSPacked_daughters" />
+            <Item Name="TopJetCollection" Value="slimmedJetsAK8_CMSTopTag" />
             <!--<Item Name="GenParticleCollection" Value="GenParticles" /> 
             <Item Name="GenJetCollection" Value="slimmedGenJets" /> -->
             
-	    <Item Name="additionalBranches" Value="patJetsCa15CHSJetsFilteredPacked_daughters" /> 
+	    <Item Name="additionalBranches" Value="patJetsAk8CHSJetsSoftDropPacked_daughters" /> 
 
 	    <Item Name="pileup_directory_data" Value="/nfs/dust/cms/user/marchesi/PUData/MyDataPileupHistogram.root"/>
 	    <Item Name="pileup_directory_25ns" Value="/nfs/dust/cms/user/peiffer/NtupleWriter/Ntuples/RunII_25ns_v1/Pileup.MC.TTbar.root"/>

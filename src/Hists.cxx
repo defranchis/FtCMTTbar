@@ -340,8 +340,8 @@ Hists2::Hists2(Context & ctx, const string & dirname): Hists(ctx, dirname){
   book<TH1F>("neutralHadronEnergyFraction", "neutralHadronEnergyFraction", 50, 0., 1.);
   book<TH1F>("neutralMultiplicity", "neutralMultiplicity", 20, 0., 20.);
 
-  h_topjetsCMSTopTag = ctx.get_handle<std::vector<TopJet> >("patJetsHepTopTagCHSPacked_daughters");
-  h_topjetssoftdrop = ctx.get_handle<std::vector<TopJet> >("patJetsCa15CHSJetsFilteredPacked_daughters");
+  h_topjetsCMSTopTag = ctx.get_handle<std::vector<TopJet> >("slimmedJetsAK8_CMSTopTag");
+  h_topjetssoftdrop = ctx.get_handle<std::vector<TopJet> >("patJetsAk8CHSJetsSoftDropPacked_daughters");
 
 }
 
@@ -381,7 +381,7 @@ void Hists2::fill(const Event & event){
     TopJet seltopjet=topjets->at(n);
     double deltaphi=deltaPhi(seltopjet,muons->at(0));
     double pi = 3.14159265359;
-    if(!((deltaphi>(2*pi/3))&&(seltopjet.pt()>150.)&&(fabs(seltopjet.eta())<2.4))) continue;
+    if(!((deltaphi>(2*pi/3))&&(seltopjet.pt()>400.)&&(fabs(seltopjet.eta())<2.4))) continue;
 
 
     auto selsubjets=seltopjet.subjets();
@@ -408,12 +408,6 @@ void Hists2::fill(const Event & event){
       hist("m23")->Fill(m23, weight);
 
       }
-    if (seltopjet.has_tag(seltopjet.tagname2tag("fRec"))) hist("fRec")->Fill(seltopjet.get_tag(seltopjet.tagname2tag("fRec")),weight);
-    if (seltopjet.has_tag(seltopjet.tagname2tag("mass"))) hist("HTTmass")->Fill(seltopjet.get_tag(seltopjet.tagname2tag("mass")),weight);
-
-    hist("tau32")->Fill(seltopjet.tau3()/seltopjet.tau2(), weight);
-    hist("tau21")->Fill(seltopjet.tau2()/seltopjet.tau1(), weight);
-
   }
   
 
@@ -427,7 +421,7 @@ void Hists2::fill(const Event & event){
       //check muon and topjet are in opposite emispheres
       double deltaphi=deltaPhi(topjets->at(j),muons->at(0));
       double pi = 3.14159265359;
-      if(!((deltaphi>(2*pi/3))&&(topjets->at(j).pt()>150.)&&(fabs(topjets->at(j).eta())<2.4))) continue;
+      if(!((deltaphi>(2*pi/3))&&(topjets->at(j).pt()>400.)&&(fabs(topjets->at(j).eta())<2.4))) continue;
       //check deltaR_tmp between topjet j and softdrop i 
       double deltaPHI = deltaPhi(topjets->at(j),topjetssoftdrop->at(i));
       double deltaETA = topjets->at(j).eta()-topjetssoftdrop->at(i).eta();
@@ -454,6 +448,13 @@ void Hists2::fill(const Event & event){
     hist("neutralEmEnergyFraction")->Fill(topjet.neutralEmEnergyFraction(),weight);
     hist("neutralHadronEnergyFraction")->Fill(topjet.neutralHadronEnergyFraction(),weight);
     hist("neutralMultiplicity")->Fill(topjet.neutralMultiplicity(),weight);
+
+    if (topjet.has_tag(topjet.tagname2tag("fRec"))) hist("fRec")->Fill(topjet.get_tag(topjet.tagname2tag("fRec")),weight);
+    if (topjet.has_tag(topjet.tagname2tag("mass"))) hist("HTTmass")->Fill(topjet.get_tag(topjet.tagname2tag("mass")),weight);
+
+    hist("tau32")->Fill(topjet.tau3()/topjet.tau2(), weight);
+    hist("tau21")->Fill(topjet.tau2()/topjet.tau1(), weight);
+
 
     //Subjets of topjetssoftdrop 
     const std::vector<Jet> subjets=topjet.subjets();

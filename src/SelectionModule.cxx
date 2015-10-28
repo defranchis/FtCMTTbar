@@ -17,6 +17,7 @@
 #include "UHH2/common/include/JetCorrections.h"
 #include "UHH2/FtCMTTbar/include/FtCMTTbarUtils.h"
 #include "UHH2/common/include/LumiSelection.h"
+#include "UHH2/common/include/MCWeight.h"
 using namespace std;
 using namespace uhh2;
 
@@ -69,26 +70,30 @@ namespace uhh2examples {
     std::unique_ptr<Selection> htlep_sel;
     std::unique_ptr<Selection> btag_sel;
     //std::unique_ptr<Selection> lumi_selection;
+    std::unique_ptr<uhh2::AnalysisModule> pileup_SF;
   };
 
 
   SelectionModule::SelectionModule(Context & ctx): selection(ctx, "selection") {
     
     type = ctx.get("dataset_type", "");
-    h_topjetsCMSTopTag = ctx.declare_event_input<std::vector<TopJet> >("patJetsHepTopTagCHSPacked_daughters");
-    h_topjetssoftdrop = ctx.declare_event_input<std::vector<TopJet> >("patJetsCa15CHSJetsFilteredPacked_daughters");
-    h_topjetsCMSTopTag = ctx.declare_event_output<std::vector<TopJet> >("patJetsHepTopTagCHSPacked_daughters");
-    h_topjetssoftdrop = ctx.declare_event_output<std::vector<TopJet> >("patJetsCa15CHSJetsFilteredPacked_daughters");
+    h_topjetsCMSTopTag = ctx.declare_event_input<std::vector<TopJet> >("slimmedJetsAK8_CMSTopTag");
+    h_topjetssoftdrop = ctx.declare_event_input<std::vector<TopJet> >("patJetsAk8CHSJetsSoftDropPacked_daughters");
+    h_topjetsCMSTopTag = ctx.declare_event_output<std::vector<TopJet> >("slimmedJetsAK8_CMSTopTag");
+    h_topjetssoftdrop = ctx.declare_event_output<std::vector<TopJet> >("patJetsAk8CHSJetsSoftDropPacked_daughters");
 
     
 
     jet_kinematic = PtEtaCut(30.0, 2.4);
-    topjet_kinematic = PtEtaCut(150.0,2.4);
+    topjet_kinematic = PtEtaCut(400.0,2.4);
     muid = AndId<Muon>(MuonIDTight(), PtEtaCut(50.0, 2.1),MuonIso(0.12));
+
+    if (type != "DATA") pileup_SF.reset(new MCPileupReweight(ctx)); 
+
     // clean the objects:
     cleanermodules.emplace_back(new JetCleaner(jet_kinematic));
     cleanermodules.emplace_back(new MuonCleaner(muid));
-    cleanermodules.emplace_back(new TopJetCleaner(HEPTopTag(150)));
+    cleanermodules.emplace_back(new TopJetCleaner(CMSTopTag()));
     if (type == "DATA"){
     jet_corrector.reset(new JetCorrector(JERFiles::Summer15_25ns_L123_AK4PFchs_DATA));
     jetlepton_cleaner.reset(new JetLeptonCleaner(JERFiles::Summer15_25ns_L123_AK4PFchs_DATA));
@@ -137,6 +142,8 @@ namespace uhh2examples {
 
 
   bool SelectionModule::process(Event & event) {
+
+    if(!event.isRealData) pileup_SF->process(event);
 
     //clean events
     for(auto & m : cleanermodules){
