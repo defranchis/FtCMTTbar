@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd"
+[
+<!ENTITY fileroot "/nfs/dust/cms/user/schumas/sframev2/CMSSW_7_4_9/src/UHH2/FtCMTTbar/config/uhh2.AnalysisModuleRunner.">
+]
+>
+<JobConfiguration JobName="ExampleCycleJob" OutputLevel="INFO">
+    <Library Name="libSUHH2FtCMTTbar"/>
+    <Package Name="SUHH2FtCMTTbar.par" />
+
+   <!--Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="./" PostFix="" TargetLumi="552.67"-->
+   <Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/marchesi/proof/" ProofNodes="24" OutputDirectory="./" PostFix="" TargetLumi="552.67">
+  
+	 <InputData Lumi="552.67" NEventsMax="-1" Type="DATA" Version="Data" Cacheable="True">
+                  <In FileName="&fileroot;DATA.Data.root" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" /> 
+            <OutputTree Name="AnalysisTree" />
+        </InputData> 
+
+         <InputData Lumi="113811.0" NEventsMax="-1" Type="MC" Version="TTbar" Cacheable="True">
+	   <In FileName="&fileroot;MC.TTbar.root" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" /> 
+            <OutputTree Name="AnalysisTree" />
+        </InputData>
+
+         <InputData Lumi="49360680.4143" NEventsMax="-1" Type="MC" Version="DYJetsToLL_M-10to50" Cacheable="True">
+	   <In FileName="&fileroot;MC.DYJetsToLL_M-10to50.root" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" /> 
+            <OutputTree Name="AnalysisTree" />
+        </InputData>
+
+         <InputData Lumi="74961297.069" NEventsMax="-1" Type="MC" Version="DYJetsToLL_M-50" Cacheable="True">
+	   <In FileName="&fileroot;MC.DYJetsToLL_M-50.root" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" /> 
+            <OutputTree Name="AnalysisTree" />
+        </InputData>
+
+         <InputData Lumi="6146790.4" NEventsMax="-1" Type="MC" Version="ST_t-channel" Cacheable="True">
+	   <In FileName="&fileroot;MC.ST_t-channel.root" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" /> 
+            <OutputTree Name="AnalysisTree" />
+        </InputData>
+ 
+        <InputData Lumi="27831.2" NEventsMax="-1" Type="MC" Version="ST_tW_antitop" Cacheable="True">
+	  <In FileName="&fileroot;MC.ST_tW_antitop.root" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" /> 
+            <OutputTree Name="AnalysisTree" />
+        </InputData>
+
+         <InputData Lumi="27709.4" NEventsMax="-1" Type="MC" Version="ST_tW_top" Cacheable="True">
+	   <In FileName="&fileroot;MC.ST_tW_top.root" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" /> 
+            <OutputTree Name="AnalysisTree" />
+        </InputData>
+
+         <InputData Lumi="60501928.3331" NEventsMax="-1" Type="MC" Version="WJets" Cacheable="True">
+	   <In FileName="&fileroot;MC.WJets.root" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" /> 
+            <OutputTree Name="AnalysisTree" />
+        </InputData>
+
+        <UserConfig>
+            <!-- define which collections to read from the input. Only specify what you need to save I/O time -->
+            <Item Name="PrimaryVertexCollection" Value="offlineSlimmedPrimaryVertices" /> 
+            <Item Name="ElectronCollection" Value="slimmedElectronsUSER" />
+            <Item Name="MuonCollection" Value="slimmedMuonsUSER" /> 
+            <Item Name="JetCollection" Value="slimmedJets" />
+            <Item Name="METName" Value="slimmedMETs" />  
+            <Item Name="GenJetCollection" Value="slimmedGenJets" />
+            <Item Name="TopJetCollection" Value="slimmedJetsAK8_CMSTopTag" />
+            <!--<Item Name="GenParticleCollection" Value="GenParticles" /> 
+            <Item Name="GenJetCollection" Value="slimmedGenJets" /> -->
+            
+	    <Item Name="additionalBranches" Value="patJetsAk8CHSJetsSoftDropPacked_daughters" /> 
+
+	    <Item Name="pileup_directory_data" Value="/nfs/dust/cms/user/marchesi/PUData/MyDataPileupHistogram.root"/>
+	    <Item Name="pileup_directory_25ns" Value="/nfs/dust/cms/user/peiffer/NtupleWriter/Ntuples/RunII_25ns_v1/Pileup.MC.TTbar.root"/>
+
+
+	    <!--Item Name="lumi_file" Value="/nfs/dust/cms/user/peiffer/NtupleWriter/Ntuples/RunII_v1/Lumifile.root" />
+            <Item Name="lumihists_lumi_per_bin" Value="0.2"/-->
+	    <!--<Item Name="use_sframe_weight" Value="false" /-->
+
+            <!-- the class name of the AnalysisModule subclasses to run: -->
+            <Item Name="AnalysisModule" Value="SelectionModule_FtCM" /> 
+
+
+        </UserConfig>
+    </Cycle>
+</JobConfiguration>
