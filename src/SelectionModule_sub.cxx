@@ -53,7 +53,7 @@ namespace uhh2examples {
  
   
     // store the Hists collection as member variables. Again, use unique_ptr to avoid memory leaks.
-    std::unique_ptr<Hists> h_nocuts, h_aftercuts_1, h_aftercuts_2, h_aftercuts_3, h_aftercuts_4, h_aftercuts;
+    std::unique_ptr<Hists> h_nocuts, h_aftercuts_1, h_aftercuts_2, h_aftercuts_3, h_aftercuts;
 
 
     std::unique_ptr<JetCorrector> jet_corrector;
@@ -126,8 +126,8 @@ namespace uhh2examples {
     h_aftercuts_1.reset(new Hists_sub(ctx, "AfterCuts_1"));
     h_aftercuts_2.reset(new Hists_sub(ctx, "AfterCuts_2"));
     h_aftercuts_3.reset(new Hists_sub(ctx, "AfterCuts_3"));
-    h_aftercuts_4.reset(new Hists_sub(ctx, "AfterCuts_4"));
-    h_aftercuts_5.reset(new Hists_sub(ctx, "AfterCuts_5"));
+    //h_aftercuts_4.reset(new Hists_sub(ctx, "AfterCuts_4"));
+    //h_aftercuts_5.reset(new Hists_sub(ctx, "AfterCuts_5"));
     //if (type == "DATA"){
     //  std::cout << "Running on Data, using lumi selection!" << std::endl;
     //  lumi_selection.reset(new LumiSelection(ctx));
@@ -201,45 +201,31 @@ namespace uhh2examples {
     }
     bool keep = selection.passes(event);
     bool pass_trigger = trigger_sel->passes(event);
-    //bool pass_met = met_sel->passes(event);
-    //bool pass_htlep = htlep_sel->passes(event);
-    
+    bool pass_met = met_sel->passes(event);
+    bool pass_htlep = htlep_sel->passes(event);
+ 
     //bool pass_twodcut =1;
     h_nocuts->fill(event);
-    if(keep && checkphi_pt) 
+    if(keep && checkphi_pt && pass_trigger) 
       {
-	
-	h_aftercuts_1->fill(event);
-
-	if(pass_trigger)
+	bool pass_btag = btag_sel->passes(event);
+	if(pass_btag)
 	  {
-	    h_aftercuts_2->fill(event);
-	
-	   
-	    //bool pass_twodcut = 1;//twodcut_sel->passes(event);
-	    bool pass_btag = btag_sel->passes(event);
-	    if(pass_btag) 
+	    //bool pass_twodcut = 1;//twodcut_sel->passes(event);	
+	    h_aftercuts_1->fill(event);
+	    if(pass_sub_btag)
 	      {
 
-		h_aftercuts_3->fill(event);
+		h_aftercuts_2->fill(event);
 
-		
-
-		if(pass_sub_btag)
+		if(toptag)
 		  {
-
-		    h_aftercuts_4->fill(event);
-
-		    if(toptag)
-		      {
 			
-			h_aftercuts_5->fill(event);
+		    h_aftercuts_3->fill(event);
 
-			if(pass_met && pass_htlep)
-			  {
-			    h_aftercuts->fill(event);
-			  }
-
+		    if(pass_met && pass_htlep)
+		      {
+			h_aftercuts->fill(event);
 		      }
 		  }
 	      }
