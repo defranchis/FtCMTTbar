@@ -10,7 +10,7 @@
 #include "UHH2/common/include/MuonIds.h"
 #include "UHH2/common/include/ElectronIds.h"
 #include "UHH2/common/include/NSelections.h"
-#include "UHH2/FtCMTTbar/include/Hists2.h"
+#include "UHH2/FtCMTTbar/include/Hists_sub.h"
 #include "UHH2/FtCMTTbar/include/FtCMTTbarSelections.h"
 #include "UHH2/common/include/TTbarReconstruction.h"
 #include "UHH2/common/include/TriggerSelection.h"
@@ -18,6 +18,7 @@
 #include "UHH2/FtCMTTbar/include/FtCMTTbarUtils.h"
 #include "UHH2/common/include/LumiSelection.h"
 #include "UHH2/common/include/MCWeight.h"
+
 using namespace std;
 using namespace uhh2;
 
@@ -47,8 +48,8 @@ namespace uhh2examples {
     TopJetId topjet_kinematic;
     MuonId muid;
     std::string type;
-    uhh2::Event::Handle<std::vector<TopJet> > h_topjetsCMSTopTag;
-    uhh2::Event::Handle<std::vector<TopJet> > h_topjetssoftdrop;
+    //uhh2::Event::Handle<std::vector<TopJet> > h_topjetsCMSTopTag;
+    //uhh2::Event::Handle<std::vector<TopJet> > h_topjetssoftdrop;
  
   
     // store the Hists collection as member variables. Again, use unique_ptr to avoid memory leaks.
@@ -78,10 +79,10 @@ namespace uhh2examples {
   SelectionModule_sub::SelectionModule_sub(Context & ctx): selection(ctx, "selection") {
     
     type = ctx.get("dataset_type", "");
-    h_topjetsCMSTopTag = ctx.declare_event_input<std::vector<TopJet> >("patJetsHepTopTagCHSPacked_daughters");
-    h_topjetssoftdrop = ctx.declare_event_input<std::vector<TopJet> >("patJetsCa15CHSJetsFilteredPacked_daughters");
-    h_topjetsCMSTopTag = ctx.declare_event_output<std::vector<TopJet> >("patJetsHepTopTagCHSPacked_daughters");
-    h_topjetssoftdrop = ctx.declare_event_output<std::vector<TopJet> >("patJetsCa15CHSJetsFilteredPacked_daughters");
+    //h_topjetsCMSTopTag = ctx.declare_event_input<std::vector<TopJet> >("patJetsCa15CHSJetsSoftDropPacked_daughters");
+    //h_topjetssoftdrop = ctx.declare_event_input<std::vector<TopJet> >("patJetsCa15CHSJetsSoftDropPacked_daughters");
+    //h_topjetsCMSTopTag = ctx.declare_event_output<std::vector<TopJet> >("patJetsCa15CHSJetsSoftDropPacked_daughters");
+    //h_topjetssoftdrop = ctx.declare_event_output<std::vector<TopJet> >("patJetsCa15CHSJetsSoftDropPacked_daughters");
 
     
 
@@ -89,26 +90,25 @@ namespace uhh2examples {
     topjet_kinematic = PtEtaCut(150.0,2.4);
     muid = AndId<Muon>(MuonIDTight(), PtEtaCut(50.0, 2.1),MuonIso(0.12));
 
-    if (type != "DATA") pileup_SF.reset(new MCPileupReweight(ctx));
+    if (type != "DATA") pileup_SF.reset(new MCPileupReweight(ctx)); 
+
 
     // clean the objects:
     cleanermodules.emplace_back(new JetCleaner(jet_kinematic));
     cleanermodules.emplace_back(new MuonCleaner(muid));
+    if (type == "DATA"){
+      jet_corrector.reset(new JetCorrector(JERFiles::Summer15_25ns_L123_AK4PFchs_DATA));
+      jetlepton_cleaner.reset(new JetLeptonCleaner(JERFiles::Summer15_25ns_L123_AK4PFchs_DATA));
+      topjet_corrector.reset(new TopJetCorrector(JERFiles::Summer15_25ns_L123_AK8PFchs_DATA));
+    }
+    else {
+      jet_corrector.reset(new JetCorrector(JERFiles::Summer15_25ns_L123_AK4PFchs_MC));
+      jetlepton_cleaner.reset(new JetLeptonCleaner(JERFiles::Summer15_25ns_L123_AK4PFchs_MC));
+      topjet_corrector.reset(new TopJetCorrector(JERFiles::Summer15_25ns_L123_AK8PFchs_MC));
+    }
     //cleanermodules.emplace_back(new TopJetCleaner(HEPTopTag(150)));
-  if (type == "DATA"){
-    jet_corrector.reset(new JetCorrector(JERFiles::Summer15_25ns_L123_AK4PFchs_DATA));
-    jetlepton_cleaner.reset(new JetLeptonCleaner(JERFiles::Summer15_25ns_L123_AK4PFchs_DATA));
-    topjet_corrector.reset(new TopJetCorrector(JERFiles::Summer15_25ns_L123_AK8PFchs_DATA));
-    }
-  else {
-    jet_corrector.reset(new JetCorrector(JERFiles::Summer15_25ns_L123_AK4PFchs_MC));
-    jetlepton_cleaner.reset(new JetLeptonCleaner(JERFiles::Summer15_25ns_L123_AK4PFchs_MC));
-    topjet_corrector.reset(new TopJetCorrector(JERFiles::Summer15_25ns_L123_AK8PFchs_MC));
-    }
- 
     jetER_smearer.reset(new JetResolutionSmearer(ctx));
     jetlepton_cleaner->set_drmax(.4);
-
     //  topjetER_smearer.reset(new TopJetResolutionSmearer(ctx));
     topjetlepton_cleaner.reset(new TopJetLeptonDeltaRCleaner(1.5));
     // make the selection, step-by-step. Note that in most cases, no explicit
@@ -121,12 +121,12 @@ namespace uhh2examples {
     selection.add<NJetSelection>("nj >= 2", 2);
     selection.add<NTopJetSelection>("ntj >= 1", 1, 1);
 
-    h_nocuts.reset(new Hists2(ctx, "NoCuts"));
-    h_aftercuts.reset(new Hists2(ctx, "AfterCuts"));
-    h_aftercuts_1.reset(new Hists2(ctx, "AfterCuts_1"));
-    h_aftercuts_2.reset(new Hists2(ctx, "AfterCuts_2"));
-    h_aftercuts_3.reset(new Hists2(ctx, "AfterCuts_3"));
-    h_aftercuts_4.reset(new Hists2(ctx, "AfterCuts_4"));
+    h_nocuts.reset(new Hists_sub(ctx, "NoCuts"));
+    h_aftercuts.reset(new Hists_sub(ctx, "AfterCuts"));
+    h_aftercuts_1.reset(new Hists_sub(ctx, "AfterCuts_1"));
+    h_aftercuts_2.reset(new Hists_sub(ctx, "AfterCuts_2"));
+    h_aftercuts_3.reset(new Hists_sub(ctx, "AfterCuts_3"));
+    h_aftercuts_4.reset(new Hists_sub(ctx, "AfterCuts_4"));
     //if (type == "DATA"){
     //  std::cout << "Running on Data, using lumi selection!" << std::endl;
     //  lumi_selection.reset(new LumiSelection(ctx));
@@ -144,8 +144,8 @@ namespace uhh2examples {
 
   bool SelectionModule_sub::process(Event & event) {
 
-    if(!event.isRealData) pileup_SF->process(event); 
-    
+    if(!event.isRealData) pileup_SF->process(event);
+
     //clean events
     for(auto & m : cleanermodules){
       m->process(event);
@@ -165,7 +165,7 @@ namespace uhh2examples {
 
     //bool btagged = 0;
     bool checkphi_pt=0;
-    bool topmass_window = 0;
+    bool toptag = 0;
     bool pass_sub_btag = 0;
     if(selection.passes(event)){
 
@@ -184,7 +184,7 @@ namespace uhh2examples {
 	if(deltaphi>2*pi/3 &&(topjets->at(i).pt()>150.)&&(fabs(topjets->at(i).eta())<2.4)) 
 	  {
 	    checkphi_pt = 1;
-	    if (topjet.v4().M()<250 && topjet.v4().M()>140) topmass_window=1;
+	    if (topjet.v4().M()<250 && topjet.v4().M()>140 && topjet.tau3()/topjet.tau2()< 0.63) toptag=1;
 	  }
 	const std::vector<Jet> subjets=topjet.subjets();
 	JetId checkbtag=CSVBTag(CSVBTag::WP_LOOSE);
@@ -200,12 +200,12 @@ namespace uhh2examples {
     }
     bool keep = selection.passes(event);
     bool pass_trigger = trigger_sel->passes(event);
-    bool pass_met = met_sel->passes(event);
-    bool pass_htlep = htlep_sel->passes(event);
+    //bool pass_met = met_sel->passes(event);
+    //bool pass_htlep = htlep_sel->passes(event);
     
     //bool pass_twodcut =1;
     h_nocuts->fill(event);
-    if(keep && checkphi_pt &&  topmass_window) 
+    if(keep && checkphi_pt) 
       {
 	
 	h_aftercuts_1->fill(event);
@@ -229,7 +229,7 @@ namespace uhh2examples {
 
 		    h_aftercuts_4->fill(event);
 
-		    if(pass_met && pass_htlep)
+		    if(toptag)
 		      {
 			
 			h_aftercuts->fill(event);
