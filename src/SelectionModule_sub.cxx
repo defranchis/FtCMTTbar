@@ -127,6 +127,7 @@ namespace uhh2examples {
     h_aftercuts_2.reset(new Hists_sub(ctx, "AfterCuts_2"));
     h_aftercuts_3.reset(new Hists_sub(ctx, "AfterCuts_3"));
     h_aftercuts_4.reset(new Hists_sub(ctx, "AfterCuts_4"));
+    h_aftercuts_5.reset(new Hists_sub(ctx, "AfterCuts_5"));
     //if (type == "DATA"){
     //  std::cout << "Running on Data, using lumi selection!" << std::endl;
     //  lumi_selection.reset(new LumiSelection(ctx));
@@ -232,7 +233,13 @@ namespace uhh2examples {
 		    if(toptag)
 		      {
 			
-			h_aftercuts->fill(event);
+			h_aftercuts_5->fill(event);
+
+			if(pass_met && pass_htlep)
+			  {
+			    h_aftercuts->fill(event);
+			  }
+
 		      }
 		  }
 	      }
