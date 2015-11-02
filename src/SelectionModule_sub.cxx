@@ -185,7 +185,8 @@ namespace uhh2examples {
 	if(deltaphi>2*pi/3 &&(topjets->at(i).pt()>150.)&&(fabs(topjets->at(i).eta())<2.4)) 
 	  {
 	    checkphi_pt = 1;
-	    if (topjet.v4().M()<250 && topjet.v4().M()>140 && topjet.tau3()/topjet.tau2()< 0.63) toptag=1;
+	    std::cout << topjets->at(i).v4().M() << "  tau3 = " << topjets->at(i).tau3()<< "  tau2 = " << topjets->at(i).tau2() << std::endl;
+	    if (topjets->at(i).v4().M()<250 && topjets->at(i).v4().M()>140 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.63) toptag=1;
 	  }
 	const std::vector<Jet> subjets=topjet.subjets();
 	JetId checkbtag=CSVBTag(CSVBTag::WP_LOOSE);
@@ -209,6 +210,7 @@ namespace uhh2examples {
     if(keep && checkphi_pt && pass_trigger) 
       {
 	bool pass_btag = btag_sel->passes(event);
+
 	if(pass_btag)
 	  {
 	    //bool pass_twodcut = 1;//twodcut_sel->passes(event);	
