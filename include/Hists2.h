@@ -27,7 +27,6 @@ public:
 private:
     uhh2::Event::Handle<std::vector<TopJet> > h_topjetsCMSTopTag;
     uhh2::Event::Handle<std::vector<TopJet> > h_topjetssoftdrop;
-    std::unique_ptr<FactorizedJetCorrector> jecAK8_;
 
 
 };

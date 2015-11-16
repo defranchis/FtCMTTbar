@@ -53,13 +53,14 @@ namespace uhh2examples {
  
   
     // store the Hists collection as member variables. Again, use unique_ptr to avoid memory leaks.
-    std::unique_ptr<Hists> h_nocuts, h_aftercuts_1, h_aftercuts_2, h_aftercuts_3, h_aftercuts;
+    std::unique_ptr<Hists> h_nocuts, h_aftercuts_1, h_aftercuts_2, h_aftercuts_3, h_aftercuts, h_aftercutscorr;
 
 
     std::unique_ptr<JetCorrector> jet_corrector;
     std::unique_ptr<JetResolutionSmearer> jetER_smearer;
     std::unique_ptr<JetLeptonCleaner> jetlepton_cleaner;
     std::unique_ptr<TopJetCorrector> topjet_corrector;
+    std::unique_ptr<TopJetCorrector> topjet23_corrector;
     //  std::unique_ptr<TopJetResolutionSmearer> topjetER_smearer;
     std::unique_ptr<TopJetLeptonDeltaRCleaner> topjetlepton_cleaner;
 
@@ -100,11 +101,13 @@ namespace uhh2examples {
       jet_corrector.reset(new JetCorrector(JERFiles::Summer15_25ns_L123_AK4PFchs_DATA));
       jetlepton_cleaner.reset(new JetLeptonCleaner(JERFiles::Summer15_25ns_L123_AK4PFchs_DATA));
       topjet_corrector.reset(new TopJetCorrector(JERFiles::Summer15_25ns_L123_AK8PFchs_DATA));
+      topjet23_corrector.reset(new TopJetCorrector(JERFiles::Summer15_25ns_L23_AK8PFchs_DATA));
     }
     else {
       jet_corrector.reset(new JetCorrector(JERFiles::Summer15_25ns_L123_AK4PFchs_MC));
       jetlepton_cleaner.reset(new JetLeptonCleaner(JERFiles::Summer15_25ns_L123_AK4PFchs_MC));
       topjet_corrector.reset(new TopJetCorrector(JERFiles::Summer15_25ns_L123_AK8PFchs_MC));
+      topjet23_corrector.reset(new TopJetCorrector(JERFiles::Summer15_25ns_L23_AK8PFchs_MC));
     }
     //cleanermodules.emplace_back(new TopJetCleaner(HEPTopTag(150)));
     jetER_smearer.reset(new JetResolutionSmearer(ctx));
@@ -123,6 +126,7 @@ namespace uhh2examples {
 
     h_nocuts.reset(new Hists_sub(ctx, "NoCuts"));
     h_aftercuts.reset(new Hists_sub(ctx, "AfterCuts"));
+    h_aftercutscorr.reset(new Hists_sub(ctx, "AfterCutsCorr"));
     h_aftercuts_1.reset(new Hists_sub(ctx, "AfterCuts_1"));
     h_aftercuts_2.reset(new Hists_sub(ctx, "AfterCuts_2"));
     h_aftercuts_3.reset(new Hists_sub(ctx, "AfterCuts_3"));
@@ -228,6 +232,9 @@ namespace uhh2examples {
 		    if(pass_met && pass_htlep)
 		      {
 			h_aftercuts->fill(event);
+			topjet23_corrector->process(event);
+			h_aftercutscorr->fill(event);
+			
 		      }
 		  }
 	      }

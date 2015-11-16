@@ -7,15 +7,10 @@
 #include <iostream>
 #include "UHH2/common/include/JetIds.h"
 #include "UHH2/common/include/Utils.h"
-#include "UHH2/common/include/JetCorrections.h"
-//#include "UHH2/common/src/JetCorrections.cxx"
 #include "UHH2/common/include/Utils.h"
 #include "UHH2/core/include/Utils.h"
 #include "UHH2/JetMETObjects/interface/JetCorrectorParameters.h"
 #include "UHH2/JetMETObjects/interface/FactorizedJetCorrector.h"
-
-#include "UHH2/JetMETObjects/interface/FactorizedJetCorrectorCalculator.h"
-
 
 #include <string>
 
@@ -319,7 +314,6 @@ Hists2::Hists2(Context & ctx, const string & dirname): Hists(ctx, dirname){
   book<TH1F>("weight_none", "weight", 100, 0., 0.1); 
   book<TH1F>("weight_data", "weight", 100, 0., 0.1); 
 
-  book<TH1F>("MassTop_uncorr", "Top Mass uncorr", 50, 0., 500.); 
   book<TH1F>("MassTop_corr", "Top Mass corr", 50, 0., 500.); 
   book<TH1F>("MassTop_sub", "Top Mass calculated from subjets", 50, 0., 500.);
  
@@ -352,37 +346,19 @@ Hists2::Hists2(Context & ctx, const string & dirname): Hists(ctx, dirname){
   book<TH1F>("neutralHadronEnergyFraction", "neutralHadronEnergyFraction", 50, 0., 1.);
   book<TH1F>("neutralMultiplicity", "neutralMultiplicity", 20, 0., 20.);
 
-  h_topjetsCMSTopTag = ctx.get_handle<std::vector<TopJet> >("patJetsHepTopTagCHSPacked_daughters");
-  h_topjetssoftdrop = ctx.get_handle<std::vector<TopJet> >("patJetsCa15CHSJetsSoftDropPacked_daughters");
+  h_topjetsCMSTopTag = ctx.get_handle<std::vector<TopJet> >("patJetsCa15CHSJetsSoftDropPacked_daughters");
+  h_topjetssoftdrop = ctx.get_handle<std::vector<TopJet> >("patJetsAk8CHSJetsSoftDropPacked_daughters");
   
-
-}
-
-std::unique_ptr<FactorizedJetCorrector> build_corrector(const std::vector<std::string> & filenames){
-    std::vector<JetCorrectorParameters> pars;
-    for(const auto & filename : filenames){
-        pars.emplace_back(locate_file(filename));
-    }
-    return make_unique<FactorizedJetCorrector>(pars);
-}
-
-void correct_jet(FactorizedJetCorrector & corrector, Jet & jet, const Event & event){
-    auto factor_raw = jet.JEC_factor_raw();
-    corrector.setJetPt(jet.pt() * factor_raw);
-    corrector.setJetEta(jet.eta());
-    corrector.setJetE(jet.energy() * factor_raw);
-    corrector.setJetA(jet.jetArea());
-    corrector.setRho(event.rho);
-    auto correctionfactor = corrector.getCorrection();
-    jet.set_v4(jet.v4() * (factor_raw * correctionfactor));
-    jet.set_JEC_factor_raw(1. / correctionfactor);
 }
 
 template<typename T>
 double m_groomedT(const T & topjet){
   auto subjets = topjet.subjets();
   LorentzVector sum(0,0,0,0);
-  for(auto subjet : subjets) sum += subjet.v4();
+  for(auto subjet : subjets){
+    auto factor_raw = subjet.JEC_factor_raw();
+    sum += subjet.v4()*factor_raw;
+  }
   if(!sum.isTimelike()) return -1.0;
   else return sum.M();
 }
@@ -398,16 +374,6 @@ void Hists2::fill(const Event & event){
   
   // Don't forget to always use the weight when filling.
   float weight = event.weight;
-
-  const std::vector<std::string> jecAK8PayloadNames_ = {
-    "JetMETObjects/data/Summer15_50nsV5_MC_L2Relative_AK8PFchs.txt",
-    "JetMETObjects/data/Summer15_50nsV5_MC_L3Absolute_AK8PFchs.txt"
-  };
-
-
-  // Make the FactorizedJetCorrector
-  jecAK8_ =  build_corrector(jecAK8PayloadNames_);//boost::shared_ptr<FactorizedJetCorrector> ( new FactorizedJetCorrector(vPar) );
-  //get extra jet collections
 
   const auto topjetssoftdrop = &event.get(h_topjetssoftdrop);
 
@@ -481,7 +447,6 @@ void Hists2::fill(const Event & event){
     //TopJets (Softdrop)
     TopJet topjet=topjetssoftdrop->at(i);
     Jet jet=topjetssoftdrop->at(i);
-    hist("MassTop_uncorr")->Fill(topjet.v4().M(), weight);
     hist("PTTop")->Fill(topjet.v4().pt(), weight);
     hist("PrimaryVertex")->Fill(event.pvs->size(), weight);
     hist("Weight")->Fill(weight);
@@ -495,23 +460,6 @@ void Hists2::fill(const Event & event){
 
     hist("tau32")->Fill(topjet.tau3()/topjet.tau2(), weight);
     hist("tau21")->Fill(topjet.tau2()/topjet.tau1(), weight);
-
-    /*const auto jets = &event.get(h_topjetssoftdrop);
-    assert(jets);
-    for(auto & jet : *jets){
-        correct_jet(*jecAK8_, jet, event);
-    }*/
-    correct_jet(*jecAK8_, jet, event);
-
-    /*    auto factor_raw = topjet.JEC_factor_raw();
-    jecAK8_.setJetPt(topjet.pt() * factor_raw);
-    jecAK8_.setJetEta(topjet.eta());
-    jecAK8_.setJetE(topjet.energy() * factor_raw);
-    jecAK8_.setJetA(topjet.jetArea());
-    jecAK8_.setRho(event.rho);
-    auto correctionfactor = jecAK8_.getCorrection();
-    topjet.set_v4(topjet.v4() * (factor_raw * correctionfactor));
-    topjet.set_JEC_factor_raw(1. / correctionfactor);*/
 
     hist("MassTop_corr")->Fill(topjet.v4().M(), weight);
 
