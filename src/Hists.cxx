@@ -346,8 +346,8 @@ Hists2::Hists2(Context & ctx, const string & dirname): Hists(ctx, dirname){
   book<TH1F>("neutralHadronEnergyFraction", "neutralHadronEnergyFraction", 50, 0., 1.);
   book<TH1F>("neutralMultiplicity", "neutralMultiplicity", 20, 0., 20.);
 
-  h_topjetsCMSTopTag = ctx.get_handle<std::vector<TopJet> >("patJetsCa15CHSJetsSoftDropPacked_daughters");
-  h_topjetssoftdrop = ctx.get_handle<std::vector<TopJet> >("patJetsAk8CHSJetsSoftDropPacked_daughters");
+  h_topjetsCMSTopTag = ctx.get_handle<std::vector<TopJet> >("patJetsHepTopTagCHSPacked_daughters");
+  h_topjetssoftdrop = ctx.get_handle<std::vector<TopJet> >("patJetsCa15CHSJetsSoftDropPacked_daughters");
   
 }
 
@@ -446,7 +446,6 @@ void Hists2::fill(const Event & event){
  
     //TopJets (Softdrop)
     TopJet topjet=topjetssoftdrop->at(i);
-    Jet jet=topjetssoftdrop->at(i);
     hist("PTTop")->Fill(topjet.v4().pt(), weight);
     hist("PrimaryVertex")->Fill(event.pvs->size(), weight);
     hist("Weight")->Fill(weight);
