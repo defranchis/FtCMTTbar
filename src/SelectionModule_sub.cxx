@@ -87,7 +87,7 @@ namespace uhh2examples {
     
 
     jet_kinematic = PtEtaCut(30.0, 2.4);
-    topjet_kinematic = PtEtaCut(150.0,2.4);
+    topjet_kinematic = PtEtaCut(400.0,2.4);
     muid = AndId<Muon>(MuonIDTight(), PtEtaCut(50.0, 2.1),MuonIso(0.12));
 
     if (type != "DATA") pileup_SF.reset(new MCPileupReweight(ctx)); 
@@ -182,11 +182,11 @@ namespace uhh2examples {
       
 	double deltaphi = deltaPhi(topjet,muons->at(0));
 	double pi = 3.14159265359;
-	if(deltaphi>2*pi/3 &&(topjets->at(i).pt()>150.)&&(fabs(topjets->at(i).eta())<2.4)) 
+	if(deltaphi>2*pi/3 &&(topjets->at(i).pt()>400.)&&(fabs(topjets->at(i).eta())<2.4)) 
 	  {
 	    checkphi_pt = 1;
 	    std::cout << topjets->at(i).v4().M() << "  tau3 = " << topjets->at(i).tau3()<< "  tau2 = " << topjets->at(i).tau2() << std::endl;
-	    if (topjets->at(i).v4().M()<250 && topjets->at(i).v4().M()>140 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.63) toptag=1;
+	    if (topjets->at(i).v4().M()<210 && topjets->at(i).v4().M()>110 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.59) toptag=1;
 	  }
 	const std::vector<Jet> subjets=topjet.subjets();
 	JetId checkbtag=CSVBTag(CSVBTag::WP_LOOSE);
@@ -213,7 +213,8 @@ namespace uhh2examples {
 
 	if(pass_btag)
 	  {
-	    //bool pass_twodcut = 1;//twodcut_sel->passes(event);	
+	    //bool pass_twodcut = 1;//twodcut_sel->passes(event);
+	    pass_sub_btag = 1;
 	    h_aftercuts_1->fill(event);
 	    if(pass_sub_btag)
 	      {
