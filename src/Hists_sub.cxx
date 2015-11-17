@@ -311,7 +311,7 @@ Hists_sub::Hists_sub(Context & ctx, const string & dirname): Hists(ctx, dirname)
   book<TH1F>("MassTop", "Top Mass", 50, 0., 500.); 
   book<TH1F>("MassTop_sub", "Top Mass calculated from subjets", 50, 0., 500.);
  
-  book<TH1F>("PTTop", "Top PT", 50, 0., 500.);  
+  book<TH1F>("PTTop", "Top PT", 50, 300., 1000.);  
 
   book<TH1F>("subVertexNvtx_b", "N of secondary vertex", 6, 0., 6.);  
   book<TH1F>("subVertexNvtx_c", "N of secondary vertex", 6, 0., 6.); 
@@ -334,6 +334,10 @@ Hists_sub::Hists_sub(Context & ctx, const string & dirname): Hists(ctx, dirname)
   book<TH1F>("HTTmass", "HTTmass", 50, 0., 300.);
   book<TH1F>("tau32", "tau32", 50, 0., 1.);
   book<TH1F>("tau21", "tau21", 50, 0., 1.);
+
+  book<TH1F>("tau3", "tau3", 50, 0., 1.);
+  book<TH1F>("tau2", "tau2", 50, 0., 1.);
+
 
   book<TH1F>("wmass", "wmass", 50, 0., 150.);
   book<TH1F>("neutralEmEnergyFraction", "neutralEmEnergyFraction", 50, 0., 1.);
@@ -425,7 +429,8 @@ void Hists_sub::fill(const Event & event){
 
     hist("tau32")->Fill(topjet.tau3()/topjet.tau2(), weight);
     hist("tau21")->Fill(topjet.tau2()/topjet.tau1(), weight);
-
+    hist("tau3")->Fill(topjet.tau3(), weight);
+    hist("tau2")->Fill(topjet.tau2(), weight);
 
  
    

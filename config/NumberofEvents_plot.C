@@ -38,8 +38,8 @@ vector<TString> Hists(vector<TString> list)
   list.push_back("MassTop");
   list.push_back("PTTop");
   list.push_back("PrimaryVertex");
-  list.push_back("subSecondaryVertex");
-  list.push_back("subTrackMomentum");
+  //list.push_back("subSecondaryVertex");
+  //list.push_back("subTrackMomentum");
   list.push_back("MassTop_sub");
   list.push_back("m12");
   list.push_back("m13");
@@ -48,7 +48,7 @@ vector<TString> Hists(vector<TString> list)
   list.push_back("HTTmass");
   list.push_back("tau21");
   list.push_back("tau32");
-  list.push_back("wmass");
+  //list.push_back("wmass");
   list.push_back("neutralEmEnergyFraction");
   list.push_back("neutralHadronEnergyFraction");
   list.push_back("neutralMultiplicity");
@@ -59,8 +59,8 @@ vector<TString> StackHists(vector<TString> list)
   list.push_back("TopMass");
   list.push_back("TopPT");
   list.push_back("PV");
-  list.push_back("SV");
-  list.push_back("SJ_PT");
+  //list.push_back("SV");
+  //list.push_back("SJ_PT");
   list.push_back("TopMass_sub");
   list.push_back("M12");
   list.push_back("M13");
@@ -69,7 +69,7 @@ vector<TString> StackHists(vector<TString> list)
   list.push_back("HTTMASS");
   list.push_back("TAU21");
   list.push_back("TAU32");
-  list.push_back("WMASS");
+  //list.push_back("WMASS");
   list.push_back("NeutralEmEnergyFraction");
   list.push_back("NeutralHadronEnergyFraction");
   list.push_back("NeutralMultiplicity");
@@ -77,12 +77,12 @@ vector<TString> StackHists(vector<TString> list)
 }
 vector<TString> Description(vector<TString> list)
 {
-  list.push_back("Ungroomed Top Mass");
+  list.push_back("Top Mass  v4().M()");
   list.push_back("Top PT");
   list.push_back("Primary Vertex");
-  list.push_back("Secondary Vertex");
-  list.push_back("Subjet Track PT");
-  list.push_back("grommed Top Mass");
+  //list.push_back("Secondary Vertex");
+  //list.push_back("Subjet Track PT");
+  list.push_back("Top Mass (sum of subjets)");
   list.push_back("mass of first and second subjet");
   list.push_back("mass of first and third subjet");
   list.push_back("mass of second and third subjet");
@@ -90,7 +90,7 @@ vector<TString> Description(vector<TString> list)
   list.push_back("HTTmass");
   list.push_back("tau21");
   list.push_back("tau32");
-  list.push_back("wmass");
+  //list.push_back("wmass");
   list.push_back("Neutral Em Energy Fraction");
   list.push_back("Neutral Hadron Energy Fraction");
   list.push_back("Neutral Multiplicity");
@@ -110,8 +110,8 @@ vector<TString> YAxis(vector<TString> list)
   list.push_back("number of topjets");
   list.push_back("number of topjets");
   list.push_back("number of vertices");
-  list.push_back("number of vertices");
-  list.push_back("number of tracks");
+  //list.push_back("number of vertices");
+  //list.push_back("number of tracks");
   list.push_back("number of topjets");
   list.push_back("number of topjets");
   list.push_back("number of topjets");
@@ -120,7 +120,7 @@ vector<TString> YAxis(vector<TString> list)
   list.push_back("number of topjets");
   list.push_back("number of topjets");
   list.push_back("number of topjets");
-  list.push_back("number of topjets");
+  //list.push_back("number of topjets");
   list.push_back("number of topjets");
   list.push_back("number of topjets");
   list.push_back("number of topjets");
@@ -131,8 +131,8 @@ vector<TString> XAxis(vector<TString> list)
   list.push_back("m_{top} [GeV]");
   list.push_back("PT_{top} [GeV]");
   list.push_back("multiplicity");
-  list.push_back("inv. mass [GeV]");
-  list.push_back("PT_{track} [GeV]");
+  //list.push_back("inv. mass [GeV]");
+  //list.push_back("PT_{track} [GeV]");
   list.push_back("m_{top} [GeV]");
   list.push_back("m_{12} [GeV]");
   list.push_back("m_{13} [GeV]");
@@ -141,7 +141,7 @@ vector<TString> XAxis(vector<TString> list)
   list.push_back("HTTmass [GeV]");
   list.push_back("tau21");
   list.push_back("tau32");
-  list.push_back("m_{W} [GeV]");
+  //list.push_back("m_{W} [GeV]");
   list.push_back("Neutral Em Energy Fraction");
   list.push_back("Neutral Hadron Energy Fraction");
   list.push_back("Neutral Multiplicity");
@@ -166,7 +166,7 @@ void NumberofEvents_plot()
   TFile * ofile = TFile::Open("NumberofEvents.root","RECREATE");
   ofile->cd();
 
-  THStack *h_NoE = new THStack("NoE","Number of Events at different selection levels");
+  //  THStack *h_NoE = new THStack("NoE","Number of Events at different selection levels");
 
   TLegend *leg = new TLegend(0.60,0.65,0.955,0.9);
   leg->SetBorderSize(0);
@@ -178,7 +178,7 @@ void NumberofEvents_plot()
   leg->SetFillColor(0);
   leg->SetFillStyle(1001);
   
-  for(int m = 0; m < files_mc.size(); m++)
+  /*for(int m = 0; m < files_mc.size(); m++)
     {
       TFile *file=TFile::Open(files_mc[m]);
       std::cout << files_mc[m] << std::endl;
@@ -215,7 +215,7 @@ void NumberofEvents_plot()
       if(n==3) h_level_data->Fill(3., NoE); 
       if(n==4) h_level_data->Fill(4., NoE); 
       if(n==5) h_level_data->Fill(5., NoE); 	    
-    }
+      }*/
     
   gStyle->SetOptStat("");
   gStyle->SetLabelFont(42);
@@ -240,7 +240,7 @@ void NumberofEvents_plot()
   TLatex T5; T5.SetTextFont(42); T5.SetTextSize(0.05681); T5.SetTextAlign(12); T5.SetLineWidth(2); T5.SetNDC();
   TLatex T6; T6.SetTextFont(42); T6.SetTextSize(0.04875); T6.SetTextAlign(31); T6.SetLineWidth(2); T6.SetNDC();
 
-  TCanvas *c1 = new TCanvas("c1", "Selection steps");
+  /*TCanvas *c1 = new TCanvas("c1", "Selection steps");
   c1->cd();
   h_level_data->SetXTitle("selection level");
   h_level_data->SetYTitle("number of events");
@@ -260,6 +260,7 @@ void NumberofEvents_plot()
   c1->Print("Plots_2.pdf[");
   c1->Print("Plots_2.pdf");
   
+  */
 
   for(int k = 0; k < hists.size(); k++)
     {
