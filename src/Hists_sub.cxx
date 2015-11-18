@@ -308,10 +308,10 @@ Hists_sub::Hists_sub(Context & ctx, const string & dirname): Hists(ctx, dirname)
   book<TH1F>("weight_none", "weight", 100, 0., 0.1); 
   book<TH1F>("weight_data", "weight", 100, 0., 0.1); 
 
-  book<TH1F>("MassTop", "Top Mass", 50, 0., 500.); 
+  book<TH1F>("MassTop_corr", "Top Mass corr", 50, 0., 500.); 
   book<TH1F>("MassTop_sub", "Top Mass calculated from subjets", 50, 0., 500.);
  
-  book<TH1F>("PTTop", "Top PT", 50, 300., 1000.);  
+  book<TH1F>("PTTop", "Top PT", 50, 0., 500.);  
 
   book<TH1F>("subVertexNvtx_b", "N of secondary vertex", 6, 0., 6.);  
   book<TH1F>("subVertexNvtx_c", "N of secondary vertex", 6, 0., 6.); 
@@ -335,16 +335,13 @@ Hists_sub::Hists_sub(Context & ctx, const string & dirname): Hists(ctx, dirname)
   book<TH1F>("tau32", "tau32", 50, 0., 1.);
   book<TH1F>("tau21", "tau21", 50, 0., 1.);
 
-  book<TH1F>("tau3", "tau3", 50, 0., 1.);
-  book<TH1F>("tau2", "tau2", 50, 0., 1.);
-
-
   book<TH1F>("wmass", "wmass", 50, 0., 150.);
   book<TH1F>("neutralEmEnergyFraction", "neutralEmEnergyFraction", 50, 0., 1.);
   book<TH1F>("neutralHadronEnergyFraction", "neutralHadronEnergyFraction", 50, 0., 1.);
   book<TH1F>("neutralMultiplicity", "neutralMultiplicity", 20, 0., 20.);
 
-
+  book<TH1F>("tau3", "tau3", 50, 0., 1.);
+  book<TH1F>("tau2", "tau2", 50, 0., 1.);
 }
 
 template<typename T>
@@ -415,7 +412,7 @@ void Hists_sub::fill(const Event & event){
     if(check_one_event == 1) hist("NumberofEvents")->Fill(1,weight);
        
     
-    hist("MassTop")->Fill(topjet.v4().M(), weight);
+ 
     hist("PTTop")->Fill(topjet.v4().pt(), weight);
     hist("PrimaryVertex")->Fill(event.pvs->size(), weight);
     hist("Weight")->Fill(weight);
@@ -432,7 +429,7 @@ void Hists_sub::fill(const Event & event){
     hist("tau3")->Fill(topjet.tau3(), weight);
     hist("tau2")->Fill(topjet.tau2(), weight);
 
- 
+    hist("MassTop_corr")->Fill(topjet.v4().M(), weight);
    
     JetId checkbtag=CSVBTag(CSVBTag::WP_LOOSE);
     

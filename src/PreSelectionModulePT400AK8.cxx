@@ -37,10 +37,10 @@ namespace uhh2examples {
    * 
    * In the output, only leptons passing the id and jets with pt > 30 GeV and eta < 2.4 are kept.
    */
-  class SelectionModule_sub: public AnalysisModule {
+  class SelectionModulePT400AK8: public AnalysisModule {
   public:
     
-    explicit SelectionModule_sub(Context & ctx);
+    explicit SelectionModulePT400AK8(Context & ctx);
     virtual bool process(Event & event);
 
   private:
@@ -51,16 +51,10 @@ namespace uhh2examples {
     //uhh2::Event::Handle<std::vector<TopJet> > h_topjetsCMSTopTag;
     //uhh2::Event::Handle<std::vector<TopJet> > h_topjetssoftdrop;
  
-  
-    // store the Hists collection as member variables. Again, use unique_ptr to avoid memory leaks.
-    std::unique_ptr<Hists> h_nocuts, h_aftercuts_1, h_aftercuts_2, h_aftercuts_3, h_aftercuts, h_aftercutscorr;
-
-
     std::unique_ptr<JetCorrector> jet_corrector;
     std::unique_ptr<JetResolutionSmearer> jetER_smearer;
     std::unique_ptr<JetLeptonCleaner> jetlepton_cleaner;
     std::unique_ptr<TopJetCorrector> topjet_corrector;
-    std::unique_ptr<TopJetCorrector> topjet23_corrector;
     //  std::unique_ptr<TopJetResolutionSmearer> topjetER_smearer;
     std::unique_ptr<TopJetLeptonDeltaRCleaner> topjetlepton_cleaner;
 
@@ -77,7 +71,7 @@ namespace uhh2examples {
   };
 
 
-  SelectionModule_sub::SelectionModule_sub(Context & ctx): selection(ctx, "selection") {
+  SelectionModulePT400AK8::SelectionModulePT400AK8(Context & ctx): selection(ctx, "selection") {
     
     type = ctx.get("dataset_type", "");
     //h_topjetsCMSTopTag = ctx.declare_event_input<std::vector<TopJet> >("patJetsCa15CHSJetsSoftDropPacked_daughters");
@@ -101,13 +95,11 @@ namespace uhh2examples {
       jet_corrector.reset(new JetCorrector(JERFiles::Summer15_25ns_L123_AK4PFchs_DATA));
       jetlepton_cleaner.reset(new JetLeptonCleaner(JERFiles::Summer15_25ns_L123_AK4PFchs_DATA));
       topjet_corrector.reset(new TopJetCorrector(JERFiles::Summer15_25ns_L123_AK8PFchs_DATA));
-      topjet23_corrector.reset(new TopJetCorrector(JERFiles::Summer15_25ns_L23_AK8PFchs_DATA));
     }
     else {
       jet_corrector.reset(new JetCorrector(JERFiles::Summer15_25ns_L123_AK4PFchs_MC));
       jetlepton_cleaner.reset(new JetLeptonCleaner(JERFiles::Summer15_25ns_L123_AK4PFchs_MC));
       topjet_corrector.reset(new TopJetCorrector(JERFiles::Summer15_25ns_L123_AK8PFchs_MC));
-      topjet23_corrector.reset(new TopJetCorrector(JERFiles::Summer15_25ns_L23_AK8PFchs_MC));
     }
     //cleanermodules.emplace_back(new TopJetCleaner(HEPTopTag(150)));
     jetER_smearer.reset(new JetResolutionSmearer(ctx));
@@ -124,14 +116,6 @@ namespace uhh2examples {
     selection.add<NJetSelection>("nj >= 2", 2);
     selection.add<NTopJetSelection>("ntj >= 1", 1, 1);
 
-    h_nocuts.reset(new Hists_sub(ctx, "NoCuts"));
-    h_aftercuts.reset(new Hists_sub(ctx, "AfterCuts"));
-    h_aftercutscorr.reset(new Hists_sub(ctx, "AfterCutsCorr"));
-    h_aftercuts_1.reset(new Hists_sub(ctx, "AfterCuts_1"));
-    h_aftercuts_2.reset(new Hists_sub(ctx, "AfterCuts_2"));
-    h_aftercuts_3.reset(new Hists_sub(ctx, "AfterCuts_3"));
-    //h_aftercuts_4.reset(new Hists_sub(ctx, "AfterCuts_4"));
-    //h_aftercuts_5.reset(new Hists_sub(ctx, "AfterCuts_5"));
     //if (type == "DATA"){
     //  std::cout << "Running on Data, using lumi selection!" << std::endl;
     //  lumi_selection.reset(new LumiSelection(ctx));
@@ -147,7 +131,7 @@ namespace uhh2examples {
   }
 
 
-  bool SelectionModule_sub::process(Event & event) {
+  bool SelectionModulePT400AK8::process(Event & event) {
 
     if(!event.isRealData) pileup_SF->process(event);
 
@@ -168,85 +152,33 @@ namespace uhh2examples {
     //    return false;
     //}
 
-    //bool btagged = 0;
     bool checkphi_pt=0;
-    bool toptag = 0;
-    bool pass_sub_btag = 0;
     if(selection.passes(event)){
 
-      //Example to access top jets information and subjets
       std::vector<TopJet>* topjets = event.topjets;
       std::vector<Muon>* muons = event.muons;
-
-
 
       for(unsigned int i=0;i<topjets->size();i++){
       
 	TopJet topjet=topjets->at(i);
-      
 	double deltaphi = deltaPhi(topjet,muons->at(0));
 	double pi = 3.14159265359;
 	if(deltaphi>2*pi/3 &&(topjets->at(i).pt()>400.)&&(fabs(topjets->at(i).eta())<2.4)) 
 	  {
 	    checkphi_pt = 1;
-	    if (topjets->at(i).v4().M()<210 && topjets->at(i).v4().M()>110 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.59) toptag=1;
 	  }
-	const std::vector<Jet> subjets=topjet.subjets();
-	JetId checkbtag=CSVBTag(CSVBTag::WP_LOOSE);
-	for(unsigned int m = 0; m < subjets.size(); m++)
-	  {
-	    if (checkbtag(subjets[m], event)) pass_sub_btag = 1;
-	  }
-
       }
-
-
     }
+
     bool keep = selection.passes(event);
     bool pass_trigger = trigger_sel->passes(event);
-    bool pass_met = met_sel->passes(event);
-    bool pass_htlep = htlep_sel->passes(event);
+   
  
-    //bool pass_twodcut =1;
-    h_nocuts->fill(event);
-    if(keep && checkphi_pt && pass_trigger) 
-      {
-	bool pass_btag = btag_sel->passes(event);
-
-	if(pass_btag)
-	  {
-	    //bool pass_twodcut = 1;//twodcut_sel->passes(event);
-
-	    h_aftercuts_1->fill(event);
-	    topjet23_corrector->process(event);
-	    h_aftercutscorr->fill(event);
-
-
-	    if(pass_sub_btag)
-	      {
-
-		h_aftercuts_2->fill(event);
-
-		if(toptag)
-		  {
-			
-		    h_aftercuts_3->fill(event);
-
-		    if(pass_met && pass_htlep)
-		      {
-			h_aftercuts->fill(event);
-
-			
-		      }
-		  }
-	      }
-	  }
-      }
-    return keep;
+    return keep || pass_trigger || checkphi_pt;
   }
 
   // as we want to run the ExampleCycleNew directly with AnalysisModuleRunner,
   // make sure the ExampleModule is found by class name. This is ensured by this macro:
-  UHH2_REGISTER_ANALYSIS_MODULE(SelectionModule_sub)
+  UHH2_REGISTER_ANALYSIS_MODULE(SelectionModulePT400AK8)
 
 }

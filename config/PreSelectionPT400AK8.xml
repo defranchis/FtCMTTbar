@@ -87,7 +87,7 @@
 	    <!--<Item Name="use_sframe_weight" Value="false" /-->
 
             <!-- the class name of the AnalysisModule subclasses to run: -->
-            <Item Name="AnalysisModule" Value="SelectionModule_sub" /> 
+            <Item Name="AnalysisModule" Value="PreSelectionModulePT400AK8" /> 
 
 
         </UserConfig>
