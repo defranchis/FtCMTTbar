@@ -486,7 +486,7 @@ void Hists2::fill(const Event & event){
 
       //Flavours
       //b 
-      if (subjet.flavor() == 5 || subjet.flavor()==-5)
+      if (subjet.hadronFlavor() == 5 || subjet.hadronFlavor()==-5)
 	{
 	  //btag variables
 	  hist("subCSV_b")->Fill(subjet.btag_combinedSecondaryVertex(),weight);
@@ -537,7 +537,7 @@ void Hists2::fill(const Event & event){
 	} //fill b
 
       //c
-      if (subjet.flavor() == 4 || subjet.flavor()==-4)
+      if (subjet.hadronFlavor() == 4 || subjet.hadronFlavor()==-4)
 	{
 	  //btag variables
 	  hist("subCSV_c")->Fill(subjet.btag_combinedSecondaryVertex(),weight);
@@ -588,7 +588,7 @@ void Hists2::fill(const Event & event){
 	} //fill c
 
       //u,d,s
-      if (subjet.flavor() == 1 || subjet.flavor()==-1 || subjet.flavor() == 2 || subjet.flavor()==-2 || subjet.flavor() == 3|| subjet.flavor()==-3 )
+      if (subjet.hadronFlavor() == 1 || subjet.hadronFlavor()==-1 || subjet.hadronFlavor() == 2 || subjet.hadronFlavor()==-2 || subjet.hadronFlavor() == 3|| subjet.hadronFlavor()==-3 )
 	{ 
 	  //btag variables	
 	  hist("subCSV_uds")->Fill(subjet.btag_combinedSecondaryVertex(),weight);
@@ -640,7 +640,7 @@ void Hists2::fill(const Event & event){
 	} //fill uds
 
       //gluon    
-      if (subjet.flavor() == 21)
+      if (subjet.hadronFlavor() == 21)
 	{
 	  //btag variables
 	  hist("subCSV_g")->Fill(subjet.btag_combinedSecondaryVertex(),weight);
@@ -691,7 +691,7 @@ void Hists2::fill(const Event & event){
 	} //fill g
        
       //none
-      if (subjet.flavor() == 0)
+      if (subjet.hadronFlavor() == 0)
 	{
 	  //btag variables
 	  hist("subCSV_none")->Fill(subjet.btag_combinedSecondaryVertex(),weight);
