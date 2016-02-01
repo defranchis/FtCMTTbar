@@ -310,8 +310,10 @@ Hists_sub::Hists_sub(Context & ctx, const string & dirname): Hists(ctx, dirname)
 
   book<TH1F>("MassTop_corr", "Top Mass corr", 50, 0., 500.); 
   book<TH1F>("MassTop_sub", "Top Mass calculated from subjets", 50, 0., 500.);
+  book<TH1F>("MassTop_SD", "Top Mass SoftDrop", 50, 0., 500.); 
+  book<TH1F>("MassTop_SD_corr", "Top Mass SoftDrop corrected", 50, 0., 500.);
  
-  book<TH1F>("PTTop", "Top PT", 50, 0., 500.);  
+  book<TH1F>("PTTop", "Top PT", 100, 0., 2000.);  
 
   book<TH1F>("subVertexNvtx_b", "N of secondary vertex", 6, 0., 6.);  
   book<TH1F>("subVertexNvtx_c", "N of secondary vertex", 6, 0., 6.); 
@@ -342,6 +344,8 @@ Hists_sub::Hists_sub(Context & ctx, const string & dirname): Hists(ctx, dirname)
 
   book<TH1F>("tau3", "tau3", 50, 0., 1.);
   book<TH1F>("tau2", "tau2", 50, 0., 1.);
+
+  book<TH1F>("subCSV", "combined secondary vertex discriminator of the subjet", 100, 0., 1.);  
 }
 
 template<typename T>
@@ -417,6 +421,9 @@ void Hists_sub::fill(const Event & event){
     hist("PrimaryVertex")->Fill(event.pvs->size(), weight);
     hist("Weight")->Fill(weight);
     hist("MassTop_sub")->Fill(M_groomed(topjet),weight);
+    hist("MassTop_SD")->Fill(topjet.softdropmass(),weight);
+    hist("MassTop_SD_corr")->Fill(topjet.softdropmass()*1/topjet.JEC_factor_raw(),weight);
+
     hist("neutralEmEnergyFraction")->Fill(topjet.neutralEmEnergyFraction(),weight);
     hist("neutralHadronEnergyFraction")->Fill(topjet.neutralHadronEnergyFraction(),weight);
     hist("neutralMultiplicity")->Fill(topjet.neutralMultiplicity(),weight);
@@ -431,6 +438,7 @@ void Hists_sub::fill(const Event & event){
 
     hist("MassTop_corr")->Fill(topjet.v4().M(), weight);
    
+    hist("subCSV")->Fill(topjet.btag_combinedSecondaryVertex(),weight);
     JetId checkbtag=CSVBTag(CSVBTag::WP_LOOSE);
     
     if(subjets.size() == 3)
@@ -449,7 +457,7 @@ void Hists_sub::fill(const Event & event){
       Jet subjet=subjets[ii];
 
       JetBTagInfo btaginfo=subjet.btaginfo();
- 
+      hist("subCSV")->Fill(subjet.btag_combinedSecondaryVertex(),weight);
 
       //Flavours
       //b 

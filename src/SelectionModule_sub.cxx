@@ -18,6 +18,7 @@
 #include "UHH2/FtCMTTbar/include/FtCMTTbarUtils.h"
 #include "UHH2/common/include/LumiSelection.h"
 #include "UHH2/common/include/MCWeight.h"
+#include "UHH2/common/include/TopJetIds.h"
 
 using namespace std;
 using namespace uhh2;
@@ -71,7 +72,7 @@ namespace uhh2examples {
     std::unique_ptr<Selection> met_sel;
     std::unique_ptr<Selection> htlep_sel;
     std::unique_ptr<Selection> btag_sel;
-    //std::unique_ptr<Selection> lumi_selection;
+    std::unique_ptr<Selection> lumi_selection;
     std::unique_ptr<uhh2::AnalysisModule> pileup_SF;
 
   };
@@ -98,19 +99,19 @@ namespace uhh2examples {
     cleanermodules.emplace_back(new JetCleaner(jet_kinematic));
     cleanermodules.emplace_back(new MuonCleaner(muid));
     if (type == "DATA"){
-      jet_corrector.reset(new JetCorrector(JERFiles::Summer15_25ns_L123_AK4PFchs_DATA));
-      jetlepton_cleaner.reset(new JetLeptonCleaner(JERFiles::Summer15_25ns_L123_AK4PFchs_DATA));
-      topjet_corrector.reset(new TopJetCorrector(JERFiles::Summer15_25ns_L123_AK8PFchs_DATA));
-      topjet23_corrector.reset(new TopJetCorrector(JERFiles::Summer15_25ns_L23_AK8PFchs_DATA));
+      jet_corrector.reset(new JetCorrector(ctx, JERFiles::Summer15_25ns_L123_AK4PFchs_DATA));
+      jetlepton_cleaner.reset(new JetLeptonCleaner(ctx, JERFiles::Summer15_25ns_L123_AK4PFchs_DATA));
+      topjet_corrector.reset(new TopJetCorrector(ctx, JERFiles::Summer15_25ns_L123_AK8PFchs_DATA));
+      topjet23_corrector.reset(new TopJetCorrector(ctx, JERFiles::Summer15_25ns_L23_AK8PFchs_DATA));
     }
     else {
-      jet_corrector.reset(new JetCorrector(JERFiles::Summer15_25ns_L123_AK4PFchs_MC));
-      jetlepton_cleaner.reset(new JetLeptonCleaner(JERFiles::Summer15_25ns_L123_AK4PFchs_MC));
-      topjet_corrector.reset(new TopJetCorrector(JERFiles::Summer15_25ns_L123_AK8PFchs_MC));
-      topjet23_corrector.reset(new TopJetCorrector(JERFiles::Summer15_25ns_L23_AK8PFchs_MC));
+      jet_corrector.reset(new JetCorrector(ctx, JERFiles::Summer15_25ns_L123_AK4PFchs_MC));
+      jetlepton_cleaner.reset(new JetLeptonCleaner(ctx, JERFiles::Summer15_25ns_L123_AK4PFchs_MC));
+      topjet_corrector.reset(new TopJetCorrector(ctx, JERFiles::Summer15_25ns_L123_AK8PFchs_MC));
+      topjet23_corrector.reset(new TopJetCorrector(ctx, JERFiles::Summer15_25ns_L23_AK8PFchs_MC));
     }
     //cleanermodules.emplace_back(new TopJetCleaner(HEPTopTag(150)));
-    jetER_smearer.reset(new JetResolutionSmearer(ctx));
+    //jetER_smearer.reset(new JetResolutionSmearer(ctx));
     jetlepton_cleaner->set_drmax(.4);
     //  topjetER_smearer.reset(new TopJetResolutionSmearer(ctx));
     topjetlepton_cleaner.reset(new TopJetLeptonDeltaRCleaner(1.5));
@@ -132,10 +133,10 @@ namespace uhh2examples {
     h_aftercuts_3.reset(new Hists_sub(ctx, "AfterCuts_3"));
     //h_aftercuts_4.reset(new Hists_sub(ctx, "AfterCuts_4"));
     //h_aftercuts_5.reset(new Hists_sub(ctx, "AfterCuts_5"));
-    //if (type == "DATA"){
+    if (type == "DATA"){
     //  std::cout << "Running on Data, using lumi selection!" << std::endl;
-    //  lumi_selection.reset(new LumiSelection(ctx));
-    //}
+      lumi_selection.reset(new LumiSelection(ctx));
+    }
 
     trigger_sel = make_unique<TriggerSelection>("HLT_Mu45_eta2p1_v*");
     twodcut_sel.reset(new TwoDCut(.4, 25.));
@@ -157,21 +158,22 @@ namespace uhh2examples {
     }
     
     jet_corrector->process(event);
-    if (type != "DATA"){
-      jetER_smearer->process(event);
-    }
+    //if (type != "DATA"){
+    //  jetER_smearer->process(event);
+    //}
     jetlepton_cleaner->process(event);
     topjet_corrector->process(event);
     //  topjetER_smearer->process(event);
     topjetlepton_cleaner->process(event);
-    //if (lumi_selection.get() && !lumi_selection->passes(event)) {
-    //    return false;
-    //}
+    if (lumi_selection.get() && !lumi_selection->passes(event)) {
+        return false;
+    }
 
     //bool btagged = 0;
     bool checkphi_pt=0;
     bool toptag = 0;
     bool pass_sub_btag = 0;
+    int numberjets = 0;
     if(selection.passes(event)){
 
       //Example to access top jets information and subjets
@@ -179,17 +181,20 @@ namespace uhh2examples {
       std::vector<Muon>* muons = event.muons;
 
 
-
+      
       for(unsigned int i=0;i<topjets->size();i++){
       
 	TopJet topjet=topjets->at(i);
       
 	double deltaphi = deltaPhi(topjet,muons->at(0));
+	
 	double pi = 3.14159265359;
 	if(deltaphi>2*pi/3 &&(topjets->at(i).pt()>400.)&&(fabs(topjets->at(i).eta())<2.4)) 
 	  {
 	    checkphi_pt = 1;
-	    if (topjets->at(i).v4().M()<210 && topjets->at(i).v4().M()>110 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.59) toptag=1;
+	    numberjets++;
+	    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.59) toptag=1;
+	   
 	  }
 	const std::vector<Jet> subjets=topjet.subjets();
 	JetId checkbtag=CSVBTag(CSVBTag::WP_LOOSE);
@@ -218,18 +223,15 @@ namespace uhh2examples {
 	    //bool pass_twodcut = 1;//twodcut_sel->passes(event);
 
 	    h_aftercuts_1->fill(event);
-	    topjet23_corrector->process(event);
-	    h_aftercutscorr->fill(event);
 
-
-	    if(pass_sub_btag)
+	    if(toptag && numberjets==1)
 	      {
-
 		h_aftercuts_2->fill(event);
+		topjet23_corrector->process(event);
+		h_aftercutscorr->fill(event);
 
-		if(toptag)
+		if(pass_sub_btag)
 		  {
-			
 		    h_aftercuts_3->fill(event);
 
 		    if(pass_met && pass_htlep)

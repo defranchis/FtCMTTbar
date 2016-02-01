@@ -99,14 +99,14 @@ namespace uhh2examples {
     cleanermodules.emplace_back(new MuonCleaner(muid));
     cleanermodules.emplace_back(new TopJetCleaner(HEPTopTag(150)));
     if (type == "DATA"){
-    jet_corrector.reset(new JetCorrector(JERFiles::Summer15_25ns_L123_AK4PFchs_DATA));
-    jetlepton_cleaner.reset(new JetLeptonCleaner(JERFiles::Summer15_25ns_L123_AK4PFchs_DATA));
-    topjet_corrector.reset(new TopJetCorrector(JERFiles::Summer15_25ns_L123_AK8PFchs_DATA));
+      jet_corrector.reset(new JetCorrector(ctx,JERFiles::Summer15_25ns_L123_AK4PFchs_DATA));
+    jetlepton_cleaner.reset(new JetLeptonCleaner(ctx,JERFiles::Summer15_25ns_L123_AK4PFchs_DATA));
+    topjet_corrector.reset(new TopJetCorrector(ctx,JERFiles::Summer15_25ns_L123_AK8PFchs_DATA));
     }
     else {
-    jet_corrector.reset(new JetCorrector(JERFiles::Summer15_25ns_L123_AK4PFchs_MC));
-    jetlepton_cleaner.reset(new JetLeptonCleaner(JERFiles::Summer15_25ns_L123_AK4PFchs_MC));
-    topjet_corrector.reset(new TopJetCorrector(JERFiles::Summer15_25ns_L123_AK8PFchs_MC));
+    jet_corrector.reset(new JetCorrector(ctx,JERFiles::Summer15_25ns_L123_AK4PFchs_MC));
+    jetlepton_cleaner.reset(new JetLeptonCleaner(ctx,JERFiles::Summer15_25ns_L123_AK4PFchs_MC));
+    topjet_corrector.reset(new TopJetCorrector(ctx,JERFiles::Summer15_25ns_L123_AK8PFchs_MC));
     }
 
     jetER_smearer.reset(new JetResolutionSmearer(ctx));
