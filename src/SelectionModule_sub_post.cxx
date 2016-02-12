@@ -89,7 +89,10 @@ namespace uhh2examples {
       h_aftercuts_2_wp7_CSV, 
       h_aftercuts_2_wp8_CSV, 
       h_aftercuts_2_wp9_CSV, 
-      h_aftercuts_2_wp10_CSV, 
+      h_aftercuts_2_wp10_CSV,
+      h_aftercuts_2_wp11_CSV,     
+      h_aftercuts_2_wp12_CSV,
+      h_aftercuts_2_wp13_CSV,
       h_aftercuts_2_wp1_tau32, 
       h_aftercuts_2_wp2_tau32, 
       h_aftercuts_2_wp3_tau32, 
@@ -100,6 +103,7 @@ namespace uhh2examples {
       h_aftercuts_2_wp8_tau32, 
       h_aftercuts_2_wp9_tau32, 
       h_aftercuts_2_wp10_tau32, 
+      h_aftercuts_2_wp11_tau32,
       h_aftercuts_2_wp1_Mass,
       h_aftercuts_2_wp2_Mass, 
       h_aftercuts_2_wp3_Mass, 
@@ -110,6 +114,7 @@ namespace uhh2examples {
       h_aftercuts_2_wp8_Mass, 
       h_aftercuts_2_wp9_Mass, 
       h_aftercuts_2_wp10_Mass, 
+      h_aftercuts_2_wp11_Mass,
       h_aftercuts_2_wp1_Mass_tau32,
       h_aftercuts_2_wp2_Mass_tau32, 
       h_aftercuts_2_wp3_Mass_tau32, 
@@ -120,6 +125,7 @@ namespace uhh2examples {
       h_aftercuts_2_wp8_Mass_tau32, 
       h_aftercuts_2_wp9_Mass_tau32, 
       h_aftercuts_2_wp10_Mass_tau32, 
+      h_aftercuts_2_wp11_Mass_tau32, 
       h_aftercuts_2_wp1_Mass_CSV,
       h_aftercuts_2_wp2_Mass_CSV, 
       h_aftercuts_2_wp3_Mass_CSV, 
@@ -130,6 +136,7 @@ namespace uhh2examples {
       h_aftercuts_2_wp8_Mass_CSV, 
       h_aftercuts_2_wp9_Mass_CSV, 
       h_aftercuts_2_wp10_Mass_CSV,
+      h_aftercuts_2_wp11_Mass_CSV, 
       h_aftercuts_2_wp1_CSV_tau32,
       h_aftercuts_2_wp2_CSV_tau32, 
       h_aftercuts_2_wp3_CSV_tau32, 
@@ -140,6 +147,7 @@ namespace uhh2examples {
       h_aftercuts_2_wp8_CSV_tau32, 
       h_aftercuts_2_wp9_CSV_tau32, 
       h_aftercuts_2_wp10_CSV_tau32,
+      h_aftercuts_2_wp11_CSV_tau32,
       h_aftercuts_2_wp1_Mass_tau32_PT400,
       h_aftercuts_2_wp2_Mass_tau32_PT400, 
       h_aftercuts_2_wp3_Mass_tau32_PT400, 
@@ -150,6 +158,7 @@ namespace uhh2examples {
       h_aftercuts_2_wp8_Mass_tau32_PT400, 
       h_aftercuts_2_wp9_Mass_tau32_PT400, 
       h_aftercuts_2_wp10_Mass_tau32_PT400, 
+      h_aftercuts_2_wp11_Mass_tau32_PT400, 
       h_aftercuts_2_wp1_Mass_CSV_PT400,
       h_aftercuts_2_wp2_Mass_CSV_PT400, 
       h_aftercuts_2_wp3_Mass_CSV_PT400, 
@@ -160,6 +169,7 @@ namespace uhh2examples {
       h_aftercuts_2_wp8_Mass_CSV_PT400, 
       h_aftercuts_2_wp9_Mass_CSV_PT400, 
       h_aftercuts_2_wp10_Mass_CSV_PT400,
+      h_aftercuts_2_wp11_Mass_CSV_PT400,
       h_aftercuts_2_wp1_CSV_tau32_PT400,
       h_aftercuts_2_wp2_CSV_tau32_PT400, 
       h_aftercuts_2_wp3_CSV_tau32_PT400, 
@@ -170,6 +180,7 @@ namespace uhh2examples {
       h_aftercuts_2_wp8_CSV_tau32_PT400, 
       h_aftercuts_2_wp9_CSV_tau32_PT400, 
       h_aftercuts_2_wp10_CSV_tau32_PT400,
+      h_aftercuts_2_wp11_CSV_tau32_PT400,
       h_aftercuts_2_wp1_Mass_tau32_PT550,
       h_aftercuts_2_wp2_Mass_tau32_PT550, 
       h_aftercuts_2_wp3_Mass_tau32_PT550, 
@@ -180,6 +191,7 @@ namespace uhh2examples {
       h_aftercuts_2_wp8_Mass_tau32_PT550, 
       h_aftercuts_2_wp9_Mass_tau32_PT550, 
       h_aftercuts_2_wp10_Mass_tau32_PT550, 
+      h_aftercuts_2_wp11_Mass_tau32_PT550,
       h_aftercuts_2_wp1_Mass_CSV_PT550,
       h_aftercuts_2_wp2_Mass_CSV_PT550, 
       h_aftercuts_2_wp3_Mass_CSV_PT550, 
@@ -190,6 +202,7 @@ namespace uhh2examples {
       h_aftercuts_2_wp8_Mass_CSV_PT550, 
       h_aftercuts_2_wp9_Mass_CSV_PT550, 
       h_aftercuts_2_wp10_Mass_CSV_PT550,
+      h_aftercuts_2_wp11_Mass_CSV_PT550,
       h_aftercuts_2_wp1_CSV_tau32_PT550,
       h_aftercuts_2_wp2_CSV_tau32_PT550, 
       h_aftercuts_2_wp3_CSV_tau32_PT550, 
@@ -200,6 +213,7 @@ namespace uhh2examples {
       h_aftercuts_2_wp8_CSV_tau32_PT550, 
       h_aftercuts_2_wp9_CSV_tau32_PT550, 
       h_aftercuts_2_wp10_CSV_tau32_PT550,
+      h_aftercuts_2_wp11_CSV_tau32_PT550,
       h_aftercuts_3, 
       h_aftercuts;
 
@@ -284,6 +298,7 @@ namespace uhh2examples {
     h_aftercutscorr_wp8.reset(new Hists_sub(ctx, "AfterCutsCorr_wp8"));
     h_aftercutscorr_wp9.reset(new Hists_sub(ctx, "AfterCutsCorr_wp9"));
     h_aftercutscorr_wp10.reset(new Hists_sub(ctx, "AfterCutsCorr_wp10"));
+    h_aftercutscorr_wp11.reset(new Hists_sub(ctx, "AfterCutsCorr_wp11"));
     h_aftercuts_1_PT400_550.reset(new Hists_sub(ctx, "AfterCuts_1_PT400_550"));
     h_aftercuts_1_PT550.reset(new Hists_sub(ctx, "AfterCuts_1_PT550"));
     h_aftercuts_1.reset(new Hists_sub(ctx, "AfterCuts_1"));
@@ -297,16 +312,15 @@ namespace uhh2examples {
     h_aftercuts_2_wp8.reset(new Hists_sub(ctx, "AfterCuts_2_wp8"));
     h_aftercuts_2_wp9.reset(new Hists_sub(ctx, "AfterCuts_2_wp9"));
     h_aftercuts_2_wp10.reset(new Hists_sub(ctx, "AfterCuts_2_wp10"));
-    h_aftercuts_2_wp1_CSV.reset(new Hists_sub(ctx, "AfterCuts_2_wp1_CSV"));
+    h_aftercuts_2_wp11.reset(new Hists_sub(ctx, "AfterCuts_2_wp11"));
     h_aftercuts_2_wp2_CSV.reset(new Hists_sub(ctx, "AfterCuts_2_wp2_CSV"));
-    h_aftercuts_2_wp3_CSV.reset(new Hists_sub(ctx, "AfterCuts_2_wp3_CSV"));
     h_aftercuts_2_wp4_CSV.reset(new Hists_sub(ctx, "AfterCuts_2_wp4_CSV"));
-    h_aftercuts_2_wp5_CSV.reset(new Hists_sub(ctx, "AfterCuts_2_wp5_CSV"));
     h_aftercuts_2_wp6_CSV.reset(new Hists_sub(ctx, "AfterCuts_2_wp6_CSV"));
-    h_aftercuts_2_wp7_CSV.reset(new Hists_sub(ctx, "AfterCuts_2_wp7_CSV"));
     h_aftercuts_2_wp8_CSV.reset(new Hists_sub(ctx, "AfterCuts_2_wp8_CSV"));
-    h_aftercuts_2_wp9_CSV.reset(new Hists_sub(ctx, "AfterCuts_2_wp9_CSV"));
     h_aftercuts_2_wp10_CSV.reset(new Hists_sub(ctx, "AfterCuts_2_wp10_CSV"));
+    h_aftercuts_2_wp11_CSV.reset(new Hists_sub(ctx, "AfterCuts_2_wp11_CSV"));
+    h_aftercuts_2_wp12_CSV.reset(new Hists_sub(ctx, "AfterCuts_2_wp12_CSV"));
+    h_aftercuts_2_wp13_CSV.reset(new Hists_sub(ctx, "AfterCuts_2_wp13_CSV"));
     h_aftercuts_2_wp1_tau32.reset(new Hists_sub(ctx, "AfterCuts_2_wp1_tau32"));
     h_aftercuts_2_wp2_tau32.reset(new Hists_sub(ctx, "AfterCuts_2_wp2_tau32"));
     h_aftercuts_2_wp3_tau32.reset(new Hists_sub(ctx, "AfterCuts_2_wp3_tau32"));
@@ -318,15 +332,6 @@ namespace uhh2examples {
     h_aftercuts_2_wp9_tau32.reset(new Hists_sub(ctx, "AfterCuts_2_wp9_tau32"));
     h_aftercuts_2_wp10_tau32.reset(new Hists_sub(ctx, "AfterCuts_2_wp10_tau32"));
     h_aftercuts_2_wp1_Mass.reset(new Hists_sub(ctx, "AfterCuts_2_wp1_Mass"));
-    h_aftercuts_2_wp2_Mass.reset(new Hists_sub(ctx, "AfterCuts_2_wp2_Mass"));
-    h_aftercuts_2_wp3_Mass.reset(new Hists_sub(ctx, "AfterCuts_2_wp3_Mass"));
-    h_aftercuts_2_wp4_Mass.reset(new Hists_sub(ctx, "AfterCuts_2_wp4_Mass"));
-    h_aftercuts_2_wp5_Mass.reset(new Hists_sub(ctx, "AfterCuts_2_wp5_Mass"));
-    h_aftercuts_2_wp6_Mass.reset(new Hists_sub(ctx, "AfterCuts_2_wp6_Mass"));
-    h_aftercuts_2_wp7_Mass.reset(new Hists_sub(ctx, "AfterCuts_2_wp7_Mass"));
-    h_aftercuts_2_wp8_Mass.reset(new Hists_sub(ctx, "AfterCuts_2_wp8_Mass"));
-    h_aftercuts_2_wp9_Mass.reset(new Hists_sub(ctx, "AfterCuts_2_wp9_Mass"));
-    h_aftercuts_2_wp10_Mass.reset(new Hists_sub(ctx, "AfterCuts_2_wp10_Mass"));
     h_aftercuts_2_wp1_Mass_tau32.reset(new Hists_sub(ctx, "AfterCuts_2_wp1_Mass_tau32"));
     h_aftercuts_2_wp2_Mass_tau32.reset(new Hists_sub(ctx, "AfterCuts_2_wp2_Mass_tau32"));
     h_aftercuts_2_wp3_Mass_tau32.reset(new Hists_sub(ctx, "AfterCuts_2_wp3_Mass_tau32"));
@@ -337,6 +342,7 @@ namespace uhh2examples {
     h_aftercuts_2_wp8_Mass_tau32.reset(new Hists_sub(ctx, "AfterCuts_2_wp8_Mass_tau32"));
     h_aftercuts_2_wp9_Mass_tau32.reset(new Hists_sub(ctx, "AfterCuts_2_wp9_Mass_tau32"));
     h_aftercuts_2_wp10_Mass_tau32.reset(new Hists_sub(ctx, "AfterCuts_2_wp10_Mass_tau32"));
+    h_aftercuts_2_wp11_Mass_tau32.reset(new Hists_sub(ctx, "AfterCuts_2_wp11_Mass_tau32"));
     h_aftercuts_2_wp1_Mass_CSV.reset(new Hists_sub(ctx, "AfterCuts_2_wp1_Mass_CSV"));
     h_aftercuts_2_wp2_Mass_CSV.reset(new Hists_sub(ctx, "AfterCuts_2_wp2_Mass_CSV"));
     h_aftercuts_2_wp3_Mass_CSV.reset(new Hists_sub(ctx, "AfterCuts_2_wp3_Mass_CSV"));
@@ -347,6 +353,7 @@ namespace uhh2examples {
     h_aftercuts_2_wp8_Mass_CSV.reset(new Hists_sub(ctx, "AfterCuts_2_wp8_Mass_CSV"));
     h_aftercuts_2_wp9_Mass_CSV.reset(new Hists_sub(ctx, "AfterCuts_2_wp9_Mass_CSV"));
     h_aftercuts_2_wp10_Mass_CSV.reset(new Hists_sub(ctx, "AfterCuts_2_wp10_Mass_CSV"));
+    h_aftercuts_2_wp11_Mass_CSV.reset(new Hists_sub(ctx, "AfterCuts_2_wp11_Mass_CSV"));
     h_aftercuts_2_wp1_CSV_tau32.reset(new Hists_sub(ctx, "AfterCuts_2_wp1_CSV_tau32"));
     h_aftercuts_2_wp2_CSV_tau32.reset(new Hists_sub(ctx, "AfterCuts_2_wp2_CSV_tau32"));
     h_aftercuts_2_wp3_CSV_tau32.reset(new Hists_sub(ctx, "AfterCuts_2_wp3_CSV_tau32"));
@@ -357,6 +364,7 @@ namespace uhh2examples {
     h_aftercuts_2_wp8_CSV_tau32.reset(new Hists_sub(ctx, "AfterCuts_2_wp8_CSV_tau32"));
     h_aftercuts_2_wp9_CSV_tau32.reset(new Hists_sub(ctx, "AfterCuts_2_wp9_CSV_tau32"));
     h_aftercuts_2_wp10_CSV_tau32.reset(new Hists_sub(ctx, "AfterCuts_2_wp10_CSV_tau32"));
+    h_aftercuts_2_wp11_CSV_tau32.reset(new Hists_sub(ctx, "AfterCuts_2_wp11_CSV_tau32"));    
     h_aftercuts_2_wp1_Mass_tau32_PT550.reset(new Hists_sub(ctx, "AfterCuts_2_wp1_Mass_tau32_PT550"));
     h_aftercuts_2_wp2_Mass_tau32_PT550.reset(new Hists_sub(ctx, "AfterCuts_2_wp2_Mass_tau32_PT550"));
     h_aftercuts_2_wp3_Mass_tau32_PT550.reset(new Hists_sub(ctx, "AfterCuts_2_wp3_Mass_tau32_PT550"));
@@ -367,6 +375,7 @@ namespace uhh2examples {
     h_aftercuts_2_wp8_Mass_tau32_PT550.reset(new Hists_sub(ctx, "AfterCuts_2_wp8_Mass_tau32_PT550"));
     h_aftercuts_2_wp9_Mass_tau32_PT550.reset(new Hists_sub(ctx, "AfterCuts_2_wp9_Mass_tau32_PT550"));
     h_aftercuts_2_wp10_Mass_tau32_PT550.reset(new Hists_sub(ctx, "AfterCuts_2_wp10_Mass_tau32_PT550"));
+    h_aftercuts_2_wp11_Mass_tau32_PT550.reset(new Hists_sub(ctx, "AfterCuts_2_wp11_Mass_tau32_PT550"));
     h_aftercuts_2_wp1_Mass_CSV_PT550.reset(new Hists_sub(ctx, "AfterCuts_2_wp1_Mass_CSV_PT550"));
     h_aftercuts_2_wp2_Mass_CSV_PT550.reset(new Hists_sub(ctx, "AfterCuts_2_wp2_Mass_CSV_PT550"));
     h_aftercuts_2_wp3_Mass_CSV_PT550.reset(new Hists_sub(ctx, "AfterCuts_2_wp3_Mass_CSV_PT550"));
@@ -377,6 +386,7 @@ namespace uhh2examples {
     h_aftercuts_2_wp8_Mass_CSV_PT550.reset(new Hists_sub(ctx, "AfterCuts_2_wp8_Mass_CSV_PT550"));
     h_aftercuts_2_wp9_Mass_CSV_PT550.reset(new Hists_sub(ctx, "AfterCuts_2_wp9_Mass_CSV_PT550"));
     h_aftercuts_2_wp10_Mass_CSV_PT550.reset(new Hists_sub(ctx, "AfterCuts_2_wp10_Mass_CSV_PT550"));
+    h_aftercuts_2_wp11_Mass_CSV_PT550.reset(new Hists_sub(ctx, "AfterCuts_2_wp11_Mass_CSV_PT550"));
     h_aftercuts_2_wp1_CSV_tau32_PT550.reset(new Hists_sub(ctx, "AfterCuts_2_wp1_CSV_tau32_PT550"));
     h_aftercuts_2_wp2_CSV_tau32_PT550.reset(new Hists_sub(ctx, "AfterCuts_2_wp2_CSV_tau32_PT550"));
     h_aftercuts_2_wp3_CSV_tau32_PT550.reset(new Hists_sub(ctx, "AfterCuts_2_wp3_CSV_tau32_PT550"));
@@ -386,7 +396,8 @@ namespace uhh2examples {
     h_aftercuts_2_wp7_CSV_tau32_PT550.reset(new Hists_sub(ctx, "AfterCuts_2_wp7_CSV_tau32_PT550"));
     h_aftercuts_2_wp8_CSV_tau32_PT550.reset(new Hists_sub(ctx, "AfterCuts_2_wp8_CSV_tau32_PT550"));
     h_aftercuts_2_wp9_CSV_tau32_PT550.reset(new Hists_sub(ctx, "AfterCuts_2_wp9_CSV_tau32_PT550"));
-    h_aftercuts_2_wp10_CSV_tau32_PT550.reset(new Hists_sub(ctx, "AfterCuts_2_wp10_CSV_tau32_PT550"));
+    h_aftercuts_2_wp10_CSV_tau32_PT550.reset(new Hists_sub(ctx, "AfterCuts_2_wp11_CSV_tau32_PT550"));
+    h_aftercuts_2_wp11_CSV_tau32_PT550.reset(new Hists_sub(ctx, "AfterCuts_2_wp10_CSV_tau32_PT550"));
     h_aftercuts_2_wp1_Mass_tau32_PT400.reset(new Hists_sub(ctx, "AfterCuts_2_wp1_Mass_tau32_PT400"));
     h_aftercuts_2_wp2_Mass_tau32_PT400.reset(new Hists_sub(ctx, "AfterCuts_2_wp2_Mass_tau32_PT400"));
     h_aftercuts_2_wp3_Mass_tau32_PT400.reset(new Hists_sub(ctx, "AfterCuts_2_wp3_Mass_tau32_PT400"));
@@ -397,6 +408,7 @@ namespace uhh2examples {
     h_aftercuts_2_wp8_Mass_tau32_PT400.reset(new Hists_sub(ctx, "AfterCuts_2_wp8_Mass_tau32_PT400"));
     h_aftercuts_2_wp9_Mass_tau32_PT400.reset(new Hists_sub(ctx, "AfterCuts_2_wp9_Mass_tau32_PT400"));
     h_aftercuts_2_wp10_Mass_tau32_PT400.reset(new Hists_sub(ctx, "AfterCuts_2_wp10_Mass_tau32_PT400"));
+    h_aftercuts_2_wp11_Mass_tau32_PT400.reset(new Hists_sub(ctx, "AfterCuts_2_wp11_Mass_tau32_PT400"));
     h_aftercuts_2_wp1_Mass_CSV_PT400.reset(new Hists_sub(ctx, "AfterCuts_2_wp1_Mass_CSV_PT400"));
     h_aftercuts_2_wp2_Mass_CSV_PT400.reset(new Hists_sub(ctx, "AfterCuts_2_wp2_Mass_CSV_PT400"));
     h_aftercuts_2_wp3_Mass_CSV_PT400.reset(new Hists_sub(ctx, "AfterCuts_2_wp3_Mass_CSV_PT400"));
@@ -407,6 +419,7 @@ namespace uhh2examples {
     h_aftercuts_2_wp8_Mass_CSV_PT400.reset(new Hists_sub(ctx, "AfterCuts_2_wp8_Mass_CSV_PT400"));
     h_aftercuts_2_wp9_Mass_CSV_PT400.reset(new Hists_sub(ctx, "AfterCuts_2_wp9_Mass_CSV_PT400"));
     h_aftercuts_2_wp10_Mass_CSV_PT400.reset(new Hists_sub(ctx, "AfterCuts_2_wp10_Mass_CSV_PT400"));
+    h_aftercuts_2_wp11_Mass_CSV_PT400.reset(new Hists_sub(ctx, "AfterCuts_2_wp11_Mass_CSV_PT400"));
     h_aftercuts_2_wp1_CSV_tau32_PT400.reset(new Hists_sub(ctx, "AfterCuts_2_wp1_CSV_tau32_PT400"));
     h_aftercuts_2_wp2_CSV_tau32_PT400.reset(new Hists_sub(ctx, "AfterCuts_2_wp2_CSV_tau32_PT400"));
     h_aftercuts_2_wp3_CSV_tau32_PT400.reset(new Hists_sub(ctx, "AfterCuts_2_wp3_CSV_tau32_PT400"));
@@ -417,6 +430,7 @@ namespace uhh2examples {
     h_aftercuts_2_wp8_CSV_tau32_PT400.reset(new Hists_sub(ctx, "AfterCuts_2_wp8_CSV_tau32_PT400"));
     h_aftercuts_2_wp9_CSV_tau32_PT400.reset(new Hists_sub(ctx, "AfterCuts_2_wp9_CSV_tau32_PT400"));
     h_aftercuts_2_wp10_CSV_tau32_PT400.reset(new Hists_sub(ctx, "AfterCuts_2_wp10_CSV_tau32_PT400"));
+    h_aftercuts_2_wp11_CSV_tau32_PT400.reset(new Hists_sub(ctx, "AfterCuts_2_wp11_CSV_tau32_PT400"));
 
     if (type == "DATA"){
       //  std::cout << "Running on Data, using lumi selection!" << std::endl;
@@ -464,16 +478,15 @@ namespace uhh2examples {
     bool toptag_wp8 = 0;
     bool toptag_wp9 = 0;
     bool toptag_wp10 = 0;
-    bool toptag_wp1_CSV = 0;
+    bool toptag_wp11 = 0;
     bool toptag_wp2_CSV = 0;
-    bool toptag_wp3_CSV = 0;
     bool toptag_wp4_CSV = 0;
-    bool toptag_wp5_CSV = 0;
     bool toptag_wp6_CSV = 0;
-    bool toptag_wp7_CSV = 0;
     bool toptag_wp8_CSV = 0;
-    bool toptag_wp9_CSV = 0;
     bool toptag_wp10_CSV = 0;
+    bool toptag_wp11_CSV = 0;
+    bool toptag_wp12_CSV = 0;
+    bool toptag_wp13_CSV = 0;
     bool toptag_wp1_tau32 = 0;
     bool toptag_wp2_tau32 = 0;
     bool toptag_wp3_tau32 = 0;
@@ -485,15 +498,6 @@ namespace uhh2examples {
     bool toptag_wp9_tau32 = 0;
     bool toptag_wp10_tau32 = 0;
     bool toptag_wp1_Mass = 0;
-    bool toptag_wp2_Mass = 0;
-    bool toptag_wp3_Mass = 0;
-    bool toptag_wp4_Mass = 0;
-    bool toptag_wp5_Mass = 0;
-    bool toptag_wp6_Mass = 0;
-    bool toptag_wp7_Mass = 0;
-    bool toptag_wp8_Mass = 0;
-    bool toptag_wp9_Mass = 0;
-    bool toptag_wp10_Mass = 0;
     bool toptag_wp1_Mass_CSV = 0;
     bool toptag_wp2_Mass_CSV = 0;
     bool toptag_wp3_Mass_CSV = 0;
@@ -504,6 +508,7 @@ namespace uhh2examples {
     bool toptag_wp8_Mass_CSV = 0;
     bool toptag_wp9_Mass_CSV = 0;
     bool toptag_wp10_Mass_CSV = 0;
+    bool toptag_wp11_Mass_CSV = 0;
     bool toptag_wp1_Mass_tau32 = 0;
     bool toptag_wp2_Mass_tau32 = 0;
     bool toptag_wp3_Mass_tau32 = 0;
@@ -514,6 +519,7 @@ namespace uhh2examples {
     bool toptag_wp8_Mass_tau32 = 0;
     bool toptag_wp9_Mass_tau32 = 0;
     bool toptag_wp10_Mass_tau32 = 0;
+    bool toptag_wp11_Mass_tau32 = 0;
     bool toptag_wp1_CSV_tau32 = 0;
     bool toptag_wp2_CSV_tau32 = 0;
     bool toptag_wp3_CSV_tau32 = 0;
@@ -524,8 +530,11 @@ namespace uhh2examples {
     bool toptag_wp8_CSV_tau32 = 0;
     bool toptag_wp9_CSV_tau32 = 0;
     bool toptag_wp10_CSV_tau32 = 0;
-
+    bool toptag_wp11_CSV_tau32 = 0;
+    bool MassCut = 0;
+    bool tau32 = 0;
     double topjetpt = 0.;
+
 
     if(selection.passes(event)){
 
@@ -578,6 +587,11 @@ namespace uhh2examples {
 	      for(unsigned int ii=0;ii<subjets.size();ii++){
 		if(subjets[ii].btag_combinedSecondaryVertex()> 0.089) toptag_wp10=1;}
 	    }
+	    if (topjets->at(i).softdropmass()<210 && topjets->at(i).softdropmass()>110 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.69){
+	      const std::vector<Jet> subjets=topjets->at(i).subjets();
+	      for(unsigned int ii=0;ii<subjets.size();ii++){
+		if(subjets[ii].btag_combinedSecondaryVertex()> 0.89) toptag_wp11=1;}
+	    }
 
 	    //sequential ScaleFactors - N-1 
 	    //Mass_CSV
@@ -611,6 +625,11 @@ namespace uhh2examples {
 	      for(unsigned int ii=0;ii<subjets.size();ii++){
 		if(subjets[ii].btag_combinedSecondaryVertex()> 0.089) toptag_wp10_Mass_CSV=1;}
 	    }
+	    if (topjets->at(i).softdropmass()<210 && topjets->at(i).softdropmass()>110){
+	      const std::vector<Jet> subjets=topjets->at(i).subjets();
+	      for(unsigned int ii=0;ii<subjets.size();ii++){
+		if(subjets[ii].btag_combinedSecondaryVertex()> 0.89) toptag_wp11_Mass_CSV=1;}
+	    }
 	    //Mass_tau32
 	    if (topjets->at(i).softdropmass()<210 && topjets->at(i).softdropmass()>110 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.44) toptag_wp1_Mass_tau32=1;
 	    if (topjets->at(i).softdropmass()<210 && topjets->at(i).softdropmass()>110 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.54) toptag_wp2_Mass_tau32=1;
@@ -621,7 +640,8 @@ namespace uhh2examples {
 	    if (topjets->at(i).softdropmass()<210 && topjets->at(i).softdropmass()>110 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.69) toptag_wp7_Mass_tau32=1;
 	    if (topjets->at(i).softdropmass()<210 && topjets->at(i).softdropmass()>110 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.75) toptag_wp8_Mass_tau32=1; 
 	    if (topjets->at(i).softdropmass()<210 && topjets->at(i).softdropmass()>110 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.86) toptag_wp9_Mass_tau32=1;
-	    if (topjets->at(i).softdropmass()<210 && topjets->at(i).softdropmass()>110 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.87) toptag_wp10_Mass_tau32=1; 
+	    if (topjets->at(i).softdropmass()<210 && topjets->at(i).softdropmass()>110 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.87) toptag_wp10_Mass_tau32=1;
+	    if (topjets->at(i).softdropmass()<210 && topjets->at(i).softdropmass()>110 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.69) toptag_wp11_Mass_tau32=1;
 	      
 	    //CSV_tau32
 	    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.44) toptag_wp1_CSV_tau32 =1;
@@ -654,18 +674,14 @@ namespace uhh2examples {
 	      for(unsigned int ii=0;ii<subjets.size();ii++){
 		if(subjets[ii].btag_combinedSecondaryVertex()> 0.089) toptag_wp10_CSV_tau32 =1;}
 	    }
+	    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.69){
+	      const std::vector<Jet> subjets=topjets->at(i).subjets();
+	      for(unsigned int ii=0;ii<subjets.size();ii++){
+		if(subjets[ii].btag_combinedSecondaryVertex()> 0.89) toptag_wp11_CSV_tau32 =1;}
+	    }
 	    //individual ScaleFactors
 	    //Mass
 	    if (topjets->at(i).softdropmass()<210 && topjets->at(i).softdropmass()>110) toptag_wp1_Mass=1;
-	    if (topjets->at(i).softdropmass()<210 && topjets->at(i).softdropmass()>110) toptag_wp2_Mass=1;
-	    if (topjets->at(i).softdropmass()<210 && topjets->at(i).softdropmass()>110) toptag_wp3_Mass=1;
-	    if (topjets->at(i).softdropmass()<210 && topjets->at(i).softdropmass()>110) toptag_wp4_Mass=1;
-	    if (topjets->at(i).softdropmass()<210 && topjets->at(i).softdropmass()>110) toptag_wp5_Mass=1;
-	    if (topjets->at(i).softdropmass()<210 && topjets->at(i).softdropmass()>110) toptag_wp6_Mass=1;
-	    if (topjets->at(i).softdropmass()<210 && topjets->at(i).softdropmass()>110) toptag_wp7_Mass=1;
-	    if (topjets->at(i).softdropmass()<210 && topjets->at(i).softdropmass()>110) toptag_wp8_Mass=1;
-	    if (topjets->at(i).softdropmass()<210 && topjets->at(i).softdropmass()>110) toptag_wp9_Mass=1;
-	    if (topjets->at(i).softdropmass()<210 && topjets->at(i).softdropmass()>110) toptag_wp10_Mass=1;
 
 	    //tau32
 	    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.44) toptag_wp1_tau32=1;
@@ -678,36 +694,45 @@ namespace uhh2examples {
 	    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.75) toptag_wp8_tau32=1;
 	    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.86) toptag_wp9_tau32=1;
 	    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.87) toptag_wp10_tau32=1;
-	      
+
+
 	    //CSV
-	    toptag_wp1_CSV =1;
+
 	    const std::vector<Jet> subjets=topjets->at(i).subjets();
 	    for(unsigned int ii=0;ii<subjets.size();ii++){
 	      if(subjets[ii].btag_combinedSecondaryVertex()> 0.79) toptag_wp2_CSV =1;}
-	    toptag_wp3_CSV =1;
+	   
 	    for(unsigned int ii=0;ii<subjets.size();ii++){
 	      if(subjets[ii].btag_combinedSecondaryVertex()> 0.76) toptag_wp4_CSV =1;}
-	    toptag_wp5_CSV =1;
+	   
 	    for(unsigned int ii=0;ii<subjets.size();ii++){
 	      if(subjets[ii].btag_combinedSecondaryVertex()> 0.66) toptag_wp6_CSV =1;}
-	    toptag_wp7_CSV =1;
+	    
 	    for(unsigned int ii=0;ii<subjets.size();ii++){
 	      if(subjets[ii].btag_combinedSecondaryVertex()> 0.39) toptag_wp8_CSV =1;}
-	    toptag_wp9_CSV =1;
+	  
 	    for(unsigned int ii=0;ii<subjets.size();ii++){
 	      if(subjets[ii].btag_combinedSecondaryVertex()> 0.089) toptag_wp10_CSV =1;}
-	      
+	    for(unsigned int ii=0;ii<subjets.size();ii++){
+	      if(subjets[ii].btag_combinedSecondaryVertex()> 0.89) toptag_wp11_CSV =1;}
+            for(unsigned int ii=0;ii<subjets.size();ii++){
+              if(subjets[ii].btag_combinedSecondaryVertex()> 0.605) toptag_wp12_CSV =1;}
+            for(unsigned int ii=0;ii<subjets.size();ii++){
+              if(subjets[ii].btag_combinedSecondaryVertex()> 0.97) toptag_wp13_CSV =1;}
+	    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.44) tau32 = 1;
+	    if (topjets->at(i).softdropmass()>110) MassCut=1;
+
 	  }
       }
     }
   
     bool keep = selection.passes(event);
     bool pass_trigger = trigger_sel->passes(event);
-    // bool pass_met = met_sel->passes(event);
+    //bool pass_met = met_sel->passes(event);
     //bool pass_htlep = htlep_sel->passes(event);
 
     h_nocuts->fill(event);
-    if(keep && checkphi_pt && pass_trigger) 
+    if(keep && checkphi_pt && pass_trigger && MassCut && tau32) 
       {
 	bool pass_btag = btag_sel->passes(event);
 
@@ -787,17 +812,22 @@ namespace uhh2examples {
 		  topjet23_corrector->process(event);
 		  h_aftercutscorr_wp10->fill(event);
 		}
+	      if(toptag_wp11)
+		{
+		  topjet_corrector->process(event);
+		  h_aftercuts_2_wp11->fill(event);
+		  topjet23_corrector->process(event);
+		  h_aftercutscorr_wp11->fill(event);
+		}
 	      topjet_corrector->process(event);
-	      if(toptag_wp1_CSV){h_aftercuts_2_wp1_CSV->fill(event);}
 	      if(toptag_wp2_CSV){h_aftercuts_2_wp2_CSV->fill(event);}
-	      if(toptag_wp3_CSV){h_aftercuts_2_wp3_CSV->fill(event);}
 	      if(toptag_wp4_CSV){h_aftercuts_2_wp4_CSV->fill(event);}
-	      if(toptag_wp5_CSV){h_aftercuts_2_wp5_CSV->fill(event);}
 	      if(toptag_wp6_CSV){h_aftercuts_2_wp6_CSV->fill(event);}
-	      if(toptag_wp7_CSV){h_aftercuts_2_wp7_CSV->fill(event);}
 	      if(toptag_wp8_CSV){h_aftercuts_2_wp8_CSV->fill(event);}
-	      if(toptag_wp9_CSV){h_aftercuts_2_wp9_CSV->fill(event);}
 	      if(toptag_wp10_CSV){h_aftercuts_2_wp10_CSV->fill(event);}
+	      if(toptag_wp11_CSV){h_aftercuts_2_wp11_CSV->fill(event);}
+              if(toptag_wp12_CSV){h_aftercuts_2_wp12_CSV->fill(event);}
+              if(toptag_wp13_CSV){h_aftercuts_2_wp13_CSV->fill(event);}
 	      if(toptag_wp1_tau32){h_aftercuts_2_wp1_tau32->fill(event);}
 	      if(toptag_wp2_tau32){h_aftercuts_2_wp2_tau32->fill(event);}
 	      if(toptag_wp3_tau32){h_aftercuts_2_wp3_tau32->fill(event);}
@@ -809,15 +839,6 @@ namespace uhh2examples {
 	      if(toptag_wp9_tau32){h_aftercuts_2_wp9_tau32->fill(event);}
 	      if(toptag_wp10_tau32){h_aftercuts_2_wp10_tau32->fill(event);}
 	      if(toptag_wp1_Mass){h_aftercuts_2_wp1_Mass->fill(event);}
-	      if(toptag_wp2_Mass){h_aftercuts_2_wp2_Mass->fill(event);}
-	      if(toptag_wp3_Mass){h_aftercuts_2_wp3_Mass->fill(event);}
-	      if(toptag_wp4_Mass){h_aftercuts_2_wp4_Mass->fill(event);}
-	      if(toptag_wp5_Mass){h_aftercuts_2_wp5_Mass->fill(event);}
-	      if(toptag_wp6_Mass){h_aftercuts_2_wp6_Mass->fill(event);}
-	      if(toptag_wp7_Mass){h_aftercuts_2_wp7_Mass->fill(event);}
-	      if(toptag_wp8_Mass){h_aftercuts_2_wp8_Mass->fill(event);}
-	      if(toptag_wp9_Mass){h_aftercuts_2_wp9_Mass->fill(event);}
-	      if(toptag_wp10_Mass){h_aftercuts_2_wp10_Mass->fill(event);}
 	      if(toptag_wp1_Mass_CSV){h_aftercuts_2_wp1_Mass_CSV->fill(event);}
 	      if(toptag_wp2_Mass_CSV){h_aftercuts_2_wp2_Mass_CSV->fill(event);}
 	      if(toptag_wp3_Mass_CSV){h_aftercuts_2_wp3_Mass_CSV->fill(event);}
@@ -828,6 +849,7 @@ namespace uhh2examples {
 	      if(toptag_wp8_Mass_CSV){h_aftercuts_2_wp8_Mass_CSV->fill(event);}
 	      if(toptag_wp9_Mass_CSV){h_aftercuts_2_wp9_Mass_CSV->fill(event);}
 	      if(toptag_wp10_Mass_CSV){h_aftercuts_2_wp10_Mass_CSV->fill(event);}
+	      if(toptag_wp11_Mass_CSV){h_aftercuts_2_wp11_Mass_CSV->fill(event);}
 	      if(toptag_wp1_Mass_tau32){h_aftercuts_2_wp1_Mass_tau32->fill(event);}
 	      if(toptag_wp2_Mass_tau32){h_aftercuts_2_wp2_Mass_tau32->fill(event);}
 	      if(toptag_wp3_Mass_tau32){h_aftercuts_2_wp3_Mass_tau32->fill(event);}
@@ -838,6 +860,7 @@ namespace uhh2examples {
 	      if(toptag_wp8_Mass_tau32){h_aftercuts_2_wp8_Mass_tau32->fill(event);}
 	      if(toptag_wp9_Mass_tau32){h_aftercuts_2_wp9_Mass_tau32->fill(event);}
 	      if(toptag_wp10_Mass_tau32){h_aftercuts_2_wp10_Mass_tau32->fill(event);}
+	      if(toptag_wp11_Mass_tau32){h_aftercuts_2_wp11_Mass_tau32->fill(event);}
 	      if(toptag_wp1_CSV_tau32){h_aftercuts_2_wp1_CSV_tau32->fill(event);}
 	      if(toptag_wp2_CSV_tau32){h_aftercuts_2_wp2_CSV_tau32->fill(event);}
 	      if(toptag_wp3_CSV_tau32){h_aftercuts_2_wp3_CSV_tau32->fill(event);}
@@ -848,6 +871,7 @@ namespace uhh2examples {
 	      if(toptag_wp8_CSV_tau32){h_aftercuts_2_wp8_CSV_tau32->fill(event);}
 	      if(toptag_wp9_CSV_tau32){h_aftercuts_2_wp9_CSV_tau32->fill(event);}
 	      if(toptag_wp10_CSV_tau32){h_aftercuts_2_wp10_CSV_tau32->fill(event);}
+	      if(toptag_wp11_CSV_tau32){h_aftercuts_2_wp11_CSV_tau32->fill(event);}
 	      if (topjetpt > 400 && topjetpt <= 550)
 		{
 		  if(toptag_wp2_Mass_CSV){h_aftercuts_2_wp2_Mass_CSV_PT400->fill(event);}
@@ -859,6 +883,7 @@ namespace uhh2examples {
 		  if(toptag_wp8_Mass_CSV){h_aftercuts_2_wp8_Mass_CSV_PT400->fill(event);}
 		  if(toptag_wp9_Mass_CSV){h_aftercuts_2_wp9_Mass_CSV_PT400->fill(event);}
 		  if(toptag_wp10_Mass_CSV){h_aftercuts_2_wp10_Mass_CSV_PT400->fill(event);}
+		  if(toptag_wp11_Mass_CSV){h_aftercuts_2_wp11_Mass_CSV_PT400->fill(event);}
 		  if(toptag_wp1_Mass_tau32){h_aftercuts_2_wp1_Mass_tau32_PT400->fill(event);}
 		  if(toptag_wp2_Mass_tau32){h_aftercuts_2_wp2_Mass_tau32_PT400->fill(event);}
 		  if(toptag_wp3_Mass_tau32){h_aftercuts_2_wp3_Mass_tau32_PT400->fill(event);}
@@ -869,6 +894,7 @@ namespace uhh2examples {
 		  if(toptag_wp8_Mass_tau32){h_aftercuts_2_wp8_Mass_tau32_PT400->fill(event);}
 		  if(toptag_wp9_Mass_tau32){h_aftercuts_2_wp9_Mass_tau32_PT400->fill(event);}
 		  if(toptag_wp10_Mass_tau32){h_aftercuts_2_wp10_Mass_tau32_PT400->fill(event);}
+		  if(toptag_wp11_Mass_tau32){h_aftercuts_2_wp11_Mass_tau32_PT400->fill(event);}
 		  if(toptag_wp1_CSV_tau32){h_aftercuts_2_wp1_CSV_tau32_PT400->fill(event);}
 		  if(toptag_wp2_CSV_tau32){h_aftercuts_2_wp2_CSV_tau32_PT400->fill(event);}
 		  if(toptag_wp3_CSV_tau32){h_aftercuts_2_wp3_CSV_tau32_PT400->fill(event);}
@@ -879,6 +905,7 @@ namespace uhh2examples {
 		  if(toptag_wp8_CSV_tau32){h_aftercuts_2_wp8_CSV_tau32_PT400->fill(event);}
 		  if(toptag_wp9_CSV_tau32){h_aftercuts_2_wp9_CSV_tau32_PT400->fill(event);}
 		  if(toptag_wp10_CSV_tau32){h_aftercuts_2_wp10_CSV_tau32_PT400->fill(event);}
+		  if(toptag_wp11_CSV_tau32){h_aftercuts_2_wp11_CSV_tau32_PT400->fill(event);}
 		}
 	      if (topjetpt > 550)
 		{
@@ -891,6 +918,8 @@ namespace uhh2examples {
 		  if(toptag_wp8_Mass_CSV){h_aftercuts_2_wp8_Mass_CSV_PT550->fill(event);}
 		  if(toptag_wp9_Mass_CSV){h_aftercuts_2_wp9_Mass_CSV_PT550->fill(event);}
 		  if(toptag_wp10_Mass_CSV){h_aftercuts_2_wp10_Mass_CSV_PT550->fill(event);}
+		  if(toptag_wp11_Mass_CSV){h_aftercuts_2_wp11_Mass_CSV_PT550->fill(event);}
+
 		  if(toptag_wp1_Mass_tau32){h_aftercuts_2_wp1_Mass_tau32_PT550->fill(event);}
 		  if(toptag_wp2_Mass_tau32){h_aftercuts_2_wp2_Mass_tau32_PT550->fill(event);}
 		  if(toptag_wp3_Mass_tau32){h_aftercuts_2_wp3_Mass_tau32_PT550->fill(event);}
@@ -901,6 +930,7 @@ namespace uhh2examples {
 		  if(toptag_wp8_Mass_tau32){h_aftercuts_2_wp8_Mass_tau32_PT550->fill(event);}
 		  if(toptag_wp9_Mass_tau32){h_aftercuts_2_wp9_Mass_tau32_PT550->fill(event);}
 		  if(toptag_wp10_Mass_tau32){h_aftercuts_2_wp10_Mass_tau32_PT550->fill(event);}
+		  if(toptag_wp11_Mass_tau32){h_aftercuts_2_wp11_Mass_tau32_PT550->fill(event);}
 		  if(toptag_wp1_CSV_tau32){h_aftercuts_2_wp1_CSV_tau32_PT550->fill(event);}
 		  if(toptag_wp2_CSV_tau32){h_aftercuts_2_wp2_CSV_tau32_PT550->fill(event);}
 		  if(toptag_wp3_CSV_tau32){h_aftercuts_2_wp3_CSV_tau32_PT550->fill(event);}
@@ -911,9 +941,10 @@ namespace uhh2examples {
 		  if(toptag_wp8_CSV_tau32){h_aftercuts_2_wp8_CSV_tau32_PT550->fill(event);}
 		  if(toptag_wp9_CSV_tau32){h_aftercuts_2_wp9_CSV_tau32_PT550->fill(event);}
 		  if(toptag_wp10_CSV_tau32){h_aftercuts_2_wp10_CSV_tau32_PT550->fill(event);}
-		  //	}
+		  if(toptag_wp11_CSV_tau32){h_aftercuts_2_wp11_CSV_tau32_PT550->fill(event);}
+		}
 	    }
-	  }
+	//}
       }
 
     return keep;

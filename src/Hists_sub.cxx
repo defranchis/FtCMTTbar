@@ -346,6 +346,17 @@ Hists_sub::Hists_sub(Context & ctx, const string & dirname): Hists(ctx, dirname)
   book<TH1F>("tau2", "tau2", 50, 0., 1.);
 
   book<TH1F>("subCSV", "combined secondary vertex discriminator of the subjet", 100, 0., 1.);  
+
+
+  book<TH1F>("subjetPT_b", "PT of subjet with highest CSV", 100, 0., 1500.);
+  book<TH1F>("subjetPT_c", "PT of subjet with highest CSV", 100, 0., 1500.);
+  book<TH1F>("subjetPT_udsg", "PT of subjet with highest CSV", 100, 0., 1500.);
+
+  book<TH1F>("subjetPT", "PT of subjet with highest CSV", 100, 0., 1500.);
+  book<TH1F>("subjethadronFlavor", "hadronFlavour of subjet with highest CSV", 100, 0., 1.);
+
+
+
 }
 
 template<typename T>
@@ -452,11 +463,22 @@ void Hists_sub::fill(const Event & event){
 	}
       }
 
-    for(unsigned int ii=0;ii<subjets.size();ii++){
+    double_t highestCSV = 0;
+    double_t PT = 0;
+    int flavor = 0;
 
+
+    for(unsigned int ii=0;ii<subjets.size();ii++){
       Jet subjet=subjets[ii];
 
       JetBTagInfo btaginfo=subjet.btaginfo();
+      if (ii == 0) {highestCSV=subjet.btag_combinedSecondaryVertex();
+	PT = subjet.v4().pt();
+	flavor = subjet.hadronFlavor();}
+      if (subjet.btag_combinedSecondaryVertex()>highestCSV) {highestCSV=subjet.btag_combinedSecondaryVertex();
+	PT = subjet.v4().pt();
+        flavor = subjet.hadronFlavor();}
+      
       hist("subCSV")->Fill(subjet.btag_combinedSecondaryVertex(),weight);
 
       //Flavours
@@ -718,7 +740,14 @@ void Hists_sub::fill(const Event & event){
 
 	} // Fill none
     } //loop over subjets
-    }  //loop over topjets 
+    hist("subjetPT")->Fill(PT, weight);
+    hist("subjethadronFlavor")->Fill(flavor, weight);
+    if (flavor == 5) hist("subjetPT_b")->Fill(PT, weight);
+    if (flavor == 4) hist("subjetPT_c")->Fill(PT, weight);
+    if (flavor != 5 && flavor !=4) hist("subjetPT_udsg")->Fill(PT, weight);
+
+
+  }  //loop over topjets 
 }
 
 Hists_sub::~Hists_sub(){}
