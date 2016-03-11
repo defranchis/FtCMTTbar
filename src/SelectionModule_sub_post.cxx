@@ -257,7 +257,7 @@ namespace uhh2examples {
 
 
     // clean the objects:
-    cleanermodules.emplace_back(new JetCleaner(jet_kinematic));
+    cleanermodules.emplace_back(new JetCleaner(ctx, jet_kinematic));
     cleanermodules.emplace_back(new MuonCleaner(muid));
     if (type == "DATA"){
       jet_corrector.reset(new JetCorrector(ctx, JERFiles::Summer15_25ns_L123_AK4PFchs_DATA));
@@ -266,12 +266,12 @@ namespace uhh2examples {
       topjet23_corrector.reset(new TopJetCorrector(ctx, JERFiles::Summer15_25ns_L23_AK8PFchs_DATA));
     }
     else {
-      jet_corrector.reset(new JetCorrector(ctx, JERFiles::Summer15_25ns_L123_AK4PFchs_MC));
-      jetlepton_cleaner.reset(new JetLeptonCleaner(ctx, JERFiles::Summer15_25ns_L123_AK4PFchs_MC));
-      topjet_corrector.reset(new TopJetCorrector(ctx, JERFiles::Summer15_25ns_L123_AK8PFchs_MC));
-      topjet23_corrector.reset(new TopJetCorrector(ctx, JERFiles::Summer15_25ns_L23_AK8PFchs_MC));
+      jet_corrector.reset(new JetCorrector(ctx, JERFiles::Fall15_25ns_L123_AK4PFchs_MC));
+      jetlepton_cleaner.reset(new JetLeptonCleaner(ctx, JERFiles::Fall15_25ns_L123_AK4PFchs_MC));
+      topjet_corrector.reset(new TopJetCorrector(ctx, JERFiles::Fall15_25ns_L123_AK8PFchs_MC));
+      topjet23_corrector.reset(new TopJetCorrector(ctx, JERFiles::Fall15_25ns_L23_AK8PFchs_MC));
     }
-    //cleanermodules.emplace_back(new TopJetCleaner(HEPTopTag(150)));
+    //cleanermodules.emplace_back(new TopJetCleaner(ctx, HEPTopTag(150)));
     //jetER_smearer.reset(new JetResolutionSmearer(ctx));
     jetlepton_cleaner->set_drmax(.4);
     //  topjetER_smearer.reset(new TopJetResolutionSmearer(ctx));
@@ -437,7 +437,7 @@ namespace uhh2examples {
       lumi_selection.reset(new LumiSelection(ctx));
     }
 
-    trigger_sel = make_unique<TriggerSelection>("HLT_Mu45_eta2p1_v*");
+    trigger_sel = uhh2::make_unique<TriggerSelection>("HLT_Mu45_eta2p1_v*");
     twodcut_sel.reset(new TwoDCut(.4, 25.));
     met_sel.reset(new METCut(50., std::numeric_limits<double>::infinity()));
     htlep_sel.reset(new HTlepCut(150., std::numeric_limits<double>::infinity()));
@@ -531,8 +531,8 @@ namespace uhh2examples {
     bool toptag_wp9_CSV_tau32 = 0;
     bool toptag_wp10_CSV_tau32 = 0;
     bool toptag_wp11_CSV_tau32 = 0;
-    bool MassCut = 0;
-    bool tau32 = 0;
+    //bool MassCut = 0;
+    //bool tau32 = 0;
     double topjetpt = 0.;
 
 
@@ -573,7 +573,7 @@ namespace uhh2examples {
 	    if (topjets->at(i).softdropmass()<210 && topjets->at(i).softdropmass()>110 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.69){
 	      const std::vector<Jet> subjets=topjets->at(i).subjets();
 	      for(unsigned int ii=0;ii<subjets.size();ii++){
-		if(subjets[ii].btag_combinedSecondaryVertex()> 0.66) toptag_wp6=1;}
+		if(subjets[ii].btag_combinedSecondaryVertex()> 0.8) toptag_wp6=1;}
 	    }
 	    if (topjets->at(i).softdropmass()<210 && topjets->at(i).softdropmass()>110 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.69) toptag_wp7=1;
 	    if (topjets->at(i).softdropmass()<210 && topjets->at(i).softdropmass()>110 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.75){
@@ -611,7 +611,7 @@ namespace uhh2examples {
 	    if (topjets->at(i).softdropmass()<210 && topjets->at(i).softdropmass()>110){
 	      const std::vector<Jet> subjets=topjets->at(i).subjets();
 	      for(unsigned int ii=0;ii<subjets.size();ii++){
-		if(subjets[ii].btag_combinedSecondaryVertex()> 0.66) toptag_wp6_Mass_CSV=1;}
+		if(subjets[ii].btag_combinedSecondaryVertex()> 0.80) toptag_wp6_Mass_CSV=1;}
 	    }
 	    if (topjets->at(i).softdropmass()<210 && topjets->at(i).softdropmass()>110) toptag_wp7_Mass_CSV=1;
 	    if (topjets->at(i).softdropmass()<210 && topjets->at(i).softdropmass()>110){
@@ -660,7 +660,7 @@ namespace uhh2examples {
 	    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.69){
 	      const std::vector<Jet> subjets=topjets->at(i).subjets();
 	      for(unsigned int ii=0;ii<subjets.size();ii++){
-		if(subjets[ii].btag_combinedSecondaryVertex()> 0.66) toptag_wp6_CSV_tau32 =1;}
+		if(subjets[ii].btag_combinedSecondaryVertex()> 0.80) toptag_wp6_CSV_tau32 =1;}
 	    }
 	    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.69) toptag_wp7_CSV_tau32 =1;
 	    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.75){
@@ -706,7 +706,7 @@ namespace uhh2examples {
 	      if(subjets[ii].btag_combinedSecondaryVertex()> 0.76) toptag_wp4_CSV =1;}
 	   
 	    for(unsigned int ii=0;ii<subjets.size();ii++){
-	      if(subjets[ii].btag_combinedSecondaryVertex()> 0.66) toptag_wp6_CSV =1;}
+	      if(subjets[ii].btag_combinedSecondaryVertex()> 0.80) toptag_wp6_CSV =1;}
 	    
 	    for(unsigned int ii=0;ii<subjets.size();ii++){
 	      if(subjets[ii].btag_combinedSecondaryVertex()> 0.39) toptag_wp8_CSV =1;}
@@ -719,8 +719,11 @@ namespace uhh2examples {
               if(subjets[ii].btag_combinedSecondaryVertex()> 0.605) toptag_wp12_CSV =1;}
             for(unsigned int ii=0;ii<subjets.size();ii++){
               if(subjets[ii].btag_combinedSecondaryVertex()> 0.97) toptag_wp13_CSV =1;}
-	    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.44) tau32 = 1;
-	    if (topjets->at(i).softdropmass()>110) MassCut=1;
+
+
+
+	    //if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.44) tau32 = 1;
+	    //if (topjets->at(i).softdropmass()>110) MassCut=1;
 
 	  }
       }
@@ -732,7 +735,7 @@ namespace uhh2examples {
     //bool pass_htlep = htlep_sel->passes(event);
 
     h_nocuts->fill(event);
-    if(keep && checkphi_pt && pass_trigger && MassCut && tau32) 
+    if(keep && checkphi_pt && pass_trigger) 
       {
 	bool pass_btag = btag_sel->passes(event);
 

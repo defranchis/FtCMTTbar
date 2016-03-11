@@ -90,28 +90,28 @@ namespace uhh2examples {
 
     jet_kinematic = PtEtaCut(30.0, 2.4);
     topjet_kinematic = PtEtaCut(100.0,2.4);
-    //muid = AndId<Muon>(MuonIDTight(), PtEtaCut(50.0, 2.1));
-    muid = AndId<Muon>(MuonIDTight(), PtEtaCut(50.0, 2.1),MuonIso(0.12));
+    muid = AndId<Muon>(MuonIDTight(), PtEtaCut(50.0, 2.1));
+    //muid = AndId<Muon>(MuonIDTight(), PtEtaCut(50.0, 2.1),MuonIso(0.12));
 
     if (type != "DATA") pileup_SF.reset(new MCPileupReweight(ctx)); 
 
 
     // clean the objects:
-    cleanermodules.emplace_back(new JetCleaner(jet_kinematic));
+    cleanermodules.emplace_back(new JetCleaner(ctx, jet_kinematic));
     cleanermodules.emplace_back(new MuonCleaner(muid));
     if (type == "DATA"){
-      jet_corrector.reset(new JetCorrector(ctx, JERFiles::Summer15_25ns_L123_AK4PFchs_DATA));
-      jetlepton_cleaner.reset(new JetLeptonCleaner(ctx, JERFiles::Summer15_25ns_L123_AK4PFchs_DATA));
-      topjet_corrector.reset(new TopJetCorrector(ctx, JERFiles::Summer15_25ns_L123_AK8PFchs_DATA));
-      topjet23_corrector.reset(new TopJetCorrector(ctx, JERFiles::Summer15_25ns_L23_AK8PFchs_DATA));
+      jet_corrector.reset(new JetCorrector(ctx, JERFiles::Fall15_25ns_L123_AK4PFchs_DATA));
+      jetlepton_cleaner.reset(new JetLeptonCleaner(ctx, JERFiles::Fall15_25ns_L123_AK4PFchs_DATA));
+      topjet_corrector.reset(new TopJetCorrector(ctx, JERFiles::Fall15_25ns_L123_AK8PFchs_DATA));
+      topjet23_corrector.reset(new TopJetCorrector(ctx, JERFiles::Fall15_25ns_L23_AK8PFchs_DATA));
     }
     else {
-      jet_corrector.reset(new JetCorrector(ctx, JERFiles::Summer15_25ns_L123_AK4PFchs_MC));
-      jetlepton_cleaner.reset(new JetLeptonCleaner(ctx, JERFiles::Summer15_25ns_L123_AK4PFchs_MC));
-      topjet_corrector.reset(new TopJetCorrector(ctx, JERFiles::Summer15_25ns_L123_AK8PFchs_MC));
-      topjet23_corrector.reset(new TopJetCorrector(ctx, JERFiles::Summer15_25ns_L23_AK8PFchs_MC));
+      jet_corrector.reset(new JetCorrector(ctx, JERFiles::Fall15_25ns_L123_AK4PFchs_MC));
+      jetlepton_cleaner.reset(new JetLeptonCleaner(ctx, JERFiles::Fall15_25ns_L123_AK4PFchs_MC));
+      topjet_corrector.reset(new TopJetCorrector(ctx, JERFiles::Fall15_25ns_L123_AK8PFchs_MC));
+      topjet23_corrector.reset(new TopJetCorrector(ctx, JERFiles::Fall15_25ns_L23_AK8PFchs_MC));
     }
-    //cleanermodules.emplace_back(new TopJetCleaner(HEPTopTag(150)));
+    //cleanermodules.emplace_back(new TopJetCleaner(ctx, HEPTopTag(150)));
     //jetER_smearer.reset(new JetResolutionSmearer(ctx));
     jetlepton_cleaner->set_drmax(.4);
     //  topjetER_smearer.reset(new TopJetResolutionSmearer(ctx));
@@ -134,7 +134,7 @@ namespace uhh2examples {
       lumi_selection.reset(new LumiSelection(ctx));
     }
 
-    trigger_sel = make_unique<TriggerSelection>("HLT_Mu45_eta2p1_v*");
+    trigger_sel = uhh2::make_unique<TriggerSelection>("HLT_Mu45_eta2p1_v*");
     twodcut_sel.reset(new TwoDCut(.4, 25.));
     met_sel.reset(new METCut(50., std::numeric_limits<double>::infinity()));
     htlep_sel.reset(new HTlepCut(150., std::numeric_limits<double>::infinity()));

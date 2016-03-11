@@ -8,6 +8,7 @@
 #include "UHH2/common/include/JetIds.h"
 #include "UHH2/common/include/Utils.h"
 
+
 using namespace std;
 using namespace uhh2;
 using namespace uhh2examples;
@@ -355,8 +356,8 @@ Hists_sub::Hists_sub(Context & ctx, const string & dirname): Hists(ctx, dirname)
   book<TH1F>("subjetPT", "PT of subjet with highest CSV", 100, 0., 1500.);
   book<TH1F>("subjethadronFlavor", "hadronFlavour of subjet with highest CSV", 100, 0., 1.);
 
-
-
+  book<TH1F>("eta", "eta", 100, -3., 3.);
+  book<TH1F>("rapidity", "rapidity", 100, -10., 10.);
 }
 
 template<typename T>
@@ -448,6 +449,8 @@ void Hists_sub::fill(const Event & event){
     hist("tau2")->Fill(topjet.tau2(), weight);
 
     hist("MassTop_corr")->Fill(topjet.v4().M(), weight);
+    hist("eta")->Fill(topjet.eta(), weight);
+    hist("rapidity")->Fill(topjet.v4().Rapidity(), weight);
    
     hist("subCSV")->Fill(topjet.btag_combinedSecondaryVertex(),weight);
     JetId checkbtag=CSVBTag(CSVBTag::WP_LOOSE);

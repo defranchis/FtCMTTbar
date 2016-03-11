@@ -96,7 +96,7 @@ namespace uhh2examples {
 
 
     // clean the objects:
-    cleanermodules.emplace_back(new JetCleaner(jet_kinematic));
+    cleanermodules.emplace_back(new JetCleaner(ctx, jet_kinematic));
     cleanermodules.emplace_back(new MuonCleaner(muid));
     if (type == "DATA"){
       jet_corrector.reset(new JetCorrector(ctx, JERFiles::Summer15_25ns_L123_AK4PFchs_DATA));
@@ -110,7 +110,7 @@ namespace uhh2examples {
       topjet_corrector.reset(new TopJetCorrector(ctx, JERFiles::Summer15_25ns_L123_AK8PFchs_MC));
       topjet23_corrector.reset(new TopJetCorrector(ctx, JERFiles::Summer15_25ns_L23_AK8PFchs_MC));
     }
-    //cleanermodules.emplace_back(new TopJetCleaner(HEPTopTag(150)));
+    //cleanermodules.emplace_back(new TopJetCleaner(ctx, HEPTopTag(150)));
     //jetER_smearer.reset(new JetResolutionSmearer(ctx));
     jetlepton_cleaner->set_drmax(.4);
     //  topjetER_smearer.reset(new TopJetResolutionSmearer(ctx));
@@ -138,7 +138,7 @@ namespace uhh2examples {
       lumi_selection.reset(new LumiSelection(ctx));
     }
 
-    trigger_sel = make_unique<TriggerSelection>("HLT_Mu45_eta2p1_v*");
+    trigger_sel = uhh2::make_unique<TriggerSelection>("HLT_Mu45_eta2p1_v*");
     twodcut_sel.reset(new TwoDCut(.4, 25.));
     met_sel.reset(new METCut(50., std::numeric_limits<double>::infinity()));
     htlep_sel.reset(new HTlepCut(150., std::numeric_limits<double>::infinity()));

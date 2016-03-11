@@ -95,9 +95,9 @@ namespace uhh2examples {
     if (type != "DATA") pileup_SF.reset(new MCPileupReweight(ctx)); 
 
     // clean the objects:
-    cleanermodules.emplace_back(new JetCleaner(jet_kinematic));
+    cleanermodules.emplace_back(new JetCleaner(ctx, jet_kinematic));
     cleanermodules.emplace_back(new MuonCleaner(muid));
-    cleanermodules.emplace_back(new TopJetCleaner(HEPTopTag(150)));
+    cleanermodules.emplace_back(new TopJetCleaner(ctx, HEPTopTag(150)));
     if (type == "DATA"){
       jet_corrector.reset(new JetCorrector(ctx,JERFiles::Summer15_25ns_L123_AK4PFchs_DATA));
     jetlepton_cleaner.reset(new JetLeptonCleaner(ctx,JERFiles::Summer15_25ns_L123_AK4PFchs_DATA));
@@ -135,7 +135,7 @@ namespace uhh2examples {
       lumi_selection.reset(new LumiSelection(ctx));
     }
 
-    trigger_sel = make_unique<TriggerSelection>("HLT_Mu45_eta2p1_v*");
+    trigger_sel = uhh2::make_unique<TriggerSelection>("HLT_Mu45_eta2p1_v*");
     twodcut_sel.reset(new TwoDCut(.4, 25.));
     met_sel.reset(new METCut(50., std::numeric_limits<double>::infinity()));
     htlep_sel.reset(new HTlepCut(150., std::numeric_limits<double>::infinity()));
