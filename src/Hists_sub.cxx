@@ -313,6 +313,7 @@ Hists_sub::Hists_sub(Context & ctx, const string & dirname): Hists(ctx, dirname)
   book<TH1F>("MassTop_sub", "Top Mass calculated from subjets", 50, 0., 500.);
   book<TH1F>("MassTop_SD", "Top Mass SoftDrop", 50, 0., 500.); 
   book<TH1F>("MassTop_SD_corr", "Top Mass SoftDrop corrected", 50, 0., 500.);
+ book<TH1F>("prunedmass", "pruned mass", 50, 0., 500.);
  
   book<TH1F>("PTTop", "Top PT", 100, 0., 2000.);  
 
@@ -358,6 +359,8 @@ Hists_sub::Hists_sub(Context & ctx, const string & dirname): Hists(ctx, dirname)
 
   book<TH1F>("eta", "eta", 100, -3., 3.);
   book<TH1F>("rapidity", "rapidity", 100, -10., 10.);
+  book<TH1F>("BoostedDoubleSecondaryVertexAK8", "BoostedDoubleSecondaryVertexAK8", 20, 0., 1.);
+  book<TH1F>("BoostedDoubleSecondaryVertexAK8_neg", "BoostedDoubleSecondaryVertexAK8_neg", 100, -10., 10.);
 }
 
 template<typename T>
@@ -434,6 +437,7 @@ void Hists_sub::fill(const Event & event){
     hist("Weight")->Fill(weight);
     hist("MassTop_sub")->Fill(M_groomed(topjet),weight);
     hist("MassTop_SD")->Fill(topjet.softdropmass(),weight);
+    hist("prunedmass")->Fill(topjet.prunedmass(),weight);
     hist("MassTop_SD_corr")->Fill(topjet.softdropmass()*1/topjet.JEC_factor_raw(),weight);
 
     hist("neutralEmEnergyFraction")->Fill(topjet.neutralEmEnergyFraction(),weight);
@@ -453,6 +457,8 @@ void Hists_sub::fill(const Event & event){
     hist("rapidity")->Fill(topjet.v4().Rapidity(), weight);
    
     hist("subCSV")->Fill(topjet.btag_combinedSecondaryVertex(),weight);
+    hist("BoostedDoubleSecondaryVertexAK8")->Fill(topjet.btag_BoostedDoubleSecondaryVertexAK8(),weight);
+    hist("BoostedDoubleSecondaryVertexAK8_neg")->Fill(topjet.btag_BoostedDoubleSecondaryVertexAK8(),weight);
     JetId checkbtag=CSVBTag(CSVBTag::WP_LOOSE);
     
     if(subjets.size() == 3)
