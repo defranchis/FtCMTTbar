@@ -64,10 +64,13 @@ namespace uhh2examples {
       h_aftercuts_1_PT550, 
       h_aftercuts_2_wp1, 
       h_aftercuts_2_wp2, 
+      h_aftercuts_2_wp3, 
       h_aftercuts_2_wp1_mass, 
       h_aftercuts_2_wp2_mass, 
+      h_aftercuts_2_wp3_mass,
       h_aftercuts_2_wp1_prunedmass, 
       h_aftercuts_2_wp2_prunedmass, 
+      h_aftercuts_2_wp3_prunedmass, 
       h_aftercuts;
 
     std::unique_ptr<JetCorrector> jet_corrector;
@@ -104,9 +107,9 @@ namespace uhh2examples {
     
 
     jet_kinematic = PtEtaCut(30.0, 2.4);
-    topjet_kinematic = PtEtaCut(400.0,2.4);
-    //muid = AndId<Muon>(MuonIDTight(), PtEtaCut(50.0, 2.1),MuonIso(0.12));
-    muid = AndId<Muon>(MuonIDTight(), PtEtaCut(50.0, 2.1));
+    topjet_kinematic = PtEtaCut(300.0,2.4);
+    muid = AndId<Muon>(MuonIDTight(), PtEtaCut(50.0, 2.1),MuonIso(0.12));
+    //muid = AndId<Muon>(MuonIDTight(), PtEtaCut(50.0, 2.1));
 
     if (type != "DATA") pileup_SF.reset(new MCPileupReweight(ctx)); 
 
@@ -134,11 +137,11 @@ namespace uhh2examples {
     // make the selection, step-by-step. Note that in most cases, no explicit
     // object id is passed, as the cleaners have removed the objects not passing the id already.
 
-    //if (version == "TTbar") {
-    //  v_pre_modules.emplace_back(new TTbarGenProducer(ctx, "ttbargen", false));
-    //  v_pre_modules.emplace_back(new TopPtWeight(ctx, "ttbargen", 0.156, -0.00137, "weight_ttbar", false));
-    //  v_hists.emplace_back(new TopPtWeightHist(ctx, "TTbarReweight", "weight_ttbar"));
-    //}
+    if (version == "TTbar") {
+      v_pre_modules.emplace_back(new TTbarGenProducer(ctx, "ttbargen", true));
+      v_pre_modules.emplace_back(new TopPtWeight(ctx, "ttbargen", 0.156, -0.00137, "weight_ttbar", true));
+      v_hists.emplace_back(new TopPtWeightHist(ctx, "TTbarReweight", "weight_ttbar"));
+    }
     
 
 
@@ -158,10 +161,13 @@ namespace uhh2examples {
     h_aftercuts_1_prunedmass.reset(new Hists_sub(ctx, "AfterCuts_1_prunedmass"));
     h_aftercuts_2_wp1.reset(new Hists_sub(ctx, "AfterCuts_2_wp1"));
     h_aftercuts_2_wp2.reset(new Hists_sub(ctx, "AfterCuts_2_wp2"));
+    h_aftercuts_2_wp3.reset(new Hists_sub(ctx, "AfterCuts_2_wp3"));
     h_aftercuts_2_wp1_mass.reset(new Hists_sub(ctx, "AfterCuts_2_wp1_mass"));
     h_aftercuts_2_wp2_mass.reset(new Hists_sub(ctx, "AfterCuts_2_wp2_mass"));
+    h_aftercuts_2_wp3_mass.reset(new Hists_sub(ctx, "AfterCuts_2_wp3_mass"));
     h_aftercuts_2_wp1_prunedmass.reset(new Hists_sub(ctx, "AfterCuts_2_wp1_prunedmass"));
     h_aftercuts_2_wp2_prunedmass.reset(new Hists_sub(ctx, "AfterCuts_2_wp2_prunedmass"));
+    h_aftercuts_2_wp3_prunedmass.reset(new Hists_sub(ctx, "AfterCuts_2_wp3_prunedmass"));
 
     if (type == "DATA"){
       //  std::cout << "Running on Data, using lumi selection!" << std::endl;
@@ -201,11 +207,13 @@ namespace uhh2examples {
     bool checkphi_pt=0;
     bool bbtag_wp1 = 0;
     bool bbtag_wp2 = 0;
+    bool bbtag_wp3 = 0;
     bool higgsmass = 0;
     bool prunedmass = 0;
-  
+    unsigned int takehighestpt = 0;
+
     //bool MassCut = 0;
-    //bool tau32 = 0;
+    bool tau32 = 0;
     double topjetpt = 0.;
 
 
@@ -215,28 +223,52 @@ namespace uhh2examples {
       std::vector<TopJet>* topjets = event.topjets;
       std::vector<Muon>* muons = event.muons;
 
+      if(topjets->size()>1)
+	{
+	  double ptTopJet[topjets->size()];
+
+	  for(unsigned int j=0;j<topjets->size();j++){
+	    ptTopJet[j] = topjets->at(j).pt();
+	  }
+
+	  int tempPT = 0;
+	  
+	  for(unsigned int k=0;k<topjets->size();k++)
+	    {
+	      if(ptTopJet[k]>tempPT){tempPT=ptTopJet[k]; takehighestpt = k;}	    
+	    }
+	}
+
+
+
       
       for(unsigned int i=0;i<topjets->size();i++){
-      
+	
+	if(topjets->size()>1)
+	  {
+	    if (takehighestpt!=i) continue;
+	  }
+
 	TopJet topjet=topjets->at(i);
       
 	double deltaphi = deltaPhi(topjet,muons->at(0));
 	
 	double pi = 3.14159265359;
-	if(deltaphi>2*pi/3 &&(topjets->at(i).pt()>400.)&&(fabs(topjets->at(i).eta())<2.4)) 
+	if(deltaphi>2*pi/3 &&(topjets->at(i).pt()>300.)&&(fabs(topjets->at(i).eta())<2.4)) 
 	  {
 	    checkphi_pt = 1;
 	    topjetpt=topjets->at(i).pt();
-	    
+	    if (i > 2) std::cout << "!!!!!!!!!!!!!!!!!! Topjet " << i << std::endl;
 	    //ScaleFactors
 	    
 	    if(topjets->at(i).btag_BoostedDoubleSecondaryVertexAK8()> 0.3 ) bbtag_wp1=1;
 	    if(topjets->at(i).btag_BoostedDoubleSecondaryVertexAK8()> 0.6 ) bbtag_wp2=1;
+	    if(topjets->at(i).btag_BoostedDoubleSecondaryVertexAK8()> 0.9 ) bbtag_wp3=1;
 	    if(70 < topjets->at(i).softdropmass() && topjets->at(i).softdropmass()< 200) higgsmass = 1;
 	    if(70 < topjets->at(i).prunedmass() && topjets->at(i).prunedmass()< 200) prunedmass = 1;
 	  }
 
-	//if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.44) tau32 = 1;
+	if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.69) tau32 = 1;
 	//if (topjets->at(i).softdropmass()>110) MassCut=1;
 
       }
@@ -245,19 +277,24 @@ namespace uhh2examples {
   
     bool keep = selection.passes(event);
     bool pass_trigger = trigger_sel->passes(event);
-    bool pass_met = met_sel->passes(event);
-    bool pass_htlep = htlep_sel->passes(event);
+    //bool pass_met = met_sel->passes(event);
+    //bool pass_htlep = htlep_sel->passes(event);
+
+
+    for (auto & h : v_hists) {
+      h->fill(event);
+    }
 
     h_nocuts->fill(event);
     if(keep && checkphi_pt && pass_trigger) 
       {
 	bool pass_btag = btag_sel->passes(event);
 
-	if(pass_btag)
+	if(pass_btag && tau32)
 	  {
-	    bool pass_twodcut = twodcut_sel->passes(event);
-	    if (pass_met &&  pass_htlep && pass_twodcut){
-	      if (topjetpt > 400 && topjetpt <= 550) h_aftercuts_1_PT400_550->fill(event);
+	    //bool pass_twodcut = twodcut_sel->passes(event);
+	    //if (pass_met &&  pass_htlep && pass_twodcut){
+	      if (topjetpt > 300 && topjetpt <= 550) h_aftercuts_1_PT400_550->fill(event);
 	      if (topjetpt > 550)h_aftercuts_1_PT550->fill(event);
 	      h_aftercuts_1->fill(event);
 	      if(bbtag_wp1)
@@ -268,6 +305,10 @@ namespace uhh2examples {
 	      if(bbtag_wp2)
 		{
 		  h_aftercuts_2_wp2->fill(event);
+		}
+	      if(bbtag_wp3)
+		{
+		  h_aftercuts_2_wp3->fill(event);
 		}
 	      if(higgsmass)
 		{
@@ -280,6 +321,10 @@ namespace uhh2examples {
 		  if(bbtag_wp2)
 		    {
 		      h_aftercuts_2_wp2_mass->fill(event);
+		    }
+		  if(bbtag_wp3)
+		    {
+		      h_aftercuts_2_wp3_mass->fill(event);
 		    }
 		}
 	      if(prunedmass)
@@ -294,8 +339,12 @@ namespace uhh2examples {
 		    {
 		      h_aftercuts_2_wp2_prunedmass->fill(event);
 		    }
+		  if(bbtag_wp3)
+		    {
+		      h_aftercuts_2_wp3_prunedmass->fill(event);
+		    }
 		}
-	  }
+	      //}
 	}
       }
 

@@ -27,7 +27,7 @@
     <Library Name="libSUHH2FtCMTTbar"/>
     <Package Name="SUHH2FtCMTTbar.par" />
 
-   <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X/post_bbtag/" PostFix="" TargetLumi="2690.707225445">
+   <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X/post_bbtag_ttbarrew/" PostFix="" TargetLumi="2690.707225445">
    <!--Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/schumas/proof/" ProofNodes="10" OutputDirectory="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X/post/" PostFix="" TargetLumi="2628.85"-->
   
 	 <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="Data1_2" Cacheable="True">

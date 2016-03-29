@@ -359,8 +359,12 @@ Hists_sub::Hists_sub(Context & ctx, const string & dirname): Hists(ctx, dirname)
 
   book<TH1F>("eta", "eta", 100, -3., 3.);
   book<TH1F>("rapidity", "rapidity", 100, -10., 10.);
-  book<TH1F>("BoostedDoubleSecondaryVertexAK8", "BoostedDoubleSecondaryVertexAK8", 20, 0., 1.);
-  book<TH1F>("BoostedDoubleSecondaryVertexAK8_neg", "BoostedDoubleSecondaryVertexAK8_neg", 100, -10., 10.);
+  book<TH1F>("BoostedDoubleSecondaryVertexAK8", "BoostedDoubleSecondaryVertexAK8", 40, -1., 1.);
+  book<TH1F>("BoostedDoubleSecondaryVertexAK8_neg", "BoostedDoubleSecondaryVertexAK8_neg", 200, -15., 15.);
+
+  book<TH1F>("subFlavour_top_A", "flavour of the top subjet", 6, 0., 6.); 
+  book<TH1F>("subFlavour_top_B", "flavour of the top subjet", 6, 0., 6.);
+
 }
 
 template<typename T>
@@ -392,13 +396,34 @@ void Hists_sub::fill(const Event & event){
   std::vector<Muon>* muons = event.muons;
  
   int check_one_event = 0;
+  unsigned int takehighestpt = 0;
+  if(topjets->size()>1)
+    {
+      double ptTopJet[topjets->size()];
+
+      for(unsigned int j=0;j<topjets->size();j++){
+	ptTopJet[j] = topjets->at(j).pt();
+      }
+
+      int tempPT = 0;
+	  
+      for(unsigned int k=0;k<topjets->size();k++)
+	{
+	  if(ptTopJet[k]>tempPT){tempPT=ptTopJet[k]; takehighestpt = k;}	    
+	}
+    }
 
   for(unsigned int n=0;n<topjets->size();n++){
     if (muons->size() == 0) continue; 
+
+    if(topjets->size()>1)
+      {
+	if (takehighestpt!=n) continue;
+      }
     TopJet topjet=topjets->at(n);
     double deltaphi=deltaPhi(topjet,muons->at(0));
     double pi = 3.14159265359;
-    if(!((deltaphi>(2*pi/3))&&(topjet.pt()>400.)&&(fabs(topjet.eta())<2.4))) continue;
+    if(!((deltaphi>(2*pi/3))&&(topjet.pt()>300.)&&(fabs(topjet.eta())<2.4))) continue;
 
 
     auto subjets=topjet.subjets();
@@ -409,6 +434,9 @@ void Hists_sub::fill(const Event & event){
     double m12 = 0;
     double m13 = 0;
     double m23 = 0;
+
+
+
     if(subjets.size()==3) {    
       
       if( (subjets[0].v4()+subjets[1].v4()).isTimelike())
@@ -423,6 +451,7 @@ void Hists_sub::fill(const Event & event){
       hist("m12")->Fill(m12, weight);
       hist("m13")->Fill(m13, weight);
       hist("m23")->Fill(m23, weight);
+
 
       }
   
@@ -481,6 +510,11 @@ void Hists_sub::fill(const Event & event){
       Jet subjet=subjets[ii];
 
       JetBTagInfo btaginfo=subjet.btaginfo();
+
+      if(topjet.btag_BoostedDoubleSecondaryVertexAK8()<-0.7) hist("subFlavour_top_A")->Fill(fabs(subjet.hadronFlavor()),weight);
+      else hist("subFlavour_top_B")->Fill(fabs(subjet.hadronFlavor()),weight);
+
+
       if (ii == 0) {highestCSV=subjet.btag_combinedSecondaryVertex();
 	PT = subjet.v4().pt();
 	flavor = subjet.hadronFlavor();}
