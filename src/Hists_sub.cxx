@@ -359,11 +359,40 @@ Hists_sub::Hists_sub(Context & ctx, const string & dirname): Hists(ctx, dirname)
 
   book<TH1F>("eta", "eta", 100, -3., 3.);
   book<TH1F>("rapidity", "rapidity", 100, -10., 10.);
-  book<TH1F>("BoostedDoubleSecondaryVertexAK8", "BoostedDoubleSecondaryVertexAK8", 40, -1., 1.);
-  book<TH1F>("BoostedDoubleSecondaryVertexAK8_neg", "BoostedDoubleSecondaryVertexAK8_neg", 200, -15., 15.);
+  book<TH1F>("BoostedDoubleSecondaryVertexAK8", "BoostedDoubleSecondaryVertexAK8", 20, -1., 1.);
+  book<TH1F>("BoostedDoubleSecondaryVertexAK8_neg", "BoostedDoubleSecondaryVertexAK8_neg", 100, -15., 15.);
 
   book<TH1F>("subFlavour_top_A", "flavour of the top subjet", 6, 0., 6.); 
   book<TH1F>("subFlavour_top_B", "flavour of the top subjet", 6, 0., 6.);
+
+  book<TH1F>("z_ratio", "z_ratio" , 20, 0., 60.);
+  book<TH1F>("trackSipdSig_3", "trackSipdSig_3" , 20, -20., 20.);
+  book<TH1F>("trackSipdSig_2", "trackSipdSig_2" , 20, -20., 20.);
+  book<TH1F>("trackSipdSig_1", "trackSipdSig_1" , 20, -20., 20.);
+  book<TH1F>("trackSipdSig_0",  "trackSipdSig_0", 20, -20., 20.);
+  book<TH1F>("trackSipdSig_1_0", "trackSipdSig_1_0" , 20, -20., 20.);
+  book<TH1F>("trackSipdSig_0_0", "trackSipdSig_0_0" , 20, -20., 20.);
+  book<TH1F>("trackSipdSig_1_1", "trackSipdSig_1_1" , 20, -20., 20.);
+  book<TH1F>("trackSipdSig_0_1", "trackSipdSig_0_1" , 20, -20., 20.);
+  book<TH1F>("trackSip2dSigAboveCharm_0", "trackSip2dSigAboveCharm_0" , 20, -20., 20.);
+  book<TH1F>("trackSip2dSigAboveBottom_0","trackSip2dSigAboveBottom_0"  , 20, -20., 20.);
+  book<TH1F>("trackSip2dSigAboveBottom_1", "trackSip2dSigAboveBottom_1" , 20, -20., 20.);
+  book<TH1F>("tau1_trackEtaRel_0",  "tau1_trackEtaRel_0", 20, 0., 10.);
+  book<TH1F>("tau1_trackEtaRel_1", "tau1_trackEtaRel_1" , 20, 0., 10.);
+  book<TH1F>("tau1_trackEtaRel_2", "tau1_trackEtaRel_2" , 20, 0., 10.);
+  book<TH1F>("tau0_trackEtaRel_0","tau0_trackEtaRel_0"  , 20, 0., 10.);
+  book<TH1F>("tau0_trackEtaRel_1","tau0_trackEtaRel_1"  , 20, 0., 10.);
+  book<TH1F>("tau0_trackEtaRel_2", "tau0_trackEtaRel_2" , 20, 0., 10.);
+  book<TH1F>("tau_vertexMass_0", "tau_vertexMass_0" , 9, 0., 27.);
+  book<TH1F>("tau_vertexEnergyRatio_0", "tau_vertexEnergyRatio_0" , 20, 0., 4.);
+  book<TH1F>("tau_vertexDeltaR_0", "tau_vertexDeltaR_0" , 20, -0.05, 1.05);
+  book<TH1F>("tau_flightDistance2dSig_0", "tau_flightDistance2dSig_0" , 20, -1., 21.);
+  book<TH1F>("tau_vertexMass_1", "tau_vertexMass_1" , 9, 0., 27.);
+  book<TH1F>("tau_vertexEnergyRatio_1", "tau_vertexEnergyRatio_1" , 20, 0., 4.);
+  book<TH1F>("tau_flightDistance2dSig_1", "tau_flightDistance2dSig_1" , 20, -1., 21.);
+  book<TH1F>("jetNTracks", "jetNTracks" , 20, 0., 40.);
+  book<TH1F>("nSV", "nSV" , 8, 0., 8.);
+
 
 }
 
@@ -488,6 +517,41 @@ void Hists_sub::fill(const Event & event){
     hist("subCSV")->Fill(topjet.btag_combinedSecondaryVertex(),weight);
     hist("BoostedDoubleSecondaryVertexAK8")->Fill(topjet.btag_BoostedDoubleSecondaryVertexAK8(),weight);
     hist("BoostedDoubleSecondaryVertexAK8_neg")->Fill(topjet.btag_BoostedDoubleSecondaryVertexAK8(),weight);
+
+    hist("z_ratio")->Fill(topjet.get_tag(topjet.tagname2tag("z_ratio")), weight);
+    hist("trackSipdSig_3")->Fill(topjet.get_tag(topjet.tagname2tag("trackSipdSig_3")), weight);
+    hist("trackSipdSig_2")->Fill(topjet.get_tag(topjet.tagname2tag("trackSipdSig_2")), weight);
+    hist("trackSipdSig_1")->Fill(topjet.get_tag(topjet.tagname2tag("trackSipdSig_1")), weight);
+    hist("trackSipdSig_0")->Fill(topjet.get_tag(topjet.tagname2tag("trackSipdSig_0")), weight);
+    hist("trackSipdSig_1_0")->Fill(topjet.get_tag(topjet.tagname2tag("trackSipdSig_1_0")), weight);
+    hist("trackSipdSig_0_0")->Fill(topjet.get_tag(topjet.tagname2tag("trackSipdSig_0_0")), weight);
+    hist("trackSipdSig_1_1")->Fill(topjet.get_tag(topjet.tagname2tag("trackSipdSig_1_1")), weight);
+    hist("trackSipdSig_0_1")->Fill(topjet.get_tag(topjet.tagname2tag("trackSipdSig_0_1")), weight);
+    hist("trackSip2dSigAboveCharm_0")->Fill(topjet.get_tag(topjet.tagname2tag("trackSip2dSigAboveCharm_0")), weight);
+    hist("trackSip2dSigAboveBottom_0")->Fill(topjet.get_tag(topjet.tagname2tag("trackSip2dSigAboveBottom_0")), weight);
+    hist("trackSip2dSigAboveBottom_1")->Fill(topjet.get_tag(topjet.tagname2tag("trackSip2dSigAboveBottom_1")), weight);
+    hist("tau1_trackEtaRel_0")->Fill(topjet.get_tag(topjet.tagname2tag("tau1_trackEtaRel_0")), weight);
+    hist("tau1_trackEtaRel_1")->Fill(topjet.get_tag(topjet.tagname2tag("tau1_trackEtaRel_1")), weight);
+    hist("tau1_trackEtaRel_2")->Fill(topjet.get_tag(topjet.tagname2tag("tau1_trackEtaRel_2")), weight);
+    hist("tau0_trackEtaRel_0")->Fill(topjet.get_tag(topjet.tagname2tag("tau0_trackEtaRel_0")), weight);
+    hist("tau0_trackEtaRel_1")->Fill(topjet.get_tag(topjet.tagname2tag("tau0_trackEtaRel_1")), weight);
+    hist("tau0_trackEtaRel_2")->Fill(topjet.get_tag(topjet.tagname2tag("tau0_trackEtaRel_2")), weight);
+    hist("tau_vertexMass_0")->Fill(topjet.get_tag(topjet.tagname2tag("tau_vertexMass_0")), weight);
+    hist("tau_vertexEnergyRatio_0")->Fill(topjet.get_tag(topjet.tagname2tag("tau_vertexEnergyRatio_0")), weight);
+    hist("tau_vertexDeltaR_0")->Fill(topjet.get_tag(topjet.tagname2tag("tau_vertexDeltaR_0")), weight);
+    hist("tau_flightDistance2dSig_0")->Fill(topjet.get_tag(topjet.tagname2tag("tau_flightDistance2dSig_0")), weight);
+    hist("tau_vertexMass_1")->Fill(topjet.get_tag(topjet.tagname2tag("tau_vertexMass_1")), weight);
+    hist("tau_vertexEnergyRatio_1")->Fill(topjet.get_tag(topjet.tagname2tag("tau_vertexEnergyRatio_1")), weight);
+    hist("tau_flightDistance2dSig_1")->Fill(topjet.get_tag(topjet.tagname2tag("tau_flightDistance2dSig_1")), weight);
+    hist("jetNTracks")->Fill(topjet.get_tag(topjet.tagname2tag("jetNTracks")), weight);
+    hist("nSV")->Fill(topjet.get_tag(topjet.tagname2tag("nSV")), weight);
+
+  
+
+
+
+
+
     JetId checkbtag=CSVBTag(CSVBTag::WP_LOOSE);
     
     if(subjets.size() == 3)

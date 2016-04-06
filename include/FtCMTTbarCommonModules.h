@@ -85,8 +85,9 @@ public:
 
     virtual void fill(const Event & event) override {
         if (event.is_valid(h_weight_)) {
-            hist->Fill(0.);
-            hist->Fill(1., event.get(h_weight_));
+
+	  hist->Fill(0.);
+	  hist->Fill(1., event.get(h_weight_));
         }
     }
 
