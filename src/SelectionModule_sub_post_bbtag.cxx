@@ -138,11 +138,11 @@ namespace uhh2examples {
     // make the selection, step-by-step. Note that in most cases, no explicit
     // object id is passed, as the cleaners have removed the objects not passing the id already.
 
-    /*if (version == "TTbar") {
+    if (version == "TTbar") {
       v_pre_modules.emplace_back(new TTbarGenProducer(ctx, "ttbargen", true));
       v_pre_modules.emplace_back(new TopPtWeight(ctx, "ttbargen", 0.156, -0.00137, "weight_ttbar", true));
     }
-    v_hists.emplace_back(new TopPtWeightHist(ctx, "TTbarReweight", "weight_ttbar"));*/
+    //v_hists.emplace_back(new TopPtWeightHist(ctx, "TTbarReweight", "weight_ttbar"));
 
 
     const std::string triggername(ctx.get("triggername", "NotSet"));
