@@ -25,6 +25,7 @@
 
 
 
+
 using namespace std;
 using namespace uhh2;
 
@@ -43,10 +44,10 @@ namespace uhh2examples {
    * 
    * In the output, only leptons passing the id and jets with pt > 30 GeV and eta < 2.4 are kept.
    */
-  class SelectionModule_sub_post2: public AnalysisModule {
+  class SelectionModule_sub_post2_puppi: public AnalysisModule {
   public:
     
-    explicit SelectionModule_sub_post2(Context & ctx);
+    explicit SelectionModule_sub_post2_puppi(Context & ctx);
     virtual bool process(Event & event);
 
   private:
@@ -149,7 +150,7 @@ namespace uhh2examples {
       h_aftercuts_2_wp7_PT550_corr23, 
       h_aftercuts_2_wp8_PT550_corr23, 
       h_aftercuts_2_wp9_PT550_corr23,
-
+      
     //h_btageffAK8,
 
       h_aftercuts_3, 
@@ -165,8 +166,6 @@ namespace uhh2examples {
     std::unique_ptr<uhh2::AnalysisModule> muo_tight_noniso_SF;
     std::unique_ptr<AnalysisModule> btagwAK8;
 
-
-
     std::vector<std::unique_ptr<AnalysisModule>> cleanermodules;
     AndSelection selection;
     std::unique_ptr<Selection> trigger_sel;
@@ -181,7 +180,7 @@ namespace uhh2examples {
   };
 
 
-  SelectionModule_sub_post2::SelectionModule_sub_post2(Context & ctx): selection(ctx, "selection") {
+  SelectionModule_sub_post2_puppi::SelectionModule_sub_post2_puppi(Context & ctx): selection(ctx, "selection") {
     
     type = ctx.get("dataset_type", "");
     version = ctx.get("dataset_version", "");
@@ -308,6 +307,7 @@ namespace uhh2examples {
     h_aftercuts_2_wp8_tau32_btag_corr23.reset(new Hists_sub(ctx, "AfterCuts_2_wp8_tau32_btag_corr23"));
     h_aftercuts_2_wp9_tau32_btag_corr23.reset(new Hists_sub(ctx, "AfterCuts_2_wp9_tau32_btag_corr23"));
 
+
     h_aftercuts_2_wp1_PT550_corr23.reset(new Hists_sub(ctx, "AfterCuts_2_wp1_PT550_corr23"));
     h_aftercuts_2_wp2_PT550_corr23.reset(new Hists_sub(ctx, "AfterCuts_2_wp2_PT550_corr23"));
     h_aftercuts_2_wp3_PT550_corr23.reset(new Hists_sub(ctx, "AfterCuts_2_wp3_PT550_corr23"));
@@ -327,10 +327,10 @@ namespace uhh2examples {
     h_aftercuts_2_wp7_PT400_corr23.reset(new Hists_sub(ctx, "AfterCuts_2_wp7_PT400_corr23"));
     h_aftercuts_2_wp8_PT400_corr23.reset(new Hists_sub(ctx, "AfterCuts_2_wp8_PT400_corr23"));
     h_aftercuts_2_wp9_PT400_corr23.reset(new Hists_sub(ctx, "AfterCuts_2_wp9_PT400_corr23"));
-
+ 
     //h_btageffAK8.reset(new BTagMCEfficiencyHists(ctx, "BTagMCEfficiencyHists",CSVBTag::WP_LOOSE,"jets"));
 
-    btagwAK8.reset(new MCBTagScaleFactor(ctx, CSVBTag::WP_LOOSE, "jets","central","mujets","incl","MCBtagEfficiencies"));
+    btagwAK8.reset(new MCBTagScaleFactor(ctx, CSVBTag::WP_MEDIUM, "jets","central","mujets","incl","MCBtagEfficiencies"));
 
     if (type == "DATA"){
       //  std::cout << "Running on Data, using lumi selection!" << std::endl;
@@ -345,7 +345,7 @@ namespace uhh2examples {
   }
 
 
-  bool SelectionModule_sub_post2::process(Event & event) {
+  bool SelectionModule_sub_post2_puppi::process(Event & event) {
 
     if(!event.isRealData) pileup_SF->process(event);
     muo_tight_noniso_SF->process(event);
@@ -459,79 +459,176 @@ namespace uhh2examples {
 
 		    double masstop = subjet_sum.M()*1/topjets->at(i).JEC_factor_raw();
 		    
-
-
-
-
-
-
-
-
 		    //std::cout << masstop << std::endl;
 		    //ScaleFactors
 
 		    ///////////////////CHS//////////////////
-	
+		    
+		    // if (i > 0) std::cout << "Topjet " << i << std::endl;
+		    // if (masstop<210 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.45) toptag_wp1=1;
+		    // if (masstop<210 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.51) toptag_wp2=1;
+		    // if (masstop<210 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.60) toptag_wp3=1;
+		    // if (masstop<210 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.69) toptag_wp4=1;
+		    // if (masstop<210 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.84) toptag_wp5=1;
+		    // if (masstop<220 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.50) {
+		    //   const std::vector<Jet> subjets=topjets->at(i).subjets();
+		    //   for(unsigned int ii=0;ii<subjets.size();ii++){
+		    // 	if(subjets[ii].btag_combinedSecondaryVertex()> 0.46) toptag_wp6=1;}
+		    // }
+		    // if (masstop<220 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.57) {
+		    //   const std::vector<Jet> subjets=topjets->at(i).subjets();
+		    //   for(unsigned int ii=0;ii<subjets.size();ii++){
+		    // 	if(subjets[ii].btag_combinedSecondaryVertex()> 0.46) toptag_wp7=1;}
+		    // }
+		    // if (masstop<220 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.67) {
+		    //   const std::vector<Jet> subjets=topjets->at(i).subjets();
+		    //   for(unsigned int ii=0;ii<subjets.size();ii++){
+		    // 	if(subjets[ii].btag_combinedSecondaryVertex()> 0.46) toptag_wp8=1;}
+		    // }
+		    // if (masstop<220 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.81) {
+		    //   const std::vector<Jet> subjets=topjets->at(i).subjets();
+		    //   for(unsigned int ii=0;ii<subjets.size();ii++){
+		    // 	if(subjets[ii].btag_combinedSecondaryVertex()> 0.46) toptag_wp9=1;}
+		    // }
+		    // if (masstop<220 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.92) {
+		    //   const std::vector<Jet> subjets=topjets->at(i).subjets();
+		    //   for(unsigned int ii=0;ii<subjets.size();ii++){
+		    // 	if(subjets[ii].btag_combinedSecondaryVertex()> 0.46) toptag_wp10=1;}
+		    // }
 
-		    if (masstop<210 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.45) toptag_wp1=1; 
-		    if (masstop<210 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.51) toptag_wp2=1;
-		    if (masstop<210 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.60) toptag_wp3=1;
-		    if (masstop<210 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.69) toptag_wp4=1;
-		    if (masstop<210 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.84) toptag_wp5=1;
-		    if (masstop<220 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.50) {
+		    // sequential Scale Factors
+		    // Mass + tau32
+		    // if (masstop<220 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.50)toptag_wp6_Mass_tau32=1;
+		    // if (masstop<220 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.57)toptag_wp7_Mass_tau32=1;
+		    // if (masstop<220 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.67)toptag_wp8_Mass_tau32=1;
+		    // if (masstop<220 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.81)toptag_wp9_Mass_tau32=1;
+		    // if (masstop<220 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.92)toptag_wp10_Mass_tau32=1;
+		    
+
+
+		    // Mass + subjetbtag
+		    // if (masstop<220 && masstop>105) {
+		    //   const std::vector<Jet> subjets=topjets->at(i).subjets();
+		    //   for(unsigned int ii=0;ii<subjets.size();ii++){
+		    // 	if(subjets[ii].btag_combinedSecondaryVertex()> 0.46) toptag_wp6_Mass_btag=1;}
+		    // }
+		 
+
+		    // tau32 + subjetbtag
+		    // if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.50) {
+		    //   const std::vector<Jet> subjets=topjets->at(i).subjets();
+		    //   for(unsigned int ii=0;ii<subjets.size();ii++){
+		    // 	if(subjets[ii].btag_combinedSecondaryVertex()> 0.46) toptag_wp6_tau32_btag=1;}
+		    // }
+		    // if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.57) {
+		    //   const std::vector<Jet> subjets=topjets->at(i).subjets();
+		    //   for(unsigned int ii=0;ii<subjets.size();ii++){
+		    // 	if(subjets[ii].btag_combinedSecondaryVertex()> 0.46) toptag_wp7_tau32_btag=1;}
+		    // }
+		    // if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.67) {
+		    //   const std::vector<Jet> subjets=topjets->at(i).subjets();
+		    //   for(unsigned int ii=0;ii<subjets.size();ii++){
+		    // 	if(subjets[ii].btag_combinedSecondaryVertex()> 0.46) toptag_wp8_tau32_btag=1;}
+		    // }
+		    // if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.81) {
+		    //   const std::vector<Jet> subjets=topjets->at(i).subjets();
+		    //   for(unsigned int ii=0;ii<subjets.size();ii++){
+		    // 	if(subjets[ii].btag_combinedSecondaryVertex()> 0.46) toptag_wp9_tau32_btag=1;}
+		    // }
+		    // if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.92) {
+		    //   const std::vector<Jet> subjets=topjets->at(i).subjets();
+		    //   for(unsigned int ii=0;ii<subjets.size();ii++){
+		    // 	if(subjets[ii].btag_combinedSecondaryVertex()> 0.46) toptag_wp10_tau32_btag=1;}
+		    // }
+
+	    
+		    // individual ScaleFactors
+		    // Mass
+		    // if (masstop<210 && masstop>105) toptag_wp1_Mass=1;
+		    // if (masstop<220 && masstop>105) toptag_wp6_Mass=1;
+
+		    // tau32
+		    // if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.45) toptag_wp1_tau32=1;
+		    // if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.51) toptag_wp2_tau32=1;
+		    // if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.60) toptag_wp3_tau32=1;
+		    // if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.69) toptag_wp4_tau32=1;
+		    // if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.84) toptag_wp5_tau32=1;
+		    // if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.50) toptag_wp6_tau32=1;
+		    // if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.57) toptag_wp7_tau32=1;
+		    // if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.67) toptag_wp8_tau32=1;
+		    // if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.81) toptag_wp9_tau32=1;
+		    // if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.92) toptag_wp10_tau32=1;
+		    
+		    // btag
+		    
+		    // const std::vector<Jet> subjets=topjets->at(i).subjets();
+		    // for(unsigned int ii=0;ii<subjets.size();ii++){
+		    //   if(subjets[ii].btag_combinedSecondaryVertex()> 0.46) toptag_wp6_btag=1;
+		    // }
+
+		    
+
+		    ////////////////////Puppi////////////////////////////////
+
+		    if (masstop<200 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.41) toptag_wp1=1; 
+		    if (masstop<200 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.48) toptag_wp2=1;
+		    if (masstop<200 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.57) toptag_wp3=1;
+		    if (masstop<200 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.67) toptag_wp4=1;
+		    if (masstop<200 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.84) toptag_wp5=1;
+		    if (masstop<210 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.46) {
 		      const std::vector<Jet> subjets=topjets->at(i).subjets();
 		      for(unsigned int ii=0;ii<subjets.size();ii++){
 		    	if(subjets[ii].btag_combinedSecondaryVertex()> 0.46) toptag_wp6=1;}
 		    }
-		    if (masstop<220 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.57) {
+		    if (masstop<210 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.54) {
 		      const std::vector<Jet> subjets=topjets->at(i).subjets();
 		      for(unsigned int ii=0;ii<subjets.size();ii++){
 		    	if(subjets[ii].btag_combinedSecondaryVertex()> 0.46) toptag_wp7=1;}
 		    }
-		    if (masstop<220 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.67) {
+		    if (masstop<210 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.65) {
 		      const std::vector<Jet> subjets=topjets->at(i).subjets();
 		      for(unsigned int ii=0;ii<subjets.size();ii++){
 		    	if(subjets[ii].btag_combinedSecondaryVertex()> 0.46) toptag_wp8=1;}
 		    }
-		    if (masstop<220 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.81) {
+		    if (masstop<210 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.80) {
 		      const std::vector<Jet> subjets=topjets->at(i).subjets();
 		      for(unsigned int ii=0;ii<subjets.size();ii++){
 		    	if(subjets[ii].btag_combinedSecondaryVertex()> 0.46) toptag_wp9=1;}
 		    }
-		 
+
 
 		    //sequential ScaleFactors
 		    // mass + tau32
-		    if (masstop<220 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.50) {toptag_wp6_Mass_tau32=1;}
-		    if (masstop<220 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.57) {toptag_wp7_Mass_tau32=1;}
-		    if (masstop<220 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.67) {toptag_wp8_Mass_tau32=1;}
-		    if (masstop<220 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.81) {toptag_wp9_Mass_tau32=1;}
+		    if (masstop<210 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.46) {toptag_wp6_Mass_tau32=1;}
+		    if (masstop<210 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.54) {toptag_wp7_Mass_tau32=1;}
+		    if (masstop<210 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.65) {toptag_wp8_Mass_tau32=1;}
+		    if (masstop<210 && masstop>105 && topjets->at(i).tau3()/topjets->at(i).tau2()< 0.80) {toptag_wp9_Mass_tau32=1;}
 		    
 
 		    // mass + btag
-		    if (masstop<220 && masstop>105) {
+		    if (masstop<210 && masstop>105) {
 		      const std::vector<Jet> subjets=topjets->at(i).subjets();
 		      for(unsigned int ii=0;ii<subjets.size();ii++){
 		    	if(subjets[ii].btag_combinedSecondaryVertex()> 0.46) toptag_wp6_Mass_btag=1;}
 		    }
 		  
 		    // tau32 + btag
-		    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.50) {
+		    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.46) {
 		      const std::vector<Jet> subjets=topjets->at(i).subjets();
 		      for(unsigned int ii=0;ii<subjets.size();ii++){
 		    	if(subjets[ii].btag_combinedSecondaryVertex()> 0.46) toptag_wp6_tau32_btag=1;}
 		    }
-		    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.57) {
+		    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.54) {
 		      const std::vector<Jet> subjets=topjets->at(i).subjets();
 		      for(unsigned int ii=0;ii<subjets.size();ii++){
 		    	if(subjets[ii].btag_combinedSecondaryVertex()> 0.46) toptag_wp7_tau32_btag=1;}
 		    }
-		    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.67) {
+		    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.65) {
 		      const std::vector<Jet> subjets=topjets->at(i).subjets();
 		      for(unsigned int ii=0;ii<subjets.size();ii++){
 		    	if(subjets[ii].btag_combinedSecondaryVertex()> 0.46) toptag_wp8_tau32_btag=1;}
 		    }
-		    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.81) {
+		    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.80) {
 		      const std::vector<Jet> subjets=topjets->at(i).subjets();
 		      for(unsigned int ii=0;ii<subjets.size();ii++){
 		    	if(subjets[ii].btag_combinedSecondaryVertex()> 0.46) toptag_wp9_tau32_btag=1;}
@@ -540,12 +637,12 @@ namespace uhh2examples {
 
 		    //individual ScaleFactors
 		    //Mass
-		    if (masstop<210 && masstop>105) toptag_wp1_Mass=1;
+		    if (masstop<200 && masstop>105) toptag_wp1_Mass=1;
 		    //tau32
-		    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.45) toptag_wp1_tau32=1;
-		    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.51) toptag_wp2_tau32=1;
-		    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.60) toptag_wp3_tau32=1;
-		    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.69) toptag_wp4_tau32=1;
+		    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.41) toptag_wp1_tau32=1;
+		    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.48) toptag_wp2_tau32=1;
+		    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.57) toptag_wp3_tau32=1;
+		    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.67) toptag_wp4_tau32=1;
 		    if (topjets->at(i).tau3()/topjets->at(i).tau2()< 0.84) toptag_wp5_tau32=1;
 
 		  
@@ -569,7 +666,7 @@ namespace uhh2examples {
     if(keep && checkphi_pt && pass_trigger) 
       {
       	bool pass_btag = btag_sel->passes(event);
-	//h_btageffAK8->fill(event);
+	//h_btageffAK8->fill(event); 
 
       	if(pass_btag)
       	  {
@@ -580,7 +677,8 @@ namespace uhh2examples {
       	      if (topjetpt > 550)h_aftercuts_1_PT550->fill(event);
 
       	      h_aftercuts_1->fill(event);
-	       
+	      
+
       	      if(toptag_wp1)h_aftercuts_2_wp1->fill(event);
       	      if(toptag_wp2)h_aftercuts_2_wp2->fill(event);
       	      if(toptag_wp3)h_aftercuts_2_wp3->fill(event);
@@ -691,7 +789,7 @@ namespace uhh2examples {
   }
   // as we want to run the ExampleCycleNew directly with AnalysisModuleRunner,
   // make sure the ExampleModule is found by class name. This is ensured by this macro:
-  UHH2_REGISTER_ANALYSIS_MODULE(SelectionModule_sub_post2)
+  UHH2_REGISTER_ANALYSIS_MODULE(SelectionModule_sub_post2_puppi)
 
 }
 

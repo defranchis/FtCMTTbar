@@ -1,6 +1,6 @@
 #include <memory>
 
-#include "UHH2/FtCMTTbar/include/Hists_sub.h"
+#include "UHH2/FtCMTTbar/include/Hists_sub_HTT.h"
 #include "UHH2/core/include/Event.h"
 #include "UHH2/common/include/TopJetIds.h"
 #include "TH1F.h"
@@ -13,7 +13,7 @@ using namespace std;
 using namespace uhh2;
 using namespace uhh2examples;
 
-Hists_sub::Hists_sub(Context & ctx, const string & dirname): Hists(ctx, dirname){
+Hists_sub_HTT::Hists_sub_HTT(Context & ctx, const string & dirname): Hists(ctx, dirname){
   // book all histograms here
   //btag variables
   book<TH1F>("subCSV_b", "combined secondary vertex discriminator of the subjet", 100, 0., 1.);  
@@ -309,12 +309,12 @@ Hists_sub::Hists_sub(Context & ctx, const string & dirname): Hists(ctx, dirname)
   book<TH1F>("weight_none", "weight", 100, 0., 0.1); 
   book<TH1F>("weight_data", "weight", 100, 0., 0.1); 
 
-  book<TH1F>("MassTop_corr", "Top Mass corrected (GeV)", 50, 0., 500.); 
+  book<TH1F>("MassTop_corr", "Top Mass corr (GeV)", 50, 0., 500.); 
   book<TH1F>("MassTop_sub", "Top Mass calculated from subjets (GeV)", 50, 0., 500.);
   book<TH1F>("MassTop_SD", "Top Mass SoftDrop (GeV)", 50, 0., 500.); 
-  book<TH1F>("MassTop_SD_corr", "Top Mass SoftDrop corrected (GeV)", 50, 0., 500.);
+  book<TH1F>("MassTop_SD_corr", "HTT Mass (GeV)", 50, 0., 500.);
   book<TH1F>("prunedmass", "pruned mass (GeV)", 50, 0., 500.);
-  book<TH1F>("MassTop_ungroomed_corr", "Top Mass ungroomed corrected", 50, 0., 500.);
+  book<TH1F>("MassTop_ungroomed_corr", "Top Mass ungroomed corrected (GeV)", 50, 0., 500.);
 
   book<TH1F>("PTTop", "Top PT (GeV)", 25, 0., 2000.);  
 
@@ -334,10 +334,10 @@ Hists_sub::Hists_sub(Context & ctx, const string & dirname): Hists(ctx, dirname)
   book<TH1F>("m13", "m13", 20, 0., 100.);
   book<TH1F>("m23", "m23", 20, 0., 100.);
  
-  book<TH1F>("fRec", "fRec", 50, 0., 1.);
+  book<TH1F>("fRec", "fRec", 25, 0., 1.);
 
   book<TH1F>("HTTmass", "HTTmass", 50, 0., 300.);
-  book<TH1F>("tau32", "#tau_{3)/#tau_{2}", 50, 0., 1.);
+  book<TH1F>("tau32", "#tau_{3}/#tau_{2}", 50, 0., 1.);
   book<TH1F>("tau21", "tau21", 50, 0., 1.);
 
   book<TH1F>("wmass", "wmass", 50, 0., 150.);
@@ -398,18 +398,18 @@ Hists_sub::Hists_sub(Context & ctx, const string & dirname): Hists(ctx, dirname)
 }
 
 template<typename T>
-double m_groomedT(const T & topjet){
+double m_groomedT2(const T & topjet){
   auto subjets = topjet.subjets();
   LorentzVector sum(0,0,0,0);
   for(auto subjet : subjets) sum += subjet.v4();
   if(!sum.isTimelike()) return -1.0;
   else return sum.M();
 }
-double M_groomed(const TopJet & topjet){
-  return m_groomedT<TopJet>(topjet);
+double M_groomed2(const TopJet & topjet){
+  return m_groomedT2<TopJet>(topjet);
 }
 
-void Hists_sub::fill(const Event & event){
+void Hists_sub_HTT::fill(const Event & event){
   // fill the histograms. Please note the comments in the header file:
   // 'hist' is used here a lot for simplicity, but it will be rather
   // slow when you have many histograms; therefore, better
@@ -497,7 +497,7 @@ void Hists_sub::fill(const Event & event){
     hist("PTTop")->Fill(topjet.v4().pt(), weight);
     hist("PrimaryVertex")->Fill(event.pvs->size(), weight);
     hist("Weight")->Fill(weight);
-    hist("MassTop_sub")->Fill(M_groomed(topjet),weight);
+    hist("MassTop_sub")->Fill(M_groomed2(topjet),weight);
     hist("MassTop_SD")->Fill(topjet.softdropmass(),weight);
     hist("prunedmass")->Fill(topjet.prunedmass(),weight);
     hist("MassTop_SD_corr")->Fill(subjet_sum.M()*1/topjet.JEC_factor_raw(),weight);
@@ -862,4 +862,4 @@ void Hists_sub::fill(const Event & event){
   }  //loop over topjets 
 }
 
-Hists_sub::~Hists_sub(){}
+Hists_sub_HTT::~Hists_sub_HTT(){}
