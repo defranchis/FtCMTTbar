@@ -27,7 +27,7 @@
     <Library Name="libSUHH2FtCMTTbar"/>
     <Package Name="SUHH2FtCMTTbar.par" />
 
-   <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X/post_TT_SF/" PostFix="" TargetLumi="2690.707225445">
+   <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X/post_TT_SF_CHS_170/" PostFix="" TargetLumi="2690.707225445">
    <!--Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/schumas/proof/" ProofNodes="10" OutputDirectory="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X/post/" PostFix="" TargetLumi="2628.85"-->
   
 	 <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="Data1_2" Cacheable="True">
@@ -41,7 +41,7 @@
             <OutputTree Name="AnalysisTree" />
         </InputData> 
 
-         <InputData Lumi="100286.301" NEventsMax="-1" Type="MC" Version="TTbar" Cacheable="True">
+         <InputData Lumi="100286.304" NEventsMax="-1" Type="MC" Version="TTbar" Cacheable="True">
             <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X/uhh2.AnalysisModuleRunner.MC.TTbar.root" Lumi="0.0"/>
             <InputTree Name="AnalysisTree" /> 
             <OutputTree Name="AnalysisTree" />
