@@ -40,7 +40,7 @@
     <Package Name="SUHH2FtCMTTbar.par" />
 
    <!--Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="../../../../../../FileStore/Preselections_76X/" PostFix="" TargetLumi="2628.85"-->
-   <Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/schumas/proof/" ProofNodes="12" OutputDirectory="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X/" PostFix="" TargetLumi="2628.85">
+   <Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/schumas/proof/" ProofNodes="12" OutputDirectory="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_puppi_debug/" PostFix="" TargetLumi="2628.85">
   
 	 <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="Data1_2" Cacheable="True">
             &Data1;
@@ -160,13 +160,13 @@
             <Item Name="JetCollection" Value="slimmedJets" />
             <Item Name="METName" Value="slimmedMETs" />  
             <Item Name="GenJetCollection" Value="slimmedGenJets" />
-            <Item Name="TopJetCollection" Value="slimmedJetsAK8_SoftDrop" />
+            <Item Name="TopJetCollection" Value="slimmedJetsAK8" />
             <Item Name="GenParticleCollection" Value="GenParticles" /> 
             <!--Item Name="GenJetCollection" Value="slimmedGenJets" /--> 
             
 	    <!--Item Name="additionalBranches" Value="patJetsCa15CHSJetsSoftDropPacked_daughters" /--> 
 	    <!--Item Name="additionalBranches" Value="patJetsCa15PuppiJetsSoftDropPacked_daughters" /--> 
-	    <!--Item Name="additionalBranches" Value="slimmedJetsAK8_SoftDrop" /--> 
+	    <!--Item Name="additionalBranches" Value="slimmedJetsAK8"/--> 
 
 	    <Item Name="pileup_directory_data" Value="/nfs/dust/cms/user/marchesi/PUData/25ns_v2/MyDataPileupHistogram.root"/>
 	    <Item Name="pileup_directory_25ns" Value="/nfs/dust/cms/user/nowatsd/PUHistogram-25ns-v2/Pileup.MC.TTbar.root"/>
