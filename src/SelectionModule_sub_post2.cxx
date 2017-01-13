@@ -193,7 +193,7 @@ namespace uhh2examples {
     
 
     jet_kinematic = PtEtaCut(30.0, 2.4);
-    topjet_kinematic = PtEtaCut(400.0,2.4);
+    topjet_kinematic = PtEtaCut(170.0,2.4);
     //muid = AndId<Muon>(MuonIDTight(), PtEtaCut(50.0, 2.1),MuonIso(0.12));
     muid = AndId<Muon>(MuonIDTight(), PtEtaCut(50.0, 2.1));
 
@@ -224,10 +224,10 @@ namespace uhh2examples {
     // make the selection, step-by-step. Note that in most cases, no explicit
     // object id is passed, as the cleaners have removed the objects not passing the id already.
 
-    if (version == "TTbar") {
-      v_pre_modules.emplace_back(new TTbarGenProducer(ctx, "ttbargen", true));
-      v_pre_modules.emplace_back(new TopPtWeight(ctx, "ttbargen", 0.156, -0.00137, "weight_ttbar", true));
-    }
+     if (version == "TTbar") {
+       v_pre_modules.emplace_back(new TTbarGenProducer(ctx, "ttbargen", true));
+       v_pre_modules.emplace_back(new TopPtWeight(ctx, "ttbargen", 0.156, -0.00137, "weight_ttbar", true));
+     }
     //v_hists.emplace_back(new TopPtWeightHist(ctx, "TTbarReweight", "weight_ttbar"));
  
 
@@ -436,7 +436,7 @@ namespace uhh2examples {
 	double deltaphi = deltaPhi(topjet,muons->at(0));
 	
 	double pi = 3.14159265359;
-	if(deltaphi>2*pi/3 &&(topjets->at(i).pt()>400.)&&(fabs(topjets->at(i).eta())<2.4)) 
+	if(deltaphi>2*pi/3 &&(topjets->at(i).pt()>170.)&&(fabs(topjets->at(i).eta())<2.4)) 
 	  {
 
 	    checkphi_pt = 1;

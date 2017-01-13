@@ -205,14 +205,14 @@ namespace uhh2examples {
     if (type == "DATA"){
       jet_corrector.reset(new JetCorrector(ctx, JERFiles::Fall15_25ns_L123_AK4PFchs_DATA));
       jetlepton_cleaner.reset(new JetLeptonCleaner(ctx, JERFiles::Fall15_25ns_L123_AK4PFchs_DATA));
-      topjet_corrector.reset(new TopJetCorrector(ctx, JERFiles::Fall15_25ns_L123_AK8PFchs_DATA));
-      topjet23_corrector.reset(new TopJetCorrector(ctx, JERFiles::Fall15_25ns_L23_AK8PFchs_DATA));
+      topjet_corrector.reset(new TopJetCorrector(ctx, JERFiles::Fall15_25ns_L123_AK8PFPuppi_DATA));
+      topjet23_corrector.reset(new TopJetCorrector(ctx, JERFiles::Fall15_25ns_L23_AK8PFPuppi_DATA));
     }
     else {
       jet_corrector.reset(new JetCorrector(ctx, JERFiles::Fall15_25ns_L123_AK4PFchs_MC));
       jetlepton_cleaner.reset(new JetLeptonCleaner(ctx, JERFiles::Fall15_25ns_L123_AK4PFchs_MC));
-      topjet_corrector.reset(new TopJetCorrector(ctx, JERFiles::Fall15_25ns_L123_AK8PFchs_MC));
-      topjet23_corrector.reset(new TopJetCorrector(ctx, JERFiles::Fall15_25ns_L23_AK8PFchs_MC));
+      topjet_corrector.reset(new TopJetCorrector(ctx, JERFiles::Fall15_25ns_L123_AK8PFPuppi_MC));
+      topjet23_corrector.reset(new TopJetCorrector(ctx, JERFiles::Fall15_25ns_L23_AK8PFPuppi_MC));
     }
     muo_tight_noniso_SF.reset(new MCMuonScaleFactor(ctx,"/nfs/dust/cms/user/schumas/sframev6/CMSSW_7_6_3/src/UHH2/common/data/MuonID_Z_RunCD_Reco76X_Feb15.root","MC_NUM_TightIDandIPCut_DEN_genTracks_PAR_pt_spliteta_bin1",1, "tightID"));
     //cleanermodules.emplace_back(new TopJetCleaner(ctx, HEPTopTag(150)));
@@ -227,7 +227,7 @@ namespace uhh2examples {
       v_pre_modules.emplace_back(new TTbarGenProducer(ctx, "ttbargen", true));
       v_pre_modules.emplace_back(new TopPtWeight(ctx, "ttbargen", 0.156, -0.00137, "weight_ttbar", true));
     }
-    //v_hists.emplace_back(new TopPtWeightHist(ctx, "TTbarReweight", "weight_ttbar"));
+    v_hists.emplace_back(new TopPtWeightHist(ctx, "TTbarReweight", "weight_ttbar"));
  
 
 
@@ -374,7 +374,7 @@ namespace uhh2examples {
 
     jetlepton_cleaner->process(event);
 
-    //topjet_corrector->process(event);
+    topjet_corrector->process(event);
     //  topjetER_smearer->process(event);
 
     topjetlepton_cleaner->process(event);
@@ -458,7 +458,8 @@ namespace uhh2examples {
 		   
 
 		    double masstop = subjet_sum.M()*1/topjets->at(i).JEC_factor_raw();
-		    
+		    //double masstop = subjet_sum.M();
+
 		    //std::cout << masstop << std::endl;
 		    //ScaleFactors
 
