@@ -27,10 +27,10 @@
     <Library Name="libSUHH2FtCMTTbar"/>
     <Package Name="SUHH2FtCMTTbar.par" />
 
-   <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X/post_TT_SF_puppi/" PostFix="" TargetLumi="2690.707225445">
+   <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X/post_TT_SF_puppi_2/" PostFix="" TargetLumi="2690.707225445">
    <!--Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/schumas/proof/" ProofNodes="10" OutputDirectory="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X/post/" PostFix="" TargetLumi="2628.85"-->
   
-	 <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="Data1_2" Cacheable="True">
+	 <!--InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="Data1_2" Cacheable="True">
             <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_TT_puppi/uhh2.AnalysisModuleRunner.DATA.Data1_2.root" Lumi="0.0"/>
             <InputTree Name="AnalysisTree" /> 
             <OutputTree Name="AnalysisTree" />
@@ -41,7 +41,7 @@
             <OutputTree Name="AnalysisTree" />
         </InputData> 
 
-         <InputData Lumi="100286.301" NEventsMax="-1" Type="MC" Version="TTbar" Cacheable="True">
+         <InputData Lumi="99641.113" NEventsMax="-1" Type="MC" Version="TTbar" Cacheable="True">
             <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_TT_puppi/uhh2.AnalysisModuleRunner.MC.TTbar.root" Lumi="0.0"/>
             <InputTree Name="AnalysisTree" /> 
             <OutputTree Name="AnalysisTree" />
@@ -72,48 +72,43 @@
             <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_TT_puppi/uhh2.AnalysisModuleRunner.MC.ST_tW_top.root" Lumi="0.0"/>
             <InputTree Name="AnalysisTree" /> 
             <OutputTree Name="AnalysisTree" />
-        </InputData>
+        </InputData-->
          <InputData Lumi="6264.6" NEventsMax="-1" Type="MC" Version="WJets1" Cacheable="True">
-            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_TT_puppi/uhh2.AnalysisModuleRunner.MC.WJets1.root" Lumi="0.0"/>
+            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_TT_puppi_debug/uhh2.AnalysisModuleRunner.MC.WJets1.root" Lumi="0.0"/>
             <InputTree Name="AnalysisTree" /> 
             <OutputTree Name="AnalysisTree" />
         </InputData>
          <InputData Lumi="10958.6" NEventsMax="-1" Type="MC" Version="WJets2" Cacheable="True">
-            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_TT_puppi/uhh2.AnalysisModuleRunner.MC.WJets2.root" Lumi="0.0"/>
+            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_TT_puppi_debug/uhh2.AnalysisModuleRunner.MC.WJets2.root" Lumi="0.0"/>
             <InputTree Name="AnalysisTree" /> 
             <OutputTree Name="AnalysisTree" />
         </InputData>
          <InputData Lumi="32842.6" NEventsMax="-1" Type="MC" Version="WJets3" Cacheable="True">
-            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_TT_puppi/uhh2.AnalysisModuleRunner.MC.WJets3.root" Lumi="0.0"/>                        
+            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_TT_puppi_debug/uhh2.AnalysisModuleRunner.MC.WJets3.root" Lumi="0.0"/>                        
             <InputTree Name="AnalysisTree" /> 
             <OutputTree Name="AnalysisTree" />
         </InputData>
         <InputData Lumi="258411.3" NEventsMax="-1" Type="MC" Version="WJets4" Cacheable="True">
-            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_TT_puppi/uhh2.AnalysisModuleRunner.MC.WJets4.root" Lumi="0.0"/>     
+            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_TT_puppi_debug/uhh2.AnalysisModuleRunner.MC.WJets4.root" Lumi="0.0"/>     
             <InputTree Name="AnalysisTree" /> 
             <OutputTree Name="AnalysisTree" />
         </InputData>
          <InputData Lumi="235611.1" NEventsMax="-1" Type="MC" Version="WJets5" Cacheable="True">
-            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_TT_puppi/uhh2.AnalysisModuleRunner.MC.WJets5.root" Lumi="0.0"/>
+            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_TT_puppi_debug/uhh2.AnalysisModuleRunner.MC.WJets5.root" Lumi="0.0"/>
             <InputTree Name="AnalysisTree" /> 
             <OutputTree Name="AnalysisTree" />
         </InputData>
          <InputData Lumi="153125.1" NEventsMax="-1" Type="MC" Version="WJets6" Cacheable="True">
-            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_TT_puppi/uhh2.AnalysisModuleRunner.MC.WJets6.root" Lumi="0.0"/>
+            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_TT_puppi_debug/uhh2.AnalysisModuleRunner.MC.WJets6.root" Lumi="0.0"/>
             <InputTree Name="AnalysisTree" /> 
             <OutputTree Name="AnalysisTree" />
         </InputData>
          <InputData Lumi="96823886.8" NEventsMax="-1" Type="MC" Version="WJets7" Cacheable="True">
-            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_TT_puppi/uhh2.AnalysisModuleRunner.MC.WJets7.root" Lumi="0.0"/>
+            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_TT_puppi_debug/uhh2.AnalysisModuleRunner.MC.WJets7.root" Lumi="0.0"/>
             <InputTree Name="AnalysisTree" /> 
             <OutputTree Name="AnalysisTree" />
         </InputData>
-         <!--InputData Lumi="60656220" NEventsMax="-1" Type="MC" Version="WJets_incl" Cacheable="True">
-            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X/uhh2.AnalysisModuleRunner.MC.WJets_incl.root" Lumi="0.0"/>
-            <InputTree Name="AnalysisTree" /> 
-            <OutputTree Name="AnalysisTree" />
-        </InputData-->
-         <InputData Lumi="612.6385" NEventsMax="-1" Type="MC" Version="QCD1" Cacheable="True">
+         <!--InputData Lumi="612.6385" NEventsMax="-1" Type="MC" Version="QCD1" Cacheable="True">
           <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_TT_puppi/uhh2.AnalysisModuleRunner.MC.QCD1.root" Lumi="0.0"/>
             <InputTree Name="AnalysisTree" /> 
             <OutputTree Name="AnalysisTree" />
@@ -137,7 +132,7 @@
              <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_TT_puppi/uhh2.AnalysisModuleRunner.MC.QCD5.root" Lumi="0.0"/>         
             <InputTree Name="AnalysisTree" /> 
             <OutputTree Name="AnalysisTree" />
-        </InputData>
+        </InputData-->
 
 
         <UserConfig>
@@ -157,7 +152,7 @@
 
 	    <Item Name="pileup_directory_data" Value="/nfs/dust/cms/user/schumas/sframev5/CMSSW_7_6_3/src/UHH2/common/data/MyDataPileupHistogram_Silver.root"/>
 	    <Item Name="pileup_directory_25ns" Value="/nfs/dust/cms/user/schumas/sframev5/CMSSW_7_6_3/src/UHH2/common/data/MyMCPileupHistogram.root"/>
-	    <Item Name="MCBtagEfficiencies" Value="/nfs/dust/cms/user/schumas/sframev6/CMSSW_7_6_3/src/UHH2/scripts/BTagMCEfficiencyHists.root" />
+	    <Item Name="MCBtagEfficiencies" Value="/nfs/dust/cms/user/schumas/sframev6/CMSSW_7_6_3/src/UHH2/scripts/BTagMCEfficiencyHists_puppi.root" />
 	    <Item Name="BTagCalibration" Value="/nfs/dust/cms/user/schumas/sframev6/CMSSW_7_6_3/src/UHH2/common/data/CSVv2.csv" />
 
 
