@@ -309,14 +309,14 @@ Hists_sub::Hists_sub(Context & ctx, const string & dirname): Hists(ctx, dirname)
   book<TH1F>("weight_none", "weight", 100, 0., 0.1); 
   book<TH1F>("weight_data", "weight", 100, 0., 0.1); 
 
-  book<TH1F>("MassTop_corr", "Top Mass corrected (GeV)", 50, 0., 500.); 
-  book<TH1F>("MassTop_sub", "Top Mass calculated from subjets (GeV)", 50, 0., 500.);
-  book<TH1F>("MassTop_SD", "Top Mass SoftDrop (GeV)", 50, 0., 500.); 
-  book<TH1F>("MassTop_SD_corr", "Top Mass SoftDrop corrected (GeV)", 50, 0., 500.);
-  book<TH1F>("prunedmass", "pruned mass (GeV)", 50, 0., 500.);
-  book<TH1F>("MassTop_ungroomed_corr", "Top Mass ungroomed corrected", 50, 0., 500.);
+  book<TH1F>("MassTop_corr", "Top Mass corrected (GeV)", 40, 0., 300.); 
+  book<TH1F>("MassTop_sub", "Top Mass calculated from subjets (GeV)", 40, 0., 300.);
+  book<TH1F>("MassTop_SD", "Top Mass SoftDrop (GeV)", 40, 0., 300.); 
+  book<TH1F>("MassTop_SD_corr", "Mass (GeV)", 40, 0., 300.);
+  book<TH1F>("prunedmass", "pruned mass (GeV)", 40, 0., 300.);
+  book<TH1F>("MassTop_ungroomed_corr", "Top Mass ungroomed corrected", 40, 0., 300.);
 
-  book<TH1F>("PTTop", "Top PT (GeV)", 25, 0., 2000.);  
+  book<TH1F>("PTTop", "Top p_{T} (GeV)", 19, 400., 1800.);  
 
   book<TH1F>("subVertexNvtx_b", "N of secondary vertex", 6, 0., 6.);  
   book<TH1F>("subVertexNvtx_c", "N of secondary vertex", 6, 0., 6.); 
@@ -337,7 +337,7 @@ Hists_sub::Hists_sub(Context & ctx, const string & dirname): Hists(ctx, dirname)
   book<TH1F>("fRec", "fRec", 50, 0., 1.);
 
   book<TH1F>("HTTmass", "HTTmass", 50, 0., 300.);
-  book<TH1F>("tau32", "#tau_{3)/#tau_{2}", 50, 0., 1.);
+  book<TH1F>("tau32", "#tau_{3}/#tau_{2} (ungroomed)", 50, 0., 1.);
   book<TH1F>("tau21", "tau21", 50, 0., 1.);
 
   book<TH1F>("wmass", "wmass", 50, 0., 150.);
@@ -453,7 +453,7 @@ void Hists_sub::fill(const Event & event){
     TopJet topjet=topjets->at(n);
     double deltaphi=deltaPhi(topjet,muons->at(0));
     double pi = 3.14159265359;
-    if(!((deltaphi>(2*pi/3))&&(topjet.pt()>150.)&&(fabs(topjet.eta())<2.4))) continue;
+    if(!((deltaphi>(2*pi/3))&&(topjet.pt()>400)&&(fabs(topjet.eta())<2.4))) continue;
 
 
     auto subjets=topjet.subjets();
@@ -498,7 +498,7 @@ void Hists_sub::fill(const Event & event){
     hist("PrimaryVertex")->Fill(event.pvs->size(), weight);
     hist("Weight")->Fill(weight);
     hist("MassTop_sub")->Fill(M_groomed(topjet),weight);
-    hist("MassTop_SD")->Fill(topjet.softdropmass(),weight);
+    hist("MassTop_SD")->Fill(subjet_sum.M(),weight);
     hist("prunedmass")->Fill(topjet.prunedmass(),weight);
     hist("MassTop_SD_corr")->Fill(subjet_sum.M()*1/topjet.JEC_factor_raw(),weight);
     hist("MassTop_ungroomed_corr")->Fill(topjet.v4().M()*1/topjet.JEC_factor_raw(),weight);
