@@ -312,7 +312,7 @@ Hists_sub_HTT::Hists_sub_HTT(Context & ctx, const string & dirname): Hists(ctx, 
   book<TH1F>("MassTop_corr", "Top Mass corr (GeV)", 50, 0., 500.); 
   book<TH1F>("MassTop_sub", "Top Mass calculated from subjets (GeV)", 50, 0., 500.);
   book<TH1F>("MassTop_SD", "Top Mass SoftDrop (GeV)", 50, 0., 500.); 
-  book<TH1F>("MassTop_SD_corr", "HTT Mass (GeV)", 50, 0., 500.);
+  book<TH1F>("MassTop_SD_corr", "HTT V2 Mass (GeV)", 40, 0., 300.);
   book<TH1F>("prunedmass", "pruned mass (GeV)", 50, 0., 500.);
   book<TH1F>("MassTop_ungroomed_corr", "Top Mass ungroomed corrected (GeV)", 50, 0., 500.);
 
@@ -334,10 +334,11 @@ Hists_sub_HTT::Hists_sub_HTT(Context & ctx, const string & dirname): Hists(ctx, 
   book<TH1F>("m13", "m13", 20, 0., 100.);
   book<TH1F>("m23", "m23", 20, 0., 100.);
  
-  book<TH1F>("fRec", "fRec", 25, 0., 1.);
+  book<TH1F>("fRec", "f_{Rec}", 25, 0., 1.);
 
-  book<TH1F>("HTTmass", "HTTmass", 50, 0., 300.);
-  book<TH1F>("tau32", "#tau_{3}/#tau_{2}", 50, 0., 1.);
+  book<TH1F>("HTTmass", "HTTmass", 40, 0., 300.);
+  book<TH1F>("HTTmass_corr", "HTTmass_corr", 40, 0., 300.);
+  book<TH1F>("tau32", "#tau_{3}/#tau_{2} (Softdrop)", 50, 0., 1.);
   book<TH1F>("tau21", "tau21", 50, 0., 1.);
 
   book<TH1F>("wmass", "wmass", 50, 0., 150.);
@@ -349,7 +350,9 @@ Hists_sub_HTT::Hists_sub_HTT(Context & ctx, const string & dirname): Hists(ctx, 
   book<TH1F>("tau2", "tau2", 50, 0., 1.);
 
   book<TH1F>("subCSV", "CSV discriminator", 100, 0., 1.);  
-
+  book<TH1F>("subCSV_minus", "CSV discriminator", 100, -12., 12.); 
+  book<TH1F>("subCSV_highest", "highest CSV discriminator", 100, 0., 1.); 
+  book<TH1F>("subCSV_topjet", "CSV discriminator Top Jet", 100, 0., 1.);
 
   book<TH1F>("subjetPT_b", "PT of subjet with highest CSV", 100, 0., 1500.);
   book<TH1F>("subjetPT_c", "PT of subjet with highest CSV", 100, 0., 1500.);
@@ -509,6 +512,7 @@ void Hists_sub_HTT::fill(const Event & event){
 
     if (topjet.has_tag(topjet.tagname2tag("fRec"))) hist("fRec")->Fill(topjet.get_tag(topjet.tagname2tag("fRec")),weight);
     if (topjet.has_tag(topjet.tagname2tag("mass"))) hist("HTTmass")->Fill(topjet.get_tag(topjet.tagname2tag("mass")),weight);
+    if (topjet.has_tag(topjet.tagname2tag("mass"))) hist("HTTmass_corr")->Fill(topjet.get_tag(topjet.tagname2tag("mass"))*1/topjet.JEC_factor_raw(),weight);
 
     hist("tau32")->Fill(topjet.tau3()/topjet.tau2(), weight);
     hist("tau21")->Fill(topjet.tau2()/topjet.tau1(), weight);
@@ -519,7 +523,7 @@ void Hists_sub_HTT::fill(const Event & event){
     hist("eta")->Fill(topjet.eta(), weight);
     hist("rapidity")->Fill(topjet.v4().Rapidity(), weight);
    
-    hist("subCSV")->Fill(topjet.btag_combinedSecondaryVertex(),weight);
+    hist("subCSV_topjet")->Fill(topjet.btag_combinedSecondaryVertex(),weight);
     hist("BoostedDoubleSecondaryVertexAK8")->Fill(topjet.btag_BoostedDoubleSecondaryVertexAK8(),weight);
     hist("BoostedDoubleSecondaryVertexAK8_neg")->Fill(topjet.btag_BoostedDoubleSecondaryVertexAK8(),weight);
 
@@ -589,9 +593,13 @@ void Hists_sub_HTT::fill(const Event & event){
 	flavor = subjet.hadronFlavor();}
       if (subjet.btag_combinedSecondaryVertex()>highestCSV) {highestCSV=subjet.btag_combinedSecondaryVertex();
 	PT = subjet.v4().pt();
-        flavor = subjet.hadronFlavor();}
+        flavor = subjet.hadronFlavor();
+	hist("subCSV_highest")->Fill(subjet.btag_combinedSecondaryVertex(),weight);}
+      
       
       hist("subCSV")->Fill(subjet.btag_combinedSecondaryVertex(),weight);
+
+      hist("subCSV_minus")->Fill(subjet.btag_combinedSecondaryVertex(),weight);
 
       //Flavours
       //b 
