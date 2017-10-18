@@ -19,14 +19,21 @@
 
 vector<TString> Files_MC(vector<TString> list)
 {
-  list.push_back("uhh2.AnalysisModuleRunner.MC.TTbar.root");
-  list.push_back("uhh2.AnalysisModuleRunner.MC.DYJetsToLL_M-10to50.root");
-  list.push_back("uhh2.AnalysisModuleRunner.MC.DYJetsToLL_M-50.root");
-  list.push_back("uhh2.AnalysisModuleRunner.MC.ST_t-channel.root"); 
-  list.push_back("uhh2.AnalysisModuleRunner.MC.ST_tW_antitop.root");
-  list.push_back("uhh2.AnalysisModuleRunner.MC.ST_tW_top.root");
-  list.push_back("uhh2.AnalysisModuleRunner.MC.WJets.root");
-  list.push_back("uhh2.AnalysisModuleRunner.MC.QCD.root");
+    // list.push_back("uhh2.AnalysisModuleRunner.MC.TTbar.root"); // m=0
+    // list.push_back("uhh2.AnalysisModuleRunner.MC.DYJetsToLL_M-10to50.root"); //m=1
+    // list.push_back("uhh2.AnalysisModuleRunner.MC.DYJetsToLL_M-50.root"); //m=2
+    // list.push_back("uhh2.AnalysisModuleRunner.MC.ST_t-channel.root"); //m=3
+    // list.push_back("uhh2.AnalysisModuleRunner.MC.ST_tW_antitop.root"); //m=4
+    // list.push_back("uhh2.AnalysisModuleRunner.MC.ST_tW_top.root"); //m=5
+    // list.push_back("uhh2.AnalysisModuleRunner.MC.WJets.root"); //m=6
+    // list.push_back("uhh2.AnalysisModuleRunner.MC.QCD.root"); //m=7
+
+    list.push_back("uhh2.AnalysisModuleRunner.MC.TTbar.root"); // m=0
+    list.push_back("uhh2.AnalysisModuleRunner.MC.DYJetsToLL.root"); //m=1
+    list.push_back("uhh2.AnalysisModuleRunner.MC.ST.root"); //m=2
+    list.push_back("uhh2.AnalysisModuleRunner.MC.WJets.root"); //m=3
+
+
   return list;
 }
 
@@ -37,7 +44,7 @@ vector<TString> Files_BKG(vector<TString> list)
   list.push_back("DY");
   list.push_back("ST"); 
   list.push_back("WJets");
-  list.push_back("QCD");
+  // list.push_back("QCD");
   return list;
 }
 
@@ -110,8 +117,8 @@ void CalSF()
       TH1F *h_ST_50_3;
       TH1F *h_WJets_50_2;
       TH1F *h_WJets_50_3;
-      TH1F *h_QCD_50_2;
-      TH1F *h_QCD_50_3;
+      // TH1F *h_QCD_50_2;
+      // TH1F *h_QCD_50_3;
       TH1F *h_data_3;
       TH1F *h_data_2;
       TH1 *h_data_3_new;
@@ -134,7 +141,7 @@ void CalSF()
       TH1 *h_SF_new_err_DY;
       TH1 *h_SF_new_err_ST;
       TH1 *h_SF_new_err_WJets;
-      TH1 *h_SF_new_err_QCD;
+      // TH1 *h_SF_new_err_QCD;
       TH1F *h_data_eff= new TH1F("mc_data", "mc_data",100, 0., 2000.);
       TH1F *h_data_err= new TH1F("mc_data", "mc_data",100, 0., 2000.);
       TH1F *h_mc_eff= new TH1F("mc_eff", "mc_eff",100, 0., 2000.);      
@@ -223,60 +230,62 @@ void CalSF()
       double_t err_DY = 0.;
       double_t err_ST = 0.;
       double_t err_WJets = 0.;
-      double_t err_QCD = 0.;
+      // double_t err_QCD = 0.;
       double_t system_uncer = 0.;
 		       
       for(unsigned int m = 0; m < files_mc.size(); m++)
 	{
 	  TFile *file= new TFile(files_mc[m]);
 	  file->cd();
-	  if (m == 1 || m == 2) 
-	    { 
-	      if (m == 1){
-		gDirectory->GetObject("AfterCuts_1/PTTop",h_DY_50_2 );
-		gDirectory->GetObject(wp_2[n]+"/PTTop",h_DY_50_3 );
-	      }
-	      if (m == 2){
-		TH1F *h_tmp_2; gDirectory->GetObject("AfterCuts_1/PTTop",h_DY_50_2 );
-		TH1F *h_tmp_3; gDirectory->GetObject(wp_2[n]+"/PTTop",h_DY_50_3 );
-		h_mc_2->Add(h_DY_50_2);
-		h_mc_3->Add(h_DY_50_3);
-		h_DY_50_2->Scale(0.5);
-		h_DY_50_3->Scale(0.5);
-	      }
+	  // if (m == 1 || m == 2) 
+	  //   { 
+          if (m == 1){
+              gDirectory->GetObject("AfterCuts_1/PTTop",h_DY_50_2 );
+              gDirectory->GetObject(wp_2[n]+"/PTTop",h_DY_50_3 );
+          }
+	    //   if (m == 2){
+	    //     TH1F *h_tmp_2; gDirectory->GetObject("AfterCuts_1/PTTop",h_DY_50_2 );
+	    //     TH1F *h_tmp_3; gDirectory->GetObject(wp_2[n]+"/PTTop",h_DY_50_3 );
+	    //     h_mc_2->Add(h_DY_50_2);
+	    //     h_mc_3->Add(h_DY_50_3);
+	    //     h_DY_50_2->Scale(0.5);
+	    //     h_DY_50_3->Scale(0.5);
+	    //   }
    
-	    }
-	  if (m == 3 || m == 4 || m == 5) 
-	    { 
-	      if (m == 3){
+	    // }
+	  // if (m == 3 || m == 4 || m == 5) 
+	  //   { 
+	      // if (m == 3){
+	      if (m == 2){
 		gDirectory->GetObject("AfterCuts_1/PTTop",h_ST_50_2 );
 		gDirectory->GetObject(wp_2[n]+"/PTTop",h_ST_50_3 );
 	      }
-	      if (m == 4 || m == 5){
-		TH1F *h_tmp_2; gDirectory->GetObject("AfterCuts_1/PTTop",h_tmp_2 );
-		TH1F *h_tmp_3; gDirectory->GetObject(wp_2[n]+"/PTTop",h_tmp_3 );
-		h_mc_2->Add(h_ST_50_2);
-		h_mc_3->Add(h_ST_50_3);
-		if (m == 5) {
-		  h_ST_50_2->Scale(0.5);
-		  h_ST_50_3->Scale(0.5);
-		}
-	      }
-	    }
-	  if (m == 6) 
-	    { 
-		gDirectory->GetObject("AfterCuts_1/PTTop",h_WJets_50_2 );
-		gDirectory->GetObject(wp_2[n]+"/PTTop",h_WJets_50_3 );
-		h_WJets_50_2->Scale(0.5);
-		h_WJets_50_3->Scale(0.5);
-	    }
-	  if (m == 7) 
-	    { 
-		gDirectory->GetObject("AfterCuts_1/PTTop",h_QCD_50_2 );
-		gDirectory->GetObject(wp_2[n]+"/PTTop",h_QCD_50_3 );
-		h_WJets_50_2->Scale(0.5);
-		h_WJets_50_3->Scale(0.5);
-	    }
+	    //   if (m == 4 || m == 5){
+	    //     TH1F *h_tmp_2; gDirectory->GetObject("AfterCuts_1/PTTop",h_tmp_2 );
+	    //     TH1F *h_tmp_3; gDirectory->GetObject(wp_2[n]+"/PTTop",h_tmp_3 );
+	    //     h_mc_2->Add(h_ST_50_2);
+	    //     h_mc_3->Add(h_ST_50_3);
+	    //     if (m == 5) {
+	    //       h_ST_50_2->Scale(0.5);
+	    //       h_ST_50_3->Scale(0.5);
+	    //     }
+	    //   }
+	    // }
+	  // if (m == 6) 
+              if (m == 3)
+              { 
+                  gDirectory->GetObject("AfterCuts_1/PTTop",h_WJets_50_2 );
+                  gDirectory->GetObject(wp_2[n]+"/PTTop",h_WJets_50_3 );
+                  h_WJets_50_2->Scale(0.5);
+                  h_WJets_50_3->Scale(0.5);
+              }
+            //   if (m == 7) 
+	    // { 
+	    //     gDirectory->GetObject("AfterCuts_1/PTTop",h_QCD_50_2 );
+	    //     gDirectory->GetObject(wp_2[n]+"/PTTop",h_QCD_50_3 );
+	    //     h_WJets_50_2->Scale(0.5);
+	    //     h_WJets_50_3->Scale(0.5);
+	    // }
 	 
 	}
       TH1F *h_data_2_err_DY = (TH1F*)h_data_2->Clone("h_data_2_err_DY");
@@ -291,10 +300,10 @@ void CalSF()
       TH1F *h_data_3_err_WJets = (TH1F*)h_data_3->Clone("h_data_3_err_WJets");
       h_data_2_err_WJets->Add(h_WJets_50_2, 1);
       h_data_3_err_WJets->Add(h_WJets_50_3, 1);
-      TH1F *h_data_2_err_QCD = (TH1F*)h_data_2->Clone("h_data_2_err_QCD");
-      TH1F *h_data_3_err_QCD = (TH1F*)h_data_3->Clone("h_data_3_err_QCD");
-      h_data_2_err_QCD->Add(h_QCD_50_2, 1);
-      h_data_3_err_QCD->Add(h_QCD_50_3, 1);
+      // TH1F *h_data_2_err_QCD = (TH1F*)h_data_2->Clone("h_data_2_err_QCD");
+      // TH1F *h_data_3_err_QCD = (TH1F*)h_data_3->Clone("h_data_3_err_QCD");
+      // h_data_2_err_QCD->Add(h_QCD_50_2, 1);
+      // h_data_3_err_QCD->Add(h_QCD_50_3, 1);
 
       h_data_2_new_err = h_data_2_err_DY->Rebin(1,"h_data_2_new_err_DY",xbins2);
       h_data_3_new_err = h_data_3_err_DY->Rebin(1,"h_data_3_new_err_DY",xbins2);
@@ -321,16 +330,16 @@ void CalSF()
       h_data_eff_new_err->Divide(h_data_3_new_err,h_data_2_new_err,1,1,"b");
       h_SF_new_err_WJets->Divide(h_data_eff_new_err, h_mc_eff_new2,1,1,"");
 
-      h_data_2_new_err->Reset();
-      h_data_3_new_err->Reset();
-      h_data_eff_new_err->Reset();
-      h_data_2_new_err = h_data_2_err_QCD->Rebin(1,"h_data_2_new_err_QCD",xbins2);
-      h_data_3_new_err = h_data_3_err_QCD->Rebin(1,"h_data_3_new_err_QCD",xbins2);
-      h_SF_new_err_QCD= h_SF->Rebin(1,"h_SF_new_err_QCD",xbins2);
-      h_data_eff_new_err->Divide(h_data_3_new_err,h_data_2_new_err,1,1,"b");
-      h_SF_new_err_QCD->Divide(h_data_eff_new_err, h_mc_eff_new2,1,1,"");
+      // h_data_2_new_err->Reset();
+      // h_data_3_new_err->Reset();
+      // h_data_eff_new_err->Reset();
+      // h_data_2_new_err = h_data_2_err_QCD->Rebin(1,"h_data_2_new_err_QCD",xbins2);
+      // h_data_3_new_err = h_data_3_err_QCD->Rebin(1,"h_data_3_new_err_QCD",xbins2);
+      // h_SF_new_err_QCD= h_SF->Rebin(1,"h_SF_new_err_QCD",xbins2);
+      // h_data_eff_new_err->Divide(h_data_3_new_err,h_data_2_new_err,1,1,"b");
+      // h_SF_new_err_QCD->Divide(h_data_eff_new_err, h_mc_eff_new2,1,1,"");
 
-      system_uncer = sqrt(TMath::Power(h_SF_new2->Integral() - h_SF_new_err_DY->Integral(), 2)+TMath::Power(h_SF_new2->Integral() - h_SF_new_err_ST->Integral(), 2)+TMath::Power(h_SF_new2->Integral() - h_SF_new_err_WJets->Integral(), 2)+TMath::Power(h_SF_new2->Integral() - h_SF_new_err_QCD->Integral(), 2));
+      system_uncer = sqrt(TMath::Power(h_SF_new2->Integral() - h_SF_new_err_DY->Integral(), 2)+TMath::Power(h_SF_new2->Integral() - h_SF_new_err_ST->Integral(), 2)+TMath::Power(h_SF_new2->Integral() - h_SF_new_err_WJets->Integral(), 2)/*+TMath::Power(h_SF_new2->Integral() - h_SF_new_err_QCD->Integral()*/, 2));
       
       std::cout << system_uncer << std::endl;
 
