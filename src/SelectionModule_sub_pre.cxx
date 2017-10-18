@@ -49,6 +49,7 @@ namespace uhh2examples {
     TopJetId topjet_kinematic;
     MuonId muid;
     std::string type;
+    std::string version;
     //uhh2::Event::Handle<std::vector<TopJet> > h_topjetsCMSTopTag;
     //uhh2::Event::Handle<std::vector<TopJet> > h_topjetssoftdrop;
  
@@ -81,6 +82,7 @@ namespace uhh2examples {
   SelectionModule_sub_pre::SelectionModule_sub_pre(Context & ctx): selection(ctx, "selection") {
     
     type = ctx.get("dataset_type", "");
+    type = ctx.get("dataset_version", "");
     //h_topjetsCMSTopTag = ctx.declare_event_input<std::vector<TopJet> >("patJetsCa15CHSJetsSoftDropPacked_daughters");
     //h_topjetssoftdrop = ctx.declare_event_input<std::vector<TopJet> >("patJetsCa15CHSJetsSoftDropPacked_daughters");
     //h_topjetsCMSTopTag = ctx.declare_event_output<std::vector<TopJet> >("patJetsCa15CHSJetsSoftDropPacked_daughters");
@@ -94,23 +96,77 @@ namespace uhh2examples {
     //muid = AndId<Muon>(MuonIDTight(), PtEtaCut(50.0, 2.1),MuonIso(0.12));
 
     if (type != "DATA") pileup_SF.reset(new MCPileupReweight(ctx)); 
+    // pileup_SF.reset(new MCPileupReweight(ctx)); 
 
 
     // clean the objects:
     cleanermodules.emplace_back(new JetCleaner(ctx, jet_kinematic));
     cleanermodules.emplace_back(new MuonCleaner(muid));
+    // if (type == "DATA"){
+    //   jet_corrector.reset(new JetCorrector(ctx, JERFiles::Spring16_25ns_L123_AK4PFchs_DATA));
+    //   jetlepton_cleaner.reset(new JetLeptonCleaner(ctx, JERFiles::Spring16_25ns_L123_AK4PFchs_DATA));
+    //   topjet_corrector.reset(new TopJetCorrector(ctx, JERFiles::Spring16_25ns_L123_AK8PFchs_DATA));
+    //   topjet23_corrector.reset(new TopJetCorrector(ctx, JERFiles::Spring16_25ns_L23_AK8PFchs_DATA));
+    // }
+    // else {
+    //   jet_corrector.reset(new JetCorrector(ctx, JERFiles::Spring16_25ns_L123_AK4PFchs_MC));
+    //   jetlepton_cleaner.reset(new JetLeptonCleaner(ctx, JERFiles::Spring16_25ns_L123_AK4PFchs_MC));
+    //   topjet_corrector.reset(new TopJetCorrector(ctx, JERFiles::Spring16_25ns_L123_AK8PFchs_MC));
+    //   topjet23_corrector.reset(new TopJetCorrector(ctx, JERFiles::Spring16_25ns_L23_AK8PFchs_MC));
+    // }
+
     if (type == "DATA"){
-      jet_corrector.reset(new JetCorrector(ctx, JERFiles::Fall15_25ns_L123_AK4PFchs_DATA));
-      jetlepton_cleaner.reset(new JetLeptonCleaner(ctx, JERFiles::Fall15_25ns_L123_AK4PFchs_DATA));
-      topjet_corrector.reset(new TopJetCorrector(ctx, JERFiles::Fall15_25ns_L123_AK8PFchs_DATA));
-      topjet23_corrector.reset(new TopJetCorrector(ctx, JERFiles::Fall15_25ns_L23_AK8PFchs_DATA));
-    }
+
+        if ( (version=="Data1") || (version=="Data2") || (version=="Data3") || (version=="Data4") ){
+            
+            jet_corrector.reset(new JetCorrector(ctx, JERFiles::Summer16_23Sep2016_V4_BCD_L123_AK4PFchs_DATA));
+            jetlepton_cleaner.reset(new JetLeptonCleaner(ctx, JERFiles::Summer16_23Sep2016_V4_BCD_L123_AK4PFchs_DATA));
+            topjet_corrector.reset(new TopJetCorrector(ctx, JERFiles::Summer16_23Sep2016_V4_BCD_L123_AK8PFchs_DATA));
+            topjet23_corrector.reset(new TopJetCorrector(ctx, JERFiles::Summer16_23Sep2016_V4_BCD_L123_AK8PFchs_DATA));
+
+        }
+
+        else if ( (version=="Data5") || (version=="Data6") ){
+            
+            jet_corrector.reset(new JetCorrector(ctx, JERFiles::Summer16_23Sep2016_V4_EF_L123_AK4PFchs_DATA));
+            jetlepton_cleaner.reset(new JetLeptonCleaner(ctx, JERFiles::Summer16_23Sep2016_V4_EF_L123_AK4PFchs_DATA));
+            topjet_corrector.reset(new TopJetCorrector(ctx, JERFiles::Summer16_23Sep2016_V4_EF_L123_AK8PFchs_DATA));
+            topjet23_corrector.reset(new TopJetCorrector(ctx, JERFiles::Summer16_23Sep2016_V4_EF_L123_AK8PFchs_DATA));
+
+        }
+
+        else if ( version=="Data7" ){
+            
+            jet_corrector.reset(new JetCorrector(ctx, JERFiles::Summer16_23Sep2016_V4_G_L123_AK4PFchs_DATA));
+            jetlepton_cleaner.reset(new JetLeptonCleaner(ctx, JERFiles::Summer16_23Sep2016_V4_G_L123_AK4PFchs_DATA));
+            topjet_corrector.reset(new TopJetCorrector(ctx, JERFiles::Summer16_23Sep2016_V4_G_L123_AK8PFchs_DATA));
+            topjet23_corrector.reset(new TopJetCorrector(ctx, JERFiles::Summer16_23Sep2016_V4_G_L123_AK8PFchs_DATA));
+
+        }
+
+        else if ( (version=="Data8") || (version=="Data9") ){
+            
+            jet_corrector.reset(new JetCorrector(ctx, JERFiles::Summer16_23Sep2016_V4_H_L123_AK4PFchs_DATA));
+            jetlepton_cleaner.reset(new JetLeptonCleaner(ctx, JERFiles::Summer16_23Sep2016_V4_H_L123_AK4PFchs_DATA));
+            topjet_corrector.reset(new TopJetCorrector(ctx, JERFiles::Summer16_23Sep2016_V4_H_L123_AK8PFchs_DATA));
+            topjet23_corrector.reset(new TopJetCorrector(ctx, JERFiles::Summer16_23Sep2016_V4_H_L123_AK8PFchs_DATA));
+
+        }
+
+
+    } // if data
+
     else {
-      jet_corrector.reset(new JetCorrector(ctx, JERFiles::Fall15_25ns_L123_AK4PFchs_MC));
-      jetlepton_cleaner.reset(new JetLeptonCleaner(ctx, JERFiles::Fall15_25ns_L123_AK4PFchs_MC));
-      topjet_corrector.reset(new TopJetCorrector(ctx, JERFiles::Fall15_25ns_L123_AK8PFchs_MC));
-      topjet23_corrector.reset(new TopJetCorrector(ctx, JERFiles::Fall15_25ns_L23_AK8PFchs_MC));
+
+        jet_corrector.reset(new JetCorrector(ctx, JERFiles::Summer16_23Sep2016_V4_L123_AK4PFchs_MC));
+        jetlepton_cleaner.reset(new JetLeptonCleaner(ctx, JERFiles::Summer16_23Sep2016_V4_L123_AK4PFchs_MC));
+        topjet_corrector.reset(new TopJetCorrector(ctx, JERFiles::Summer16_23Sep2016_V4_L123_AK8PFchs_MC));
+        topjet23_corrector.reset(new TopJetCorrector(ctx, JERFiles::Summer16_23Sep2016_V4_L123_AK8PFchs_MC));
     }
+
+
+
+
     //cleanermodules.emplace_back(new TopJetCleaner(ctx, HEPTopTag(150)));
     //jetER_smearer.reset(new JetResolutionSmearer(ctx));
     jetlepton_cleaner->set_drmax(.4);
@@ -134,7 +190,7 @@ namespace uhh2examples {
       lumi_selection.reset(new LumiSelection(ctx));
     }
 
-    trigger_sel = uhh2::make_unique<TriggerSelection>("HLT_Mu45_eta2p1_v*");
+    trigger_sel = uhh2::make_unique<TriggerSelection>("HLT_Mu50_v*");
     twodcut_sel.reset(new TwoDCut(.4, 25.));
     met_sel.reset(new METCut(50., std::numeric_limits<double>::infinity()));
     htlep_sel.reset(new HTlepCut(150., std::numeric_limits<double>::infinity()));
