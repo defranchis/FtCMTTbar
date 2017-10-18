@@ -16,6 +16,8 @@ using namespace uhh2examples;
 Hists_sub::Hists_sub(Context & ctx, const string & dirname): Hists(ctx, dirname){
   // book all histograms here
   //btag variables
+  book<TH1F>("muon_jet_PT", "", 30, 0., 900.);  
+
   book<TH1F>("subCSV_b", "combined secondary vertex discriminator of the subjet", 100, 0., 1.);  
   book<TH1F>("subCSV_c", "combined secondary vertex discriminator of the subjet", 100, 0., 1.); 
   book<TH1F>("subCSV_uds", "combined secondary vertex discriminator of the subjet", 100, 0., 1.); 
@@ -316,7 +318,7 @@ Hists_sub::Hists_sub(Context & ctx, const string & dirname): Hists(ctx, dirname)
   book<TH1F>("prunedmass", "pruned mass (GeV)", 40, 0., 300.);
   book<TH1F>("MassTop_ungroomed_corr", "Top Mass ungroomed corrected", 40, 0., 300.);
 
-  book<TH1F>("PTTop", "Top p_{T} (GeV)", 19, 400., 1800.);  
+  book<TH1F>("PTTop", "Top p_{T} (GeV)", 175, 250., 2000.);  
 
   book<TH1F>("subVertexNvtx_b", "N of secondary vertex", 6, 0., 6.);  
   book<TH1F>("subVertexNvtx_c", "N of secondary vertex", 6, 0., 6.); 
@@ -366,7 +368,7 @@ Hists_sub::Hists_sub(Context & ctx, const string & dirname): Hists(ctx, dirname)
   book<TH1F>("subFlavour_top_A", "flavour of the top subjet", 6, 0., 6.); 
   book<TH1F>("subFlavour_top_B", "flavour of the top subjet", 6, 0., 6.);
 
-  /*book<TH1F>("z_ratio", "z_ratio" , 20, 0., 60.);
+  book<TH1F>("z_ratio", "z_ratio" , 20, 0., 60.);
   book<TH1F>("trackSipdSig_3", "trackSipdSig_3" , 20, -20., 20.);
   book<TH1F>("trackSipdSig_2", "trackSipdSig_2" , 20, -20., 20.);
   book<TH1F>("trackSipdSig_1", "trackSipdSig_1" , 20, -20., 20.);
@@ -392,7 +394,7 @@ Hists_sub::Hists_sub(Context & ctx, const string & dirname): Hists(ctx, dirname)
   book<TH1F>("tau_vertexEnergyRatio_1", "tau_vertexEnergyRatio_1" , 20, 0., 4.);
   book<TH1F>("tau_flightDistance2dSig_1", "tau_flightDistance2dSig_1" , 20, -1., 21.);
   book<TH1F>("jetNTracks", "jetNTracks" , 20, 0., 40.);
-  book<TH1F>("nSV", "nSV" , 8, 0., 8.);*/
+  book<TH1F>("nSV", "nSV" , 8, 0., 8.);
 
 
 }
@@ -423,8 +425,57 @@ void Hists_sub::fill(const Event & event){
 
   
   std::vector<TopJet>* topjets = event.topjets;
+  std::vector<Jet>* jets = event.jets;
   std::vector<Muon>* muons = event.muons;
  
+  JetId my_checkbtag = CSVBTag( CSVBTag::WP_LOOSE );
+  
+  TLorentzVector muon_TLV, jet_TLV, muon_jet_TLV;
+  // bool fill_new_hist = false;
+
+  if (muons->size()>0) {
+
+      muon_TLV.SetPtEtaPhiE(muons->at(0).pt(),muons->at(0).eta(),muons->at(0).phi(),muons->at(0).energy());
+      
+      double max_jet_pt = 0.;
+
+      for(unsigned int i=0; i<event.jets->size(); ++i) {
+
+          bool jettagged = 0;
+          Jet jet = jets->at(i);
+
+          if (my_checkbtag(jet, event)) jettagged = 1;
+ 
+          if(muons->size() != 1){
+              std::cout << "ATTENTION!!! muon size " << muons->size() << std::endl;
+          }
+
+          double deltaphi=deltaPhi(jet,muons->at(0));
+          double pi = 3.14159265359;
+          if( jettagged && (deltaphi<(2*pi/3)) && (jet.pt()>30.) && (fabs(jet.eta())<2.4) && (jet.pt()>max_jet_pt)){
+
+              jet_TLV.SetPtEtaPhiE(jet.pt(),jet.eta(),jet.phi(),jet.energy());
+              max_jet_pt = jet_TLV.Pt();
+          }
+
+      }
+
+      if ( max_jet_pt > 0 ){
+          muon_jet_TLV = muon_TLV + jet_TLV ;
+          // fill_new_hist = true;
+      }
+
+
+
+  }
+
+
+
+
+  
+  
+
+
   int check_one_event = 0;
   unsigned int takehighestpt = 0;
   if(topjets->size()>1)
@@ -453,7 +504,7 @@ void Hists_sub::fill(const Event & event){
     TopJet topjet=topjets->at(n);
     double deltaphi=deltaPhi(topjet,muons->at(0));
     double pi = 3.14159265359;
-    if(!((deltaphi>(2*pi/3))&&(topjet.pt()>400)&&(fabs(topjet.eta())<2.4))) continue;
+    if(!((deltaphi>(2*pi/3))&&(topjet.pt()>250)&&(fabs(topjet.eta())<2.4))) continue;
 
 
     auto subjets=topjet.subjets();
@@ -493,7 +544,10 @@ void Hists_sub::fill(const Event & event){
     for (const auto s : topjet.subjets()) {
       subjet_sum += s.v4();
     }
- 
+
+
+    hist("muon_jet_PT")->Fill(muon_jet_TLV.Pt(), weight);
+
     hist("PTTop")->Fill(topjet.v4().pt(), weight);
     hist("PrimaryVertex")->Fill(event.pvs->size(), weight);
     hist("Weight")->Fill(weight);
@@ -523,7 +577,7 @@ void Hists_sub::fill(const Event & event){
     hist("BoostedDoubleSecondaryVertexAK8")->Fill(topjet.btag_BoostedDoubleSecondaryVertexAK8(),weight);
     hist("BoostedDoubleSecondaryVertexAK8_neg")->Fill(topjet.btag_BoostedDoubleSecondaryVertexAK8(),weight);
 
-    /*hist("z_ratio")->Fill(topjet.get_tag(topjet.tagname2tag("z_ratio")), weight);
+    hist("z_ratio")->Fill(topjet.get_tag(topjet.tagname2tag("z_ratio")), weight);
     hist("trackSipdSig_3")->Fill(topjet.get_tag(topjet.tagname2tag("trackSipdSig_3")), weight);
     hist("trackSipdSig_2")->Fill(topjet.get_tag(topjet.tagname2tag("trackSipdSig_2")), weight);
     hist("trackSipdSig_1")->Fill(topjet.get_tag(topjet.tagname2tag("trackSipdSig_1")), weight);
@@ -549,7 +603,7 @@ void Hists_sub::fill(const Event & event){
     hist("tau_vertexEnergyRatio_1")->Fill(topjet.get_tag(topjet.tagname2tag("tau_vertexEnergyRatio_1")), weight);
     hist("tau_flightDistance2dSig_1")->Fill(topjet.get_tag(topjet.tagname2tag("tau_flightDistance2dSig_1")), weight);
     hist("jetNTracks")->Fill(topjet.get_tag(topjet.tagname2tag("jetNTracks")), weight);
-    hist("nSV")->Fill(topjet.get_tag(topjet.tagname2tag("nSV")), weight);*/
+    hist("nSV")->Fill(topjet.get_tag(topjet.tagname2tag("nSV")), weight);
 
   
 
