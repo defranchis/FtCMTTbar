@@ -1,146 +1,158 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd"
 [
-<!ENTITY TT_Mtt-700to1000_TuneCUETP8M1_13TeV-powheg-pythia8  SYSTEM "/nfs/dust/cms/user/schumas/sframev4/CMSSW_7_4_15_patch1/src/UHH2/common/datasets/RunII_25ns_v2/TT_Mtt-700to1000.xml">
-<!ENTITY TT_Mtt-1000toInf_TuneCUETP8M1_13TeV-powheg-pythia8  SYSTEM "/nfs/dust/cms/user/schumas/sframev4/CMSSW_7_4_15_patch1/src/UHH2/common/datasets/RunII_25ns_v2/TT_Mtt-1000toInf.xml">
-<!ENTITY MC_TTbar  SYSTEM "/nfs/dust/cms/user/schumas/sframev4/CMSSW_7_4_15_patch1/src/UHH2/common/datasets/RunII_25ns_v2/MC_TTbar.xml">
-<!ENTITY DYJetsToLL_M-10to50  SYSTEM "/nfs/dust/cms/user/schumas/sframev4/CMSSW_7_4_15_patch1/src/UHH2/common/datasets/RunII_25ns_v2/MC_DYJetsToLL_M-10to50.xml">
-<!ENTITY DYJetsToLL_M-50  SYSTEM "/nfs/dust/cms/user/schumas/sframev4/CMSSW_7_4_15_patch1/src/UHH2/common/datasets/RunII_25ns_v2/MC_DYJetsToLL_M-50.xml">
-<!ENTITY ST_t-channel_4f_leptonDecays  SYSTEM "/nfs/dust/cms/user/schumas/sframev4/CMSSW_7_4_15_patch1/src/UHH2/common/datasets/RunII_25ns_v2/MC_ST_t-channel_4f_leptonDecays.xml">
-<!ENTITY ST_tW_antitop_5f_inclusiveDecays  SYSTEM "/nfs/dust/cms/user/schumas/sframev4/CMSSW_7_4_15_patch1/src/UHH2/common/datasets/RunII_25ns_v2/MC_STneg_tW_inc.xml">
-<!ENTITY ST_tW_top_5f_inclusiveDecays  SYSTEM "/nfs/dust/cms/user/schumas/sframev4/CMSSW_7_4_15_patch1/src/UHH2/common/datasets/RunII_25ns_v2/MC_STpos_tW_inc.xml">
-<!ENTITY WJets_LNu_HT100To200  SYSTEM "/nfs/dust/cms/user/schumas/sframev4/CMSSW_7_4_15_patch1/src/UHH2/common/datasets/RunII_25ns_v2/MC_WJets_LNu_HT100To200.xml">
-<!ENTITY WJets_LNu_HT200To400  SYSTEM "/nfs/dust/cms/user/schumas/sframev4/CMSSW_7_4_15_patch1/src/UHH2/common/datasets/RunII_25ns_v2/MC_WJets_LNu_HT200To400.xml">
-<!ENTITY WJets_LNu_HT400To600  SYSTEM "/nfs/dust/cms/user/schumas/sframev4/CMSSW_7_4_15_patch1/src/UHH2/common/datasets/RunII_25ns_v2/MC_WJets_LNu_HT400To600.xml">
-<!ENTITY WJets_LNu_HT600To800  SYSTEM "/nfs/dust/cms/user/schumas/sframev4/CMSSW_7_4_15_patch1/src/UHH2/common/datasets/RunII_25ns_v2/MC_WJets_LNu_HT600To800.xml">
-<!ENTITY WJets_LNu_HT800To1200  SYSTEM "/nfs/dust/cms/user/schumas/sframev4/CMSSW_7_4_15_patch1/src/UHH2/common/datasets/RunII_25ns_v2/MC_WJets_LNu_HT800To1200.xml">
-<!ENTITY WJets_LNu_HT1200To2500  SYSTEM "/nfs/dust/cms/user/schumas/sframev4/CMSSW_7_4_15_patch1/src/UHH2/common/datasets/RunII_25ns_v2/MC_WJets_LNu_HT1200To2500.xml">
-<!ENTITY WJets_LNu_HT2500ToInf  SYSTEM "/nfs/dust/cms/user/schumas/sframev4/CMSSW_7_4_15_patch1/src/UHH2/common/datasets/RunII_25ns_v2/MC_WJets_LNu_HT2500ToInf.xml">
-<!ENTITY WJets  SYSTEM "/nfs/dust/cms/user/schumas/sframev4/CMSSW_7_4_15_patch1/src/UHH2/common/datasets/RunII_25ns_v2/MC_WJetsToLNu.xml">
 
-<!ENTITY Data1  SYSTEM "//nfs/dust/cms/user/schumas/sframev4/CMSSW_7_4_15_patch1/src/UHH2/common/datasets/RunII_25ns_v2/SingleMuon_Run2015D-05Oct2015-v1.xml">
-<!ENTITY Data2  SYSTEM "//nfs/dust/cms/user/schumas/sframev4/CMSSW_7_4_15_patch1/src/UHH2/common/datasets/RunII_25ns_v2/SingleMuon_Run2015D-PromptReco-v4.xml">
 
 ]
 >
 
+<!--
+   <ConfigParse NEventsBreak="0" FileSplit="30" AutoResubmit="1"/>
+   <ConfigSGE RAM="8" DISK="2" Mail="matteo.defranchis@desy.de" Notification="as" Workdir="workdir"/>
+--> 
 
 
 <JobConfiguration JobName="ExampleCycleJob" OutputLevel="INFO">
     <Library Name="libSUHH2FtCMTTbar"/>
     <Package Name="SUHH2FtCMTTbar.par" />
 
-   <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_Hbb/post_bbtag/" PostFix="" TargetLumi="2690.707225445">
+   <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/defrancm/Hbb_Ntuples/CMSSW_8_0_24_patch1/src/UHH2/FtCMTTbar/output_sel" PostFix="" TargetLumi="35867.1">
    <!--Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/schumas/proof/" ProofNodes="10" OutputDirectory="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_Hbb/post/" PostFix="" TargetLumi="2628.85"-->
   
-	 <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="Data1_2" Cacheable="True">
-            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_Hbb/uhh2.AnalysisModuleRunner.DATA.Data1_2.root" Lumi="0.0"/>
-            <InputTree Name="AnalysisTree" /> 
-            <OutputTree Name="AnalysisTree" />
-        </InputData> 
-	 <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="Data2_2" Cacheable="True">
-            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_Hbb/uhh2.AnalysisModuleRunner.DATA.Data2_2.root" Lumi="0.0"/>
-            <InputTree Name="AnalysisTree" /> 
-            <OutputTree Name="AnalysisTree" />
-        </InputData> 
 
-         <InputData Lumi="247528.933" NEventsMax="-1" Type="MC" Version="TTbar" Cacheable="True">
-            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_Hbb/uhh2.AnalysisModuleRunner.MC.TTbar.root" Lumi="0.0"/>
-            <InputTree Name="AnalysisTree" /> 
+	 <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="Data1" Cacheable="False">
+            <In FileName="/nfs/dust/cms/user/defrancm/Hbb_Ntuples/CMSSW_8_0_24_patch1/src/UHH2/FtCMTTbar/output_presel/workdir/uhh2.AnalysisModuleRunner.DATA.Data1_*" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" />
             <OutputTree Name="AnalysisTree" />
         </InputData>
 
-         <InputData Lumi="275026572.1" NEventsMax="-1" Type="MC" Version="DYJetsToLL_M-10to50" Cacheable="True">
-             <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_Hbb/uhh2.AnalysisModuleRunner.MC.DYJetsToLL_M-10to50.root" Lumi="0.0"/>
-            <InputTree Name="AnalysisTree" /> 
+	 <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="Data2" Cacheable="False">
+            <In FileName="/nfs/dust/cms/user/defrancm/Hbb_Ntuples/CMSSW_8_0_24_patch1/src/UHH2/FtCMTTbar/output_presel/workdir/uhh2.AnalysisModuleRunner.DATA.Data2_*" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" />
             <OutputTree Name="AnalysisTree" />
         </InputData>
 
-         <InputData Lumi="391021197.2" NEventsMax="-1" Type="MC" Version="DYJetsToLL_M-50" Cacheable="True">
-            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_Hbb/uhh2.AnalysisModuleRunner.MC.DYJetsToLL_M-50.root" Lumi="0.0"/>
-            <InputTree Name="AnalysisTree" /> 
+	 <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="Data3" Cacheable="False">
+            <In FileName="/nfs/dust/cms/user/defrancm/Hbb_Ntuples/CMSSW_8_0_24_patch1/src/UHH2/FtCMTTbar/output_presel/workdir/uhh2.AnalysisModuleRunner.DATA.Data3_*" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" />
             <OutputTree Name="AnalysisTree" />
         </InputData>
-         <InputData Lumi="18992240" NEventsMax="-1" Type="MC" Version="ST_t-channel" Cacheable="True">
-            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_Hbb/uhh2.AnalysisModuleRunner.MC.ST_t-channel.root" Lumi="0.0"/>
-            <InputTree Name="AnalysisTree" /> 
+
+	 <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="Data4" Cacheable="False">
+            <In FileName="/nfs/dust/cms/user/defrancm/Hbb_Ntuples/CMSSW_8_0_24_patch1/src/UHH2/FtCMTTbar/output_presel/workdir/uhh2.AnalysisModuleRunner.DATA.Data4_*" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" />
             <OutputTree Name="AnalysisTree" />
         </InputData>
-         <InputData Lumi="28073.03" NEventsMax="-1" Type="MC" Version="ST_tW_antitop" Cacheable="True">
-            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_Hbb/uhh2.AnalysisModuleRunner.MC.ST_tW_antitop.root" Lumi="0.0"/>
-            <InputTree Name="AnalysisTree" /> 
+
+	 <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="Data5" Cacheable="False">
+            <In FileName="/nfs/dust/cms/user/defrancm/Hbb_Ntuples/CMSSW_8_0_24_patch1/src/UHH2/FtCMTTbar/output_presel/workdir/uhh2.AnalysisModuleRunner.DATA.Data5_*" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" />
             <OutputTree Name="AnalysisTree" />
         </InputData>
-         <InputData Lumi="28089.89" NEventsMax="-1" Type="MC" Version="ST_tW_top" Cacheable="True">
-            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_Hbb/uhh2.AnalysisModuleRunner.MC.ST_tW_top.root" Lumi="0.0"/>
-            <InputTree Name="AnalysisTree" /> 
+
+	 <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="Data6" Cacheable="False">
+            <In FileName="/nfs/dust/cms/user/defrancm/Hbb_Ntuples/CMSSW_8_0_24_patch1/src/UHH2/FtCMTTbar/output_presel/workdir/uhh2.AnalysisModuleRunner.DATA.Data6_*" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" />
             <OutputTree Name="AnalysisTree" />
         </InputData>
-         <InputData Lumi="6264.6" NEventsMax="-1" Type="MC" Version="WJets1" Cacheable="True">
-            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_Hbb/uhh2.AnalysisModuleRunner.MC.WJets1.root" Lumi="0.0"/>
-            <InputTree Name="AnalysisTree" /> 
+
+	 <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="Data7" Cacheable="False">
+            <In FileName="/nfs/dust/cms/user/defrancm/Hbb_Ntuples/CMSSW_8_0_24_patch1/src/UHH2/FtCMTTbar/output_presel/workdir/uhh2.AnalysisModuleRunner.DATA.Data7_*" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" />
             <OutputTree Name="AnalysisTree" />
         </InputData>
-         <InputData Lumi="10958.6" NEventsMax="-1" Type="MC" Version="WJets2" Cacheable="True">
-            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_Hbb/uhh2.AnalysisModuleRunner.MC.WJets2.root" Lumi="0.0"/>
-            <InputTree Name="AnalysisTree" /> 
+
+	 <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="Data8" Cacheable="False">
+            <In FileName="/nfs/dust/cms/user/defrancm/Hbb_Ntuples/CMSSW_8_0_24_patch1/src/UHH2/FtCMTTbar/output_presel/workdir/uhh2.AnalysisModuleRunner.DATA.Data8_*" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" />
             <OutputTree Name="AnalysisTree" />
         </InputData>
-         <InputData Lumi="32842.6" NEventsMax="-1" Type="MC" Version="WJets3" Cacheable="True">
-            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_Hbb/uhh2.AnalysisModuleRunner.MC.WJets3.root" Lumi="0.0"/>                        
-            <InputTree Name="AnalysisTree" /> 
+
+	 <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="Data9" Cacheable="False">
+            <In FileName="/nfs/dust/cms/user/defrancm/Hbb_Ntuples/CMSSW_8_0_24_patch1/src/UHH2/FtCMTTbar/output_presel/workdir/uhh2.AnalysisModuleRunner.DATA.Data9_*" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" />
             <OutputTree Name="AnalysisTree" />
         </InputData>
-        <InputData Lumi="258411.3" NEventsMax="-1" Type="MC" Version="WJets4" Cacheable="True">
-            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_Hbb/uhh2.AnalysisModuleRunner.MC.WJets4.root" Lumi="0.0"/>     
-            <InputTree Name="AnalysisTree" /> 
+
+         <InputData Lumi="92847.910" NEventsMax="-1" Type="MC" Version="TTbar" Cacheable="False">
+            <In FileName="/nfs/dust/cms/user/defrancm/Hbb_Ntuples/CMSSW_8_0_24_patch1/src/UHH2/FtCMTTbar/output_presel/workdir/uhh2.AnalysisModuleRunner.MC.TTbar_*" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" />
             <OutputTree Name="AnalysisTree" />
         </InputData>
-         <InputData Lumi="235611.1" NEventsMax="-1" Type="MC" Version="WJets5" Cacheable="True">
-            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_Hbb/uhh2.AnalysisModuleRunner.MC.WJets5.root" Lumi="0.0"/>
-            <InputTree Name="AnalysisTree" /> 
+
+
+        <!--  <InputData Lumi="2169.876" NEventsMax="-1" Type="MC" Version="DYJetsToLL_M-10to50" Cacheable="False"> -->
+        <!--      <In FileName="/nfs/dust/cms/user/defrancm/Hbb_Ntuples/CMSSW_8_0_24_patch1/src/UHH2/FtCMTTbar/output_presel/workdir/uhh2.AnalysisModuleRunner.MC.DYJetsToLL_M-10to50_*" Lumi="0.0"/> -->
+        <!--     <InputTree Name="AnalysisTree" /> -->
+        <!--     <OutputTree Name="AnalysisTree" /> -->
+        <!-- </InputData> -->
+
+         <InputData Lumi="194744.466" NEventsMax="-1" Type="MC" Version="ST_tW_antitop" Cacheable="False">
+            <In FileName="/nfs/dust/cms/user/defrancm/Hbb_Ntuples/CMSSW_8_0_24_patch1/src/UHH2/FtCMTTbar/output_presel/workdir/uhh2.AnalysisModuleRunner.MC.ST_tW_antitop_*" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" />
             <OutputTree Name="AnalysisTree" />
         </InputData>
-         <InputData Lumi="153125.1" NEventsMax="-1" Type="MC" Version="WJets6" Cacheable="True">
-            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_Hbb/uhh2.AnalysisModuleRunner.MC.WJets6.root" Lumi="0.0"/>
-            <InputTree Name="AnalysisTree" /> 
+
+         <InputData Lumi="195025.478" NEventsMax="-1" Type="MC" Version="ST_tW_top" Cacheable="False">
+            <In FileName="/nfs/dust/cms/user/defrancm/Hbb_Ntuples/CMSSW_8_0_24_patch1/src/UHH2/FtCMTTbar/output_presel/workdir/uhh2.AnalysisModuleRunner.MC.ST_tW_top_*" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" />
             <OutputTree Name="AnalysisTree" />
         </InputData>
-         <InputData Lumi="96823886.8" NEventsMax="-1" Type="MC" Version="WJets7" Cacheable="True">
-            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_Hbb/uhh2.AnalysisModuleRunner.MC.WJets7.root" Lumi="0.0"/>
-            <InputTree Name="AnalysisTree" /> 
+
+         <InputData Lumi="48523.533" NEventsMax="-1" Type="MC" Version="ST_t-channel_antitop" Cacheable="False">
+           <In FileName="/nfs/dust/cms/user/defrancm/Hbb_Ntuples/CMSSW_8_0_24_patch1/src/UHH2/FtCMTTbar/output_presel/workdir/uhh2.AnalysisModuleRunner.MC.ST_t-channel_antitop_*" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" />
             <OutputTree Name="AnalysisTree" />
         </InputData>
-         <!--InputData Lumi="60656220" NEventsMax="-1" Type="MC" Version="WJets_incl" Cacheable="True">
-            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_Hbb/uhh2.AnalysisModuleRunner.MC.WJets_incl.root" Lumi="0.0"/>
-            <InputTree Name="AnalysisTree" /> 
+
+         <InputData Lumi="44063.888" NEventsMax="-1" Type="MC" Version="ST_t-channel_top" Cacheable="False">
+           <In FileName="/nfs/dust/cms/user/defrancm/Hbb_Ntuples/CMSSW_8_0_24_patch1/src/UHH2/FtCMTTbar/output_presel/workdir/uhh2.AnalysisModuleRunner.MC.ST_t-channel_top_*" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" />
             <OutputTree Name="AnalysisTree" />
         </InputData>
-         <InputData Lumi="612.6385" NEventsMax="-1" Type="MC" Version="QCD1" Cacheable="True">
-          <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_Hbb/uhh2.AnalysisModuleRunner.MC.QCD1.root" Lumi="0.0"/>
-            <InputTree Name="AnalysisTree" /> 
+
+         <InputData Lumi="6289.101" NEventsMax="-1" Type="MC" Version="WJets1" Cacheable="False">
+            <In FileName="/nfs/dust/cms/user/defrancm/Hbb_Ntuples/CMSSW_8_0_24_patch1/src/UHH2/FtCMTTbar/output_presel/workdir/uhh2.AnalysisModuleRunner.MC.WJets1_*" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" />
             <OutputTree Name="AnalysisTree" />
         </InputData>
-         <InputData Lumi="2276.089" NEventsMax="-1" Type="MC" Version="QCD2" Cacheable="True">
-           <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_Hbb/uhh2.AnalysisModuleRunner.MC.QCD2.root" Lumi="0.0"/>         
-            <InputTree Name="AnalysisTree" /> 
+
+         <InputData Lumi="11373.971" NEventsMax="-1" Type="MC" Version="WJets2" Cacheable="False">
+            <In FileName="/nfs/dust/cms/user/defrancm/Hbb_Ntuples/CMSSW_8_0_24_patch1/src/UHH2/FtCMTTbar/output_presel/workdir/uhh2.AnalysisModuleRunner.MC.WJets2_*" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" />
             <OutputTree Name="AnalysisTree" />
         </InputData>
-         <InputData Lumi="4183.32" NEventsMax="-1" Type="MC" Version="QCD3" Cacheable="True">
-           <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_Hbb/uhh2.AnalysisModuleRunner.MC.QCD3.root" Lumi="0.0"/>          
-            <InputTree Name="AnalysisTree" /> 
+
+         <InputData Lumi="33177.214" NEventsMax="-1" Type="MC" Version="WJets3" Cacheable="False">
+            <In FileName="/nfs/dust/cms/user/defrancm/Hbb_Ntuples/CMSSW_8_0_24_patch1/src/UHH2/FtCMTTbar/output_presel/workdir/uhh2.AnalysisModuleRunner.MC.WJets3_*" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" />
             <OutputTree Name="AnalysisTree" />
         </InputData>
-         <InputData Lumi="32853.02" NEventsMax="-1" Type="MC" Version="QCD4" Cacheable="True">
-            <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_Hbb/uhh2.AnalysisModuleRunner.MC.QCD4.root" Lumi="0.0"/>        
-            <InputTree Name="AnalysisTree" /> 
+
+        <InputData Lumi="259191.454" NEventsMax="-1" Type="MC" Version="WJets4" Cacheable="False">
+            <In FileName="/nfs/dust/cms/user/defrancm/Hbb_Ntuples/CMSSW_8_0_24_patch1/src/UHH2/FtCMTTbar/output_presel/workdir/uhh2.AnalysisModuleRunner.MC.WJets4_*" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" />
             <OutputTree Name="AnalysisTree" />
         </InputData>
-         <InputData Lumi="78495.56" NEventsMax="-1" Type="MC" Version="QCD5" Cacheable="True">
-             <In FileName="/nfs/dust/cms/user/schumas/FileStore/Preselections_76X_Hbb/uhh2.AnalysisModuleRunner.MC.QCD5.root" Lumi="0.0"/>         
-            <InputTree Name="AnalysisTree" /> 
+
+         <InputData Lumi="232040.906" NEventsMax="-1" Type="MC" Version="WJets5" Cacheable="False">
+            <In FileName="/nfs/dust/cms/user/defrancm/Hbb_Ntuples/CMSSW_8_0_24_patch1/src/UHH2/FtCMTTbar/output_presel/workdir/uhh2.AnalysisModuleRunner.MC.WJets5_*" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" />
             <OutputTree Name="AnalysisTree" />
-        </InputData-->
+        </InputData>
+
+         <InputData Lumi="152063.628" NEventsMax="-1" Type="MC" Version="WJets6" Cacheable="False">
+            <In FileName="/nfs/dust/cms/user/defrancm/Hbb_Ntuples/CMSSW_8_0_24_patch1/src/UHH2/FtCMTTbar/output_presel/workdir/uhh2.AnalysisModuleRunner.MC.WJets6_*" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" />
+            <OutputTree Name="AnalysisTree" />
+        </InputData>
+
+         <InputData Lumi="6515999.548" NEventsMax="-1" Type="MC" Version="WJets7" Cacheable="False">
+            <In FileName="/nfs/dust/cms/user/defrancm/Hbb_Ntuples/CMSSW_8_0_24_patch1/src/UHH2/FtCMTTbar/output_presel/workdir/uhh2.AnalysisModuleRunner.MC.WJets7_*" Lumi="0.0"/>
+            <InputTree Name="AnalysisTree" />
+            <OutputTree Name="AnalysisTree" />
+        </InputData>
+
 
 
         <UserConfig>
@@ -151,18 +163,26 @@
             <Item Name="JetCollection" Value="slimmedJets" />
             <Item Name="METName" Value="slimmedMETs" />  
             <Item Name="GenJetCollection" Value="slimmedGenJets" />
-            <Item Name="TopJetCollection" Value="slimmedJetsAK8_SoftDrop" />
+            <Item Name="TopJetCollection" Value="patJetsAk8CHSJetsSoftDropPacked_daughters" />
             <Item Name="GenParticleCollection" Value="GenParticles" /> 
             <!--Item Name="GenJetCollection" Value="slimmedGenJets" /-->
             
 	    <!--Item Name="additionalBranches" Value="patJetsCa15CHSJetsSoftDropPacked_daughters" /--> 
 	    <!--Item Name="additionalBranches" Value="patJetsCa15PuppiJetsSoftDropPacked_daughters" /--> 
 
-	    <Item Name="pileup_directory_data" Value="/nfs/dust/cms/user/schumas/sframev5/CMSSW_7_6_3/src/UHH2/common/data/MyDataPileupHistogram_Silver.root"/>
-	    <Item Name="pileup_directory_25ns" Value="/nfs/dust/cms/user/schumas/sframev5/CMSSW_7_6_3/src/UHH2/common/data/MyMCPileupHistogram.root"/>
+	    <!-- <Item Name="pileup_directory_data" Value="/nfs/dust/cms/user/schumas/sframev5/CMSSW_7_6_3/src/UHH2/common/data/MyDataPileupHistogram_Silver.root"/> -->
+	    <!-- <Item Name="pileup_directory_25ns" Value="/nfs/dust/cms/user/schumas/sframev5/CMSSW_7_6_3/src/UHH2/common/data/MyMCPileupHistogram.root"/> -->
 
 
-	    <Item Name="lumi_file" Value="/nfs/dust/cms/user/schumas/sframev5/CMSSW_7_6_3/src/UHH2/common/data/Cert_13TeV_16Dec2015ReReco_Collisions15_25ns_JSON_Silver.root" />
+	    <!-- <Item Name="lumi_file" Value="/nfs/dust/cms/user/schumas/sframev5/CMSSW_7_6_3/src/UHH2/common/data/Cert_13TeV_16Dec2015ReReco_Collisions15_25ns_JSON_Silver.root" /> -->
+	    <Item Name="pileup_directory_data" Value="/nfs/dust/cms/user/defrancm/Hbb_Ntuples/CMSSW_8_0_24_patch1/src/UHH2/common/data/MyDataPileupHistogram.root"/>
+	    <Item Name="pileup_directory_25ns" Value="/nfs/dust/cms/user/defrancm/Hbb_Ntuples/CMSSW_8_0_24_patch1/src/UHH2/common/data/MyMCPileupHistogram.root"/>
+
+
+	    <Item Name="lumi_file" Value="/nfs/dust/cms/user/defrancm/Hbb_Ntuples/CMSSW_8_0_24_patch1/src/UHH2/common/data/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.root" />
+
+
+
             <Item Name="lumihists_lumi_per_bin" Value="0.2"/>
 	    <!--<Item Name="use_sframe_weight" Value="false" /-->
 
